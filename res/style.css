@@ -94,3 +94,7 @@ pre {
     padding-top: 1em;
     height: var(--pagination-height);
 }
+
+.hidden {
+    display: none;
+}
