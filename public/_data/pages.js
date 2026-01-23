@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 function pageToNavHTML(page) {
-    let html = `<a href="/${page.url}"><h1>${page.title}</h1></a>`;
+    let html = `<a href="javascript:goto('/${page.url}')"><h1>${page.title}</h1></a>`;
     if (page.pages.length > 0) {
         html += "<ol>";
         for (let subpage of page.pages) {
@@ -15,13 +15,9 @@ function pageToNavHTML(page) {
 function setURLs(page) {
     if (page.headingValue > 0) {
         let url = encodeURI(page.title.toLowerCase().replaceAll(" ", "-"));
-        let parent = page.parent;
-
-        while (parent && parent.parent) {
-            url = parent.url + "/" + url;
-            parent = parent.parent;
+        if (page.parent?.parent) {
+            url = page.parent.url + "/" + url;
         }
-
         page.url = url;
     }
 
@@ -50,7 +46,7 @@ function pageData(page) {
 }
 
 export default function() {
-    const content = fs.readFileSync("./public/content.md", { encoding: "utf8" });
+    const content = fs.readFileSync("./content/content.md", { encoding: "utf8" });
 
     const lines = content.split("\n");
     const structure = {
@@ -70,7 +66,6 @@ export default function() {
         if (line.trim() === "") continue;
 
         if (lookingForSection) {
-            const previous = currentPage;
             const header = line.split(" ").slice(1).join(" ");
             const headingValue = line.split(" ")[0].length;
             while (headingValue <= currentPage.headingValue) {
@@ -82,10 +77,7 @@ export default function() {
                 pages: [],
                 parent: currentPage,
                 headingValue: headingValue,
-                previous: previous,
-                next: undefined
             }
-            previous.next = page;
             currentPage.pages.push(page);
             currentPage = page;
             lookingForSection = false;

@@ -1,7 +1,3 @@
----
-layout: page_wrapper.html
----
-
 The Official **Z-corp™**
 
 # Level editor™ Handbook
