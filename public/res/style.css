@@ -1,0 +1,96 @@
+:root {
+    --bg: #2a2a2a;
+    --pagination-height: 2em;
+    --binder-holes-width: 3em;
+    --page-image: url(/res/paper.jpg);
+    --page-aspect: 793/960;
+
+    color-scheme: dark;
+}
+
+body, html {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    background: var(--bg);
+    gap: 2em;
+}
+
+aside {
+    padding: 2em;
+    padding-right: 0;
+    box-sizing: border-box;
+}
+
+main {
+    flex-grow: 1;
+    padding: 2em;
+    padding-left: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+nav {
+    width: 30vw;
+    min-width: 15em;
+    max-width: 20em;
+    padding: 0 2em;
+    box-sizing: border-box;
+    height: 100%;
+    overflow: hidden;
+    overflow-y: scroll;
+    background: #1a1a1a;
+    border: 1px solid #333333;
+}
+
+nav ol {
+    list-style-type: none;
+}
+nav > ol, nav > ol > li > ol {
+    padding-left: 0;
+}
+
+nav > ol > li {
+    margin-bottom: 1.5em;
+}
+nav > ol h1 {
+    font-size: 1rem;
+}
+nav > ol > li > ol h1 {
+    font-weight: normal;
+}
+
+.book-page {
+    background-color: transparent;
+    background-image: var(--page-image);
+    background-size: 100%;
+    background-position: center;
+    height: calc(100% - var(--pagination-height));
+    max-height: 700px;
+    aspect-ratio: var(--page-aspect);
+    padding: 2em;
+    padding-left: calc(var(--binder-holes-width) + 2em);
+    box-sizing: border-box;
+    position: relative;
+
+    color-scheme: light;
+    color: black;
+}
+
+pre {
+    white-space: pre-wrap;
+}
+
+.pagination {
+    padding-top: 1em;
+    height: var(--pagination-height);
+}
