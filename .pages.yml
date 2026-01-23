@@ -1,0 +1,7 @@
+media: content/media
+content:
+  - name: content
+    label: Content
+    path: content/content.md
+    type: file
+    format: raw
