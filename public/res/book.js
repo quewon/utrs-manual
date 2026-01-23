@@ -1,4 +1,5 @@
 var PAGES;
+var previousState;
 
 fetch("/res/content.json").then(res => res.json()).then(json => {
     PAGES = json.pages;
@@ -18,9 +19,14 @@ fetch("/res/content.json").then(res => res.json()).then(json => {
     document.querySelector(".pagination [name='pagecount']").textContent = PAGES.length - 1;
 
     goto(location.pathname);
+    
+    window.addEventListener('popstate', function() {
+        goto(location.pathname, true);
+    });
+
 })
 
-function goto(url) {
+function goto(url, onpop) {
     if (document.querySelector(".page:not(.hidden)")) {
         document.querySelector(".page:not(.hidden)").classList.add("hidden");
     }
@@ -31,7 +37,16 @@ function goto(url) {
     let data = PAGES[pageIndex];
 
     document.title = data.title;
-    window.history.pushState(data.title, data.title, location.origin + data.url);
+
+    if (!onpop) {
+        if (!previousState) {
+            history.replaceState(data, "", location.origin + data.url);
+        } else if (location.origin + data.url !== previousState) {
+            history.pushState(data, "", location.origin + data.url);
+        }
+        previousState = location.origin + data.url;
+    }
+
     pageElement.classList.remove("hidden");
 
     const pbuttons = document.querySelectorAll(".pagination button");
