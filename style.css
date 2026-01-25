@@ -1,0 +1,173 @@
+:root {
+    --bg: #2a2a2a;
+    --sidebar-bg: #1a1a1a;
+    --sidebar-border: #555555;
+    --pagination-height: 2em;
+    --binder-holes-width: 3em;
+    --page-aspect: 793/960;
+    --padding: 2em;
+
+    color-scheme: dark;
+}
+
+body, html {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    background: var(--bg);
+    gap: var(--padding);
+}
+
+aside {
+    width: 30vw;
+    min-width: 15em;
+    max-width: 20em;
+    box-sizing: border-box;
+    background: var(--sidebar-bg);
+    margin: var(--padding);
+    border: 1px solid var(--sidebar-border);
+}
+
+main {
+    flex-grow: 1;
+    padding: var(--padding);
+    padding-left: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+nav {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    overflow-y: scroll;
+    padding: 1em;
+    padding: var(--padding);
+}
+
+nav a {
+    text-decoration: none;
+    color: inherit;
+}
+nav a:hover {
+    text-decoration: underline;
+}
+
+nav ol {
+    list-style-type: none;
+}
+nav > ol > li {
+    border-top: 1px solid var(--sidebar-border);
+}
+ol {
+    padding-left: 0;
+}
+nav > ol > li, nav > ol > li > ol > li {
+    padding-left: 0;
+}
+
+/* sitename */
+nav > a > h1 {
+    margin: 0;
+}
+nav > ol > li {
+    /* margin-bottom: 1.5em; */
+    margin-bottom: 1em;
+}
+/* section headers */
+nav > ol h1 {
+    font-size: 1rem;
+}
+nav > ol > li > a {
+    text-transform: uppercase;
+}
+/* subsection headers */
+nav > ol > li > ol h1 {
+    font-weight: normal;
+}
+
+.book-page {
+    flex-grow: 1;
+    background-color: lightgray;
+    aspect-ratio: var(--page-aspect);
+    max-width: 100%;
+    max-height: calc(100% - var(--pagination-height));
+    padding: 2em;
+    padding-left: calc(var(--binder-holes-width) + 2em);
+    box-sizing: border-box;
+    position: relative;
+
+    color-scheme: light;
+    color: black;
+}
+
+.book-page:has(div[data-page="1"]:not(.hidden)) {
+    background: url(/res/utrs_sky.jpeg);
+    background-size: auto 100%;
+}
+
+pre {
+    white-space: pre-wrap;
+}
+
+.pagination {
+    padding-top: 1em;
+    height: var(--pagination-height);
+}
+
+.hidden {
+    display: none;
+}
+
+#sidebar-toggle {
+    display: none;
+}
+
+@media (max-width: 800px) {
+    :root {
+        --padding: 1em;
+    }
+    main {
+        padding: var(--padding);
+    }
+    .book-page {
+        font-size: min(3vw, 1rem);
+        width: 100%;
+        max-width: 600px;
+        height: unset;
+        flex-grow: unset;
+    }
+    aside {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translateX(-100%);
+        margin: 0;
+        z-index: 1;
+        height: 100%;
+    }
+    aside.toggled {
+        transform: none;
+        width: 50%;
+    }
+    #sidebar-toggle {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 100%;
+        width: 2em;
+        height: 2em;
+        margin: 1em;
+    }
+}
