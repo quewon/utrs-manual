@@ -45,12 +45,12 @@ function pageData(page) {
     return data;
 }
 
-export default function() {
+export default function(config) {
     const content = fs.readFileSync("./content/content.md", { encoding: "utf8" });
 
     const lines = content.split("\n");
     const structure = {
-        title: "Index",
+        title: config.sitename,
         url: "",
         pages: [],
         headingValue: 0

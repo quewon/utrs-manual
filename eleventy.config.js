@@ -1,10 +1,12 @@
 import { RenderPlugin } from "@11ty/eleventy";
 
 export default function (config) {
-    config.addPassthroughCopy("./public/res/");
-    config.addPassthroughCopy("./public/favicon.ico");
+    config.addGlobalData("sitename", "Handbook");
+
+    config.addPassthroughCopy("./public/res");
+    config.addPassthroughCopy("./public/**/*.js");
     config.addPassthroughCopy("./public/**/*.css");
-    config.addPassthroughCopy("./public/script.js");
+    config.addPassthroughCopy("./public/**/*.ico");
 
     config.addPlugin(RenderPlugin);
 

@@ -1,7 +1,7 @@
 var PAGES;
 var previousState;
 
-fetch("/res/content.json").then(res => res.json()).then(json => {
+fetch("/content.json").then(res => res.json()).then(json => {
     PAGES = json.pages;
 
     const bookPage = document.querySelector(".book-page");
@@ -75,4 +75,6 @@ function goto(url, onpop) {
         }
     }
     document.querySelector(".pagination input").value = pageIndex;
+
+    document.querySelector("aside").classList.remove("toggled");
 }

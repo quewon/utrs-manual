@@ -6,6 +6,7 @@ layout: base.html
     <nav>
         {{ pages.nav }}
     </nav>
+    <button type="button" id="sidebar-toggle" onclick="document.querySelector('aside').classList.toggle('toggled')"></button>
 </aside>
 
 <main>
@@ -21,3 +22,5 @@ layout: base.html
         <button type="button" disabled>&gt;&gt;</button>
     </div>
 </main>
+
+<script src="/book.js{{ nocache }}"></script>
