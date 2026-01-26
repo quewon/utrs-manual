@@ -6,17 +6,20 @@ permalink: content.json
         {
             "url": "/404",
             "title": "404",
-            "content": "whoops"
+            "content": "whoops",
+            "headingValue": 0
         },
         {
             "url": "/",
-            "title": "Level editor Handbook",
-            "content": {% capture title_content %}{% renderFile "./content/title.md" %}{% endcapture %}{{ title_content | json }}
+            "title": "Handbook",
+            "content": {% capture title_content %}{% renderFile "./content/title.md" %}{% endcapture %}{{ title_content | json }},
+            "headingValue": 0
         }{% for section in pages.pages %},
         {
             "url": "/{{ section.url }}",
             "title": {{ section.title | json }},
-            "content": {{ section.content | renderContent: "md" | json }}
+            "content": {{ section.content | renderContent: "md" | json }},
+            "headingValue": {{ section.headingValue }}
         }{% endfor %}
     ]
 }

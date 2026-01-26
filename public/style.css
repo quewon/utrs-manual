@@ -1,11 +1,25 @@
 :root {
     --bg: #2a2a2a;
+    --bg-dot: #555555;
     --sidebar-bg: #1a1a1a;
     --sidebar-border: #555555;
-    --pagination-height: 2em;
-    --binder-holes-width: 3em;
-    --page-aspect: 793/960;
+    --accent: #4A9EFF;
+
+    --binder-holes-width: 2.5em;
+    --binder-holes-bg: url(res/Texturelabs_Paper_381M.jpg);
+    --binder-hole-radius: .5em;
+    --page-bg: url(res/paper.png);
+    --page-aspect: 4/5;
+    --title-page-bg: url(res/Texturelabs_Paper_360M.jpg);
+    --title-page-color: rgb(235, 235, 235);
     --padding: 2em;
+    --footer-height: 4em;
+
+    --page-fade-distance: 70px;
+    --page-fade-speed: .4s;
+    --page-fade-angle: 2deg;
+
+    --monospace: 'IBM Plex Mono', monospace;
 
     color-scheme: dark;
 }
@@ -23,16 +37,29 @@ body {
     height: 100dvh;
     background: var(--bg);
     gap: var(--padding);
+
+    background-image: radial-gradient(var(--bg-dot) 1px, var(--bg) 0);
+    background-size: 2em 2em;
+    animation: bg-dots 3s infinite linear;
+    overflow: hidden;
+}
+
+@keyframes bg-dots {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 2em 2em;
+    }
 }
 
 aside {
-    width: 30vw;
-    min-width: 15em;
-    max-width: 20em;
+    flex-shrink: 0;
+    width: 18em;
     box-sizing: border-box;
     background: var(--sidebar-bg);
     margin: var(--padding);
-    border: 1px solid var(--sidebar-border);
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px;
 }
 
 main {
@@ -44,6 +71,7 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    overflow: visible;
 }
 
 nav {
@@ -52,23 +80,49 @@ nav {
     height: 100%;
     overflow: hidden;
     overflow-y: scroll;
-    padding: 1em;
-    padding: var(--padding);
+    padding: var(--padding) calc(var(--padding) / 2);
 }
 
 nav a {
     text-decoration: none;
     color: inherit;
+    line-height: 1.5em;
+}
+
+/* sitename */
+nav a h1 {
+    font-size: .8rem;
+    margin: 0;
+}
+nav a {
+    display: block;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 5px calc(var(--padding) / 2);
+    color: rgba(255, 255, 255, .5);
+    transition: opacity .2s, background-color .2s;
+    cursor: default;
+    border-left: 2px solid transparent;
 }
 nav a:hover {
-    text-decoration: underline;
+    background: var(--bg);
+    color: white;
+}
+nav a.selected {
+    background: var(--bg);
+    color: var(--accent);
+    border-left: 2px solid var(--accent);
+}
+
+nav a.subtitle {
+    color: var(--accent);
+}
+nav a.subtitle:hover {
+    background: none;
 }
 
 nav ol {
     list-style-type: none;
-}
-nav > ol > li {
-    border-top: 1px solid var(--sidebar-border);
 }
 ol {
     padding-left: 0;
@@ -77,20 +131,14 @@ nav > ol > li, nav > ol > li > ol > li {
     padding-left: 0;
 }
 
-/* sitename */
-nav > a > h1 {
-    margin: 0;
+nav > ol > li > ol h1 {
+    text-transform: none;
+    font-size: 1rem;
 }
+
 nav > ol > li {
     /* margin-bottom: 1.5em; */
     margin-bottom: 1em;
-}
-/* section headers */
-nav > ol h1 {
-    font-size: 1rem;
-}
-nav > ol > li > a {
-    text-transform: uppercase;
 }
 /* subsection headers */
 nav > ol > li > ol h1 {
@@ -98,36 +146,155 @@ nav > ol > li > ol h1 {
 }
 
 .book-page {
+    position: relative;
     flex-grow: 1;
-    background-color: lightgray;
-    aspect-ratio: var(--page-aspect);
+    min-width: 300px;
     max-width: 100%;
-    max-height: calc(100% - var(--pagination-height));
+    max-height: 100%;
+    aspect-ratio: var(--page-aspect);
+
+    color-scheme: light;
+    color: rgba(0, 0, 0, .8);
+}
+
+.page {
+    width: 100%;
+    height: 100%;
+    background: var(--page-bg);
+    background-size: cover;
     padding: 2em;
-    padding-left: calc(var(--binder-holes-width) + 2em);
+    padding-left: calc(var(--binder-holes-width) + var(--padding));
+    padding-bottom: calc(var(--footer-height) + var(--padding));
     box-sizing: border-box;
     position: relative;
 
-    color-scheme: light;
-    color: black;
+    mask-image: 
+        radial-gradient(circle at calc(var(--binder-holes-width) / 2) 10%, transparent var(--binder-hole-radius), black var(--binder-hole-radius)),
+        radial-gradient(circle at calc(var(--binder-holes-width) / 2) 35%, transparent var(--binder-hole-radius), black var(--binder-hole-radius)),
+        radial-gradient(circle at calc(var(--binder-holes-width) / 2) 50%, transparent var(--binder-hole-radius), black var(--binder-hole-radius)),
+        radial-gradient(circle at calc(var(--binder-holes-width) / 2) 65%, transparent var(--binder-hole-radius), black var(--binder-hole-radius)),
+        radial-gradient(circle at calc(var(--binder-holes-width) / 2) 90%, transparent var(--binder-hole-radius), black var(--binder-hole-radius));
+    mask-composite: intersect;
+}
+.page::after {
+    content: "";
+    width: var(--binder-holes-width);
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--binder-holes-bg);
+    background-size: cover;
+    box-shadow: 0 0 2px 1px inset rgba(0, 0, 0, .1), 0 0 1px 1px rgba(0, 0, 0, .05);
+}
+.page footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: var(--footer-height);
+    text-align: center;
+    font-family: var(--monospace);
+    font-size: .8rem;
+    opacity: .75;
+    padding: 1em;
+    box-sizing: border-box;
+}
+.page.title {
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center; */
+    color: var(--title-page-color);
+}
+.page.title:not(:has(.background)) {
+    background: var(--title-page-bg);
+    background-size: cover;
 }
 
-.book-page:has(div[data-page="1"]:not(.hidden)) {
-    background: url(/res/utrs_sky.jpeg);
-    background-size: auto 100%;
+.page .background {
+    position: absolute;
+    top: 0;
+    left: var(--binder-holes-width);
+    z-index: -1;
+    object-fit: cover;
+    width: calc(100% - var(--binder-holes-width));
+    height: 100%;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+    opacity: .9;
+}
+
+.page.hidden {
+    display: none;
+}
+
+.exit-to-bottom, .exit-to-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.exit-to-bottom {
+    animation: exit-to-bottom var(--page-fade-speed);
+    z-index: -1;
+}
+.exit-to-top {
+    animation: exit-to-top var(--page-fade-speed);
+    z-index: 1;
+}
+.enter-from-bottom {
+    animation: enter-from-bottom var(--page-fade-speed);
+}
+.enter-from-top {
+    animation: enter-from-top var(--page-fade-speed);
+}
+
+@keyframes exit-to-bottom {
+    0% {
+        display: block;
+        transform: translateY(0) rotate(0);
+        opacity: 1;
+    }
+    100% {
+        display: block;
+        transform: translateY(var(--page-fade-distance)) rotate(var(--page-fade-angle));
+        opacity: 0;
+    }
+}
+@keyframes exit-to-top {
+    0% {
+        display: block;
+        transform: translateY(0) rotate(0);
+        opacity: 1;
+    }
+    100% {
+        display: block;
+        transform: translateY(calc(-1 * var(--page-fade-distance))) rotate(calc(-1 * var(--page-fade-angle)));
+        opacity: 0;
+    }
+}
+@keyframes enter-from-bottom {
+    0% {
+        transform: translateY(var(--page-fade-distance)) rotate(var(--page-fade-angle));
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0) rotate(0);
+        opacity: 1;
+    }
+}
+@keyframes enter-from-top {
+    0% {
+        transform: translateY(calc(-1 * var(--page-fade-distance))) rotate(calc(-1 * var(--page-fade-angle)));
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0) rotate(0);
+        opacity: 1;
+    }
 }
 
 pre {
     white-space: pre-wrap;
-}
-
-.pagination {
-    padding-top: 1em;
-    height: var(--pagination-height);
-}
-
-.hidden {
-    display: none;
 }
 
 #sidebar-toggle {
@@ -135,14 +302,11 @@ pre {
 }
 
 @media (max-width: 800px) {
-    :root {
-        --padding: 1em;
-    }
     main {
         padding: var(--padding);
     }
     .book-page {
-        font-size: min(3vw, 1rem);
+        font-size: clamp(.7rem, 3vw, 1rem);
         width: 100%;
         max-width: 600px;
         height: unset;
@@ -156,18 +320,36 @@ pre {
         margin: 0;
         z-index: 1;
         height: 100%;
+        border-top: none;
+        border-bottom: none;
+        border-left: none;
+        box-shadow: none;
+        transition: transform .5s ease-in-out, box-shadow .5s;
+        width: min(75vw, 400px);
+        z-index: 2;
     }
     aside.toggled {
         transform: none;
-        width: 50%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+        z-index: 2;
     }
     #sidebar-toggle {
         display: block;
         position: absolute;
         top: 0;
         left: 100%;
-        width: 2em;
-        height: 2em;
-        margin: 1em;
+        width: calc(var(--padding) / 1.2);
+        height: calc(var(--padding) * 4);
+        margin-top: 1em;
+        border: none;
+        border-top-right-radius: var(--padding);
+        border-bottom-right-radius: var(--padding);
+        cursor: pointer;
+        background-color: var(--accent);
+        transition: background-color .2s;
+        box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+    }
+    #sidebar-toggle:hover {
+        background-color: #66B3FF;
     }
 }

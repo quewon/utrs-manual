@@ -4,6 +4,7 @@ layout: base.html
 
 <aside>
     <nav>
+        <a href="javascript:goto('/')" class="subtitle">UTRS</a>
         {{ pages.nav }}
     </nav>
     <button type="button" id="sidebar-toggle" onclick="document.querySelector('aside').classList.toggle('toggled')"></button>
@@ -12,14 +13,6 @@ layout: base.html
 <main>
     <div class="book-page">
         {{ content }}
-    </div>
-
-    <div class="pagination">
-        <button type="button" disabled>&lt;&lt;</button>
-        <button type="button" disabled>&lt;</button>
-        Page <input type="number" value="1" max="999" min="0">/<span name="pagecount"></span>
-        <button type="button" disabled>&gt;</button>
-        <button type="button" disabled>&gt;&gt;</button>
     </div>
 </main>
 
