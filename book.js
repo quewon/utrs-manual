@@ -90,8 +90,51 @@ document.addEventListener("keydown", e => {
     }
 })
 
-document.addEventListener("mousedown", e => {
+let scrollAmount = 0;
+let wheelEndTimeout;
+let wheelLocked = false;
+document.addEventListener("wheel", e => {
+    if (wheelEndTimeout) clearTimeout(wheelEndTimeout);
+    if (!wheelLocked) {
+        if (e.deltaY > 2) {
+            if (currentPageIndex < PAGES.length - 1) {
+                goto(PAGES[currentPageIndex + 1].url);
+                wheelLocked = true;
+            }
+        } else if (e.deltaY < -2) {
+            if (currentPageIndex > 1) {
+                goto(PAGES[currentPageIndex - 1].url);
+                wheelLocked = true;
+            }
+        }
+    }
+    wheelEndTimeout = setTimeout(() => {
+        wheelLocked = false;
+    }, 50);
+})
+
+let mouseLocked = false;
+document.addEventListener("pointerdown", e => {
     if (!e.target.closest("aside")) {
         document.querySelector("aside").classList.remove("toggled");
+    }
+    mouseLocked = false;
+})
+document.addEventListener("pointermove", e => {
+    if (window.innerWidth > 800) return;
+
+    if (!mouseLocked) {
+        let delta = Math.abs(e.movementY) > Math.abs(e.movementX) ? e.movementY : e.movementX;
+        if (delta < -2) {
+            if (currentPageIndex < PAGES.length - 1) {
+                goto(PAGES[currentPageIndex + 1].url);
+                mouseLocked = true;
+            }
+        } else if (delta > 2) {
+            if (currentPageIndex > 1) {
+                goto(PAGES[currentPageIndex - 1].url);
+                mouseLocked = true;
+            }
+        }
     }
 })
