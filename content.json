@@ -3,37 +3,44 @@
         {
             "url": "/404",
             "title": "404",
-            "content": "whoops"
+            "content": "whoops",
+            "headingValue": 0
         },
         {
             "url": "/",
-            "title": "Level editor Handbook",
-            "content": "<p>The Official <strong>Z-corp™</strong></p>\n<h1>Level editor™ Handbook</h1>\n<h2>for Employees</h2>\n<pre><code>CONFIDENTIAL - FOR INTERNAL USE ONLY\n\n© 20ZZ Z-corp\n</code></pre>\n"
+            "title": "Handbook",
+            "content": "<p>The Official <strong>Z-corp™</strong></p>\n<h1>Level editor™ Handbook</h1>\n<h2>for Employees</h2>\n<pre><code>CONFIDENTIAL - FOR INTERNAL USE ONLY\n\n© 20ZZ Z-corp\n</code></pre>\n<img class=\"background\" src=\"media/utrs_sky.jpeg\" alt=\"\">",
+            "headingValue": 0
         },
         {
             "url": "/section-1",
             "title": "Section 1",
-            "content": "<h1>Section 1</h1>\n<h2>Table of contents</h2>\n<ul>\n<li><a href=\"/section-1/section-1-1\">Section 1-1</a></li>\n<li><a href=\"/section-1/section-1-2\">Section 1-2</a></li>\n</ul>\n"
+            "content": "<h1>Section 1</h1>\n<h2>Table of contents</h2>\n<ul>\n<li><a href=\"/section-1/section-1-1\">Section 1-1</a></li>\n<li><a href=\"/section-1/section-1-2\">Section 1-2</a></li>\n</ul>\n",
+            "headingValue": 1
         },
         {
             "url": "/section-1/section-1-1",
             "title": "Section 1-1",
-            "content": "<h2>Section 1-1</h2>\n<p>Content under section 1-1 should appear in a page of its own.</p>\n"
+            "content": "<h2>Section 1-1</h2>\n<p>Content under section 1-1 should appear in a page of its own.</p>\n",
+            "headingValue": 2
         },
         {
             "url": "/section-1/section-1-1/section-1-1-1",
             "title": "Section 1-1-1",
-            "content": "<h3>Section 1-1-1</h3>\n<p>Hello</p>\n"
+            "content": "<h3>Section 1-1-1</h3>\n<p>Hello</p>\n",
+            "headingValue": 3
         },
         {
             "url": "/section-1/section-1-2",
             "title": "Section 1-2",
-            "content": "<h2>Section 1-2</h2>\n<p>Content under section 1-2 should appear in a page of its own.</p>\n"
+            "content": "<h2>Section 1-2</h2>\n<p>Content under section 1-2 should appear in a page of its own.</p>\n",
+            "headingValue": 2
         },
         {
             "url": "/section-2",
             "title": "Section 2",
-            "content": "<h1>Section 2</h1>\n<h2>Table of contents</h2>\n<ul>\n<li>No content written for this section.</li>\n</ul>\n"
+            "content": "<h1>Section 2</h1>\n<h2>Table of contents</h2>\n<ul>\n<li>No content written for this section.</li>\n</ul>\n",
+            "headingValue": 1
         }
     ]
 }

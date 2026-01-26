@@ -1,40 +1,46 @@
 var PAGES;
 var previousState;
+var currentPageIndex = -1;
+const bookPage = document.querySelector(".book-page");
 
 fetch("/content.json").then(res => res.json()).then(json => {
     PAGES = json.pages;
 
-    const bookPage = document.querySelector(".book-page");
-
     let pagenumber = 0;
-    for (let page of json.pages) {
+    for (let page of PAGES) {
         const div = document.createElement("div");
         div.className = "hidden page";
         div.dataset.page = pagenumber++;
         div.dataset.url = page.url;
         div.innerHTML = page.content;
+        if (page.headingValue <= 1) {
+            div.classList.add("title");
+        } else if (pagenumber > 2) {
+            div.innerHTML += `<footer>Page ${pagenumber - 2} of ${PAGES.length - 2}</footer>`;
+        }
         bookPage.appendChild(div);
     }
-
-    document.querySelector(".pagination [name='pagecount']").textContent = PAGES.length - 1;
 
     goto(location.pathname);
     
     window.addEventListener('popstate', function() {
         goto(location.pathname, true);
     });
-
 })
 
 function goto(url, onpop) {
-    if (document.querySelector(".page:not(.hidden)")) {
-        document.querySelector(".page:not(.hidden)").classList.add("hidden");
-    }
+    let previousPageIndex = currentPageIndex;
+    let previousPage = document.querySelector(`.page[data-page="${currentPageIndex}"]`);
+
     let pageElement = document.querySelector(`[data-url="${url}"]`);
     if (!pageElement)
         pageElement = document.querySelector("[data-page='0']");
-    let pageIndex = parseInt(pageElement.dataset.page);
-    let data = PAGES[pageIndex];
+    currentPageIndex = parseInt(pageElement.dataset.page);
+
+    if (currentPageIndex === previousPageIndex && previousState)
+        return;
+
+    let data = PAGES[currentPageIndex];
 
     document.title = data.title;
 
@@ -47,34 +53,45 @@ function goto(url, onpop) {
         previousState = location.origin + data.url;
     }
 
-    pageElement.classList.remove("hidden");
+    pageElement.classList.remove("enter-from-top");
+    pageElement.classList.remove("enter-from-bottom");
+    pageElement.classList.remove("exit-to-top");
+    pageElement.classList.remove("exit-to-bottom");
+    if (previousPage) {
+        previousPage.classList.add("hidden");
+        previousPage.classList.remove("enter-from-bottom");
+        previousPage.classList.remove("enter-from-top");
+        previousPage.classList.remove("exit-to-bottom");
+        previousPage.classList.remove("exit-to-top");
+    }
+    if (previousPageIndex < currentPageIndex) {
+        if (previousPage) previousPage.classList.add("exit-to-top");
+        pageElement.classList.add("enter-from-bottom");
+    } else {
+        if (previousPage) previousPage.classList.add("exit-to-bottom");
+        pageElement.classList.add("enter-from-top");
+    }
+    setTimeout(() => {
+        if (currentPageIndex === parseInt(pageElement.dataset.page))
+            pageElement.classList.remove("hidden");
+    }, 200);
 
-    const pbuttons = document.querySelectorAll(".pagination button");
-    pbuttons[0].disabled = true;
-    pbuttons[1].disabled = true;
-    pbuttons[2].disabled = true;
-    pbuttons[3].disabled = true;
-    if (pageIndex > 1) {
-        pbuttons[0].disabled = false;
-        pbuttons[1].disabled = false;
-        pbuttons[0].onclick = () => {
-            goto("/");
-        }
-        pbuttons[1].onclick = () => {
-            goto(PAGES[pageIndex - 1].url);
-        }
-    }
-    if (pageIndex < PAGES.length - 1) {
-        pbuttons[2].disabled = false;
-        pbuttons[3].disabled = false;
-        pbuttons[3].onclick = () => {
-            goto(PAGES[PAGES.length - 1].url)
-        }
-        pbuttons[2].onclick = () => {
-            goto(PAGES[pageIndex + 1].url);
-        }
-    }
-    document.querySelector(".pagination input").value = pageIndex;
+    document.querySelector(`nav a.selected`)?.classList.remove("selected");
+    document.querySelectorAll("nav a")[currentPageIndex].classList.add("selected");
 
     document.querySelector("aside").classList.remove("toggled");
 }
+
+document.addEventListener("keydown", e => {
+    if ((e.code === "ArrowRight" || e.code === "ArrowDown") && currentPageIndex < PAGES.length - 1) {
+        goto(PAGES[currentPageIndex + 1].url);
+    } else if ((e.code === "ArrowLeft" || e.code === "ArrowUp") && currentPageIndex > 1) {
+        goto(PAGES[currentPageIndex - 1].url);
+    }
+})
+
+document.addEventListener("mousedown", e => {
+    if (!e.target.closest("aside")) {
+        document.querySelector("aside").classList.remove("toggled");
+    }
+})
