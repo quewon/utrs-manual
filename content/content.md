@@ -1,34 +1,57 @@
-# Section 1
+# Introduction
 
-## Table of contents
+# Introduction
 
-- [Section 1-1](/section-1/section-1-1)
-- [Section 1-2](/section-1/section-1-2)
-
----
-
-## Section 1-1
-
-Content under section 1-1 should appear in a page of its own.
+Welcome to the manual :)
 
 ---
 
-### Section 1-1-1
+# Getting started
 
-Hello
+```section-title
+Getting Started
+```
+
+```section-subtitle
+Everything you need to know about ...
+```
+
+---
+
+## Creating your first level
 
 ---
 
-## Section 1-2
-
-Content under section 1-2 should appear in a page of its own.
+## Saving & loading
 
 ---
 
-# Section 2
-
-## Table of contents
-
-- No content written for this section.
+# Editor
 
 ---
+
+## Inspector
+
+---
+
+## Toolbar
+
+---
+
+## Object tray
+
+---
+
+## Z-grid slider
+
+---
+
+# Publishing your game
+
+---
+
+## Exporting
+
+---
+
+## Uploading to Steam Workshop

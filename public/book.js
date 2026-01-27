@@ -13,9 +13,7 @@ fetch("/content.json").then(res => res.json()).then(json => {
         div.dataset.page = pagenumber++;
         div.dataset.url = page.url;
         div.innerHTML = page.content;
-        if (page.headingValue <= 1) {
-            div.classList.add("title");
-        } else if (pagenumber > 2) {
+        if (pagenumber > 2) {
             div.innerHTML += `<footer>Page ${pagenumber - 2} of ${PAGES.length - 2}</footer>`;
         }
         bookPage.appendChild(div);
@@ -91,49 +89,76 @@ document.addEventListener("keydown", e => {
 })
 
 let scrollAmount = 0;
-let wheelEndTimeout;
-let wheelLocked = false;
+let wheelTimeout;
+let direction = 0;
 document.addEventListener("wheel", e => {
-    if (wheelEndTimeout) clearTimeout(wheelEndTimeout);
-    if (!wheelLocked) {
-        if (e.deltaY > 2) {
-            if (currentPageIndex < PAGES.length - 1) {
-                goto(PAGES[currentPageIndex + 1].url);
-                wheelLocked = true;
-            }
-        } else if (e.deltaY < -2) {
-            if (currentPageIndex > 1) {
-                goto(PAGES[currentPageIndex - 1].url);
-                wheelLocked = true;
-            }
+    if (e.target.closest("nav"))
+        return;
+
+    scrollAmount += e.deltaY;
+
+    if (currentPageIndex <= 1)
+        scrollAmount = Math.max(0, scrollAmount);
+    if (currentPageIndex >= PAGES.length - 1)
+        scrollAmount = Math.min(0, scrollAmount);
+
+    if (scrollAmount > 50 && direction <= 0) {
+        if (currentPageIndex < PAGES.length - 1) {
+            goto(PAGES[currentPageIndex + 1].url);
+            direction = 1;
+        }
+    } else if (scrollAmount < -50 && direction >= 0) {
+        if (currentPageIndex > 1) {
+            goto(PAGES[currentPageIndex - 1].url);
+            direction = -1;
         }
     }
-    wheelEndTimeout = setTimeout(() => {
-        wheelLocked = false;
+
+    if (wheelTimeout) clearTimeout(wheelTimeout);
+    wheelTimeout = setTimeout(() => {
+        scrollAmount = 0;
+        direction = 0;
     }, 50);
 })
 
-let mouseLocked = false;
-document.addEventListener("pointerdown", e => {
+document.addEventListener("mousedown", e => {
     if (!e.target.closest("aside")) {
         document.querySelector("aside").classList.remove("toggled");
     }
-    mouseLocked = false;
 })
-document.addEventListener("pointermove", e => {
-    if (window.innerWidth > 800) return;
 
-    if (!mouseLocked) {
-        let delta = Math.abs(e.movementY) > Math.abs(e.movementX) ? e.movementY : e.movementX;
+let touchLocked = false;
+let touch;
+document.addEventListener("touchstart", e => {
+    if (e.touches[0]) {
+        if (e.touches[0].target.closest("aside")) {
+            return;
+        }
+        touchLocked = false;
+        touch = { x: e.touches[0].screenX, y: e.touches[0].screenY };
+    }
+})
+document.addEventListener("touchmove", e => {
+    if (!e.touches[0])
+        return;
+
+    if (!touchLocked) {
+        let deltaY = e.touches[0].screenY - touch.y;
+        let deltaX = e.touches[0].screenX - touch.x;
+
+        touch.y = e.touches[0].pageY;
+        touch.x = e.touches[0].pageX;
+
+        let delta = Math.abs(deltaY) > Math.abs(deltaX) ? deltaY : deltaX;
         if (delta < -2) {
             if (currentPageIndex < PAGES.length - 1) {
                 goto(PAGES[currentPageIndex + 1].url);
-                mouseLocked = true;
+                touchLocked = true;
             }
         } else if (delta > 2) {
             if (currentPageIndex > 1) {
                 goto(PAGES[currentPageIndex - 1].url);
-                mouseLocked = true;
+                touchLocked = true;
             }
         }
     }
