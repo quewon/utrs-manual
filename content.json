@@ -27,7 +27,13 @@
         {
             "url": "/getting-started/creating-a-new-project",
             "title": "Creating a new project",
-            "content": "<h1>Creating a new project</h1>\n<div class=\"note-blue\"><h3>Levels</h3>\n<p>Levels are employee-designed stages for runners to run around on. In case you were wondering</p>\n</div><p>Create your first level using the Level editor™!</p>\n<p>--</p>\n<h2>Importing an existing project</h2>\n<p>Here's how to do that</p>\n",
+            "content": "<h1>Creating a new project</h1>\n<div class=\"note-blue\"><h3>Levels</h3>\n<p>Levels are employee-designed stages for runners to run around on. In case you were wondering</p>\n</div><p>Create your first level using the Level editor™!</p>\n",
+            "headingValue": 2
+        },
+        {
+            "url": "/getting-started/importing-an-existing-project",
+            "title": "Importing an existing project",
+            "content": "<p>Here's how to do that</p>\n",
             "headingValue": 2
         },
         {
