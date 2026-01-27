@@ -11,7 +11,7 @@
     --page-bg: url(res/paper.png);
     --page-aspect: 4/5;
     --title-page-bg: url(res/Texturelabs_Paper_360M.jpg);
-    --title-page-color: rgb(235, 235, 235);
+    --title-page-color: white;
     --padding: 2em;
     --footer-height: 4em;
 
@@ -100,7 +100,7 @@ nav a {
     text-transform: uppercase;
     padding: 5px calc(var(--padding) / 2);
     color: rgba(255, 255, 255, .5);
-    transition: opacity .2s, background-color .2s;
+    transition: border-color .2s;
     cursor: default;
     border-left: 2px solid transparent;
 }
@@ -160,8 +160,6 @@ nav > ol > li > ol h1 {
 .page {
     width: 100%;
     height: 100%;
-    background: var(--page-bg);
-    background-size: cover;
     padding: 2em;
     padding-left: calc(var(--binder-holes-width) + var(--padding));
     padding-bottom: calc(var(--footer-height) + var(--padding));
@@ -175,6 +173,19 @@ nav > ol > li > ol h1 {
         radial-gradient(circle at calc(var(--binder-holes-width) / 2) 65%, transparent var(--binder-hole-radius), black var(--binder-hole-radius)),
         radial-gradient(circle at calc(var(--binder-holes-width) / 2) 90%, transparent var(--binder-hole-radius), black var(--binder-hole-radius));
     mask-composite: intersect;
+}
+.page::before {
+    content: "";
+    width: calc(100% - var(--binder-holes-width));
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: var(--page-bg);
+    background-size: cover;
+    mix-blend-mode: color-burn;
+    z-index: 10;
+    pointer-events: none;
 }
 .page::after {
     content: "";
@@ -200,15 +211,16 @@ nav > ol > li > ol h1 {
     padding: 1em;
     box-sizing: border-box;
 }
-.page.title {
+.page:has(.language-section-title) {
     /* display: flex;
     flex-direction: column;
     justify-content: center; */
     color: var(--title-page-color);
 }
-.page.title:not(:has(.background)) {
+.page:has(.language-section-title)::before {
     background: var(--title-page-bg);
     background-size: cover;
+    mix-blend-mode: color-dodge;
 }
 
 .page .background {
@@ -220,7 +232,6 @@ nav > ol > li > ol h1 {
     width: calc(100% - var(--binder-holes-width));
     height: 100%;
     pointer-events: none;
-    mix-blend-mode: multiply;
     opacity: .9;
 }
 
@@ -301,7 +312,7 @@ pre {
     display: none;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 950px) {
     main {
         padding: var(--padding);
     }
@@ -347,9 +358,42 @@ pre {
         cursor: pointer;
         background-color: var(--accent);
         transition: background-color .2s;
-        box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+        box-shadow: 2px 0 4px rgba(0, 0, 0, .15);
     }
     #sidebar-toggle:hover {
         background-color: #66B3FF;
     }
+}
+
+/* page components */
+
+pre {
+    font-family: inherit;
+}
+
+code.language-section-title,
+code.language-section-subtitle {
+    font-family: inherit;
+    white-space: normal;
+    display: block;
+}
+
+code.language-section-title {
+    padding: var(--padding);
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+    background-color: var(--accent);
+    margin: auto;
+    margin-top: 40%;
+
+    background-image: var(--binder-holes-bg);
+    background-size: cover;
+
+    box-shadow: inset 1px 1px 3px rgba(0, 0, 0, .3);
+}
+
+code.language-section-subtitle {
+    text-align: center;
+    opacity: .75;
 }

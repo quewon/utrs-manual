@@ -9,38 +9,80 @@
         {
             "url": "/",
             "title": "Handbook",
-            "content": "<p>The Official <strong>Z-corp™</strong></p>\n<h1>Level editor™ Handbook</h1>\n<h2>for Employees</h2>\n<pre><code>CONFIDENTIAL - FOR INTERNAL USE ONLY\n\n© 20ZZ Z-corp\n</code></pre>\n<img class=\"background\" src=\"media/utrs_sky.jpeg\" alt=\"\">",
+            "content": "<pre><code class=\"language-title\">The Official **Z-corp™**\n\n# Level editor™ Handbook\n\n## for Employees\n</code></pre>\n<pre><code>CONFIDENTIAL - FOR INTERNAL USE ONLY\n\n© 20ZZ Z-corp\n</code></pre>\n<img class=\"background\" src=\"media/utrs_sky.jpeg\" alt=\"\">",
             "headingValue": 0
         },
         {
-            "url": "/section-1",
-            "title": "Section 1",
-            "content": "<h1>Section 1</h1>\n<h2>Table of contents</h2>\n<ul>\n<li><a href=\"/section-1/section-1-1\">Section 1-1</a></li>\n<li><a href=\"/section-1/section-1-2\">Section 1-2</a></li>\n</ul>\n",
+            "url": "/introduction",
+            "title": "Introduction",
+            "content": "<h1>Introduction</h1>\n<p>Welcome to the manual :)</p>\n",
             "headingValue": 1
         },
         {
-            "url": "/section-1/section-1-1",
-            "title": "Section 1-1",
-            "content": "<h2>Section 1-1</h2>\n<p>Content under section 1-1 should appear in a page of its own.</p>\n",
-            "headingValue": 2
-        },
-        {
-            "url": "/section-1/section-1-1/section-1-1-1",
-            "title": "Section 1-1-1",
-            "content": "<h3>Section 1-1-1</h3>\n<p>Hello</p>\n",
-            "headingValue": 3
-        },
-        {
-            "url": "/section-1/section-1-2",
-            "title": "Section 1-2",
-            "content": "<h2>Section 1-2</h2>\n<p>Content under section 1-2 should appear in a page of its own.</p>\n",
-            "headingValue": 2
-        },
-        {
-            "url": "/section-2",
-            "title": "Section 2",
-            "content": "<h1>Section 2</h1>\n<h2>Table of contents</h2>\n<ul>\n<li>No content written for this section.</li>\n</ul>\n",
+            "url": "/getting-started",
+            "title": "Getting started",
+            "content": "<pre><code class=\"language-section-title\">Getting Started\n</code></pre>\n<pre><code class=\"language-section-subtitle\">Everything you need to know about ...\n</code></pre>\n",
             "headingValue": 1
+        },
+        {
+            "url": "/getting-started/creating-your-first-level",
+            "title": "Creating your first level",
+            "content": "",
+            "headingValue": 2
+        },
+        {
+            "url": "/getting-started/saving-&-loading",
+            "title": "Saving & loading",
+            "content": "",
+            "headingValue": 2
+        },
+        {
+            "url": "/editor",
+            "title": "Editor",
+            "content": "",
+            "headingValue": 1
+        },
+        {
+            "url": "/editor/inspector",
+            "title": "Inspector",
+            "content": "",
+            "headingValue": 2
+        },
+        {
+            "url": "/editor/toolbar",
+            "title": "Toolbar",
+            "content": "",
+            "headingValue": 2
+        },
+        {
+            "url": "/editor/object-tray",
+            "title": "Object tray",
+            "content": "",
+            "headingValue": 2
+        },
+        {
+            "url": "/editor/z-grid-slider",
+            "title": "Z-grid slider",
+            "content": "",
+            "headingValue": 2
+        },
+        {
+            "url": "/publishing-your-game",
+            "title": "Publishing your game",
+            "content": "",
+            "headingValue": 1
+        },
+        {
+            "url": "/publishing-your-game/exporting",
+            "title": "Exporting",
+            "content": "",
+            "headingValue": 2
+        },
+        {
+            "url": "/publishing-your-game/uploading-to-steam-workshop",
+            "title": "Uploading to Steam Workshop",
+            "content": "",
+            "headingValue": 2
         }
     ]
 }

@@ -73,7 +73,7 @@ export default function(config) {
             }
             const page = {
                 title: header,
-                content: line,
+                content: "",
                 pages: [],
                 parent: currentPage,
                 headingValue: headingValue,
