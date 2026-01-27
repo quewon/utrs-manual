@@ -1,28 +1,44 @@
 # Introduction
 
-# Introduction
+# Welcome
 
-Welcome to the manual :)
+This is a manual created just for you guys my hard working employees!!!
+
+```note
+**Important:** Please read this handbook carefully and keep it accessible for future reference. If you have any questions, please contact Human Resources and not me.
+```
 
 ---
 
 # Getting started
 
 ```section-title
-Getting Started
+Getting started
 ```
 
-```section-subtitle
-Everything you need to know about ...
-```
+In this section we'll be teaching you various ways to get a project up and running.
+
+1. [Creating a new project](/getting-started/creating-a-new-project)
+2. [Importing an existing project](/getting-started/importing-an-existing-project)
 
 ---
 
-## Creating your first level
+## Creating a new project
 
----
+# Creating a new project
 
-## Saving & loading
+```note-blue
+### Levels
+Levels are employee-designed stages for runners to run around on. In case you were wondering
+```
+
+Create your first level using the Level editor™!
+
+--
+
+## Importing an existing project
+
+Here's how to do that
 
 ---
 
@@ -49,9 +65,5 @@ Everything you need to know about ...
 # Publishing your game
 
 ---
-
-## Exporting
-
----
-
+    
 ## Uploading to Steam Workshop

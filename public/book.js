@@ -1,3 +1,9 @@
+// config
+
+const PAGE_ENTER_DELAY = 150;
+
+//
+
 var PAGES;
 var previousState;
 var currentPageIndex = -1;
@@ -72,7 +78,7 @@ function goto(url, onpop) {
     setTimeout(() => {
         if (currentPageIndex === parseInt(pageElement.dataset.page))
             pageElement.classList.remove("hidden");
-    }, 200);
+    }, PAGE_ENTER_DELAY);
 
     document.querySelector(`nav a.selected`)?.classList.remove("selected");
     document.querySelectorAll("nav a")[currentPageIndex].classList.add("selected");

@@ -1,7 +1,8 @@
+import markdownIt from "markdown-it";
 import { RenderPlugin } from "@11ty/eleventy";
 
 export default function (config) {
-    config.addGlobalData("sitename", "Employee Handbook");
+    config.addGlobalData("sitename", "Level Editor Handbook");
 
     config.addWatchTarget("./content");
 
@@ -15,6 +16,26 @@ export default function (config) {
     });
 
     config.addPlugin(RenderPlugin);
+
+    const md = markdownIt({
+        html: true,
+        breaks: true,
+        linkify: true
+    });
+
+    const defaultFenceRenderer = md.renderer.rules.fence;
+    md.renderer.rules.fence = function(tokens, idx, options, env, self) {
+        const token = tokens[idx];
+        const info = token.info.trim();
+        if (info) {
+            const content = token.content;
+            const renderedContent = md.render(content);
+            return `<div class="${info}">${renderedContent}</div>`;
+        }
+        return defaultFenceRenderer(tokens, idx, options, env, self);
+    }
+
+    config.setLibrary("md", md);
 
     return {
         dir: {
