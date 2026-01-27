@@ -9,31 +9,25 @@
         {
             "url": "/",
             "title": "Handbook",
-            "content": "<pre><code class=\"language-title\">The Official **Z-corp™**\n\n# Level editor™ Handbook\n\n## for Employees\n</code></pre>\n<pre><code>CONFIDENTIAL - FOR INTERNAL USE ONLY\n\n© 20ZZ Z-corp\n</code></pre>\n<img class=\"background\" src=\"media/utrs_sky.jpeg\" alt=\"\">",
+            "content": "<div style=\"\ncolor: white;\nfont-size: 1.3em;\n\">\n<h1>LEVEL EDITOR</h1>\n<h1>HANDBOOK</h1>\n<h4><em>for Employees</em></h4>\n</div>\n<footer>\n    <p>\n        <span style=\"display: inline-block; font-family: monospace; padding: 0 3px; background: rgba(255, 255, 255, .8); color: red;\">\n        CONFIDENTIAL — FOR INTERNAL USE ONLY\n    </span>\n    </p>\n    © 20ZZ Z-corp\n</footer>\n<img class=\"background\" src=\"media/utrs_sky.jpeg\" alt=\"\">",
             "headingValue": 0
         },
         {
             "url": "/introduction",
             "title": "Introduction",
-            "content": "<h1>Introduction</h1>\n<p>Welcome to the manual :)</p>\n",
+            "content": "<h1>Welcome</h1>\n<p>This is a manual created just for you guys my hard working employees!!!</p>\n<div class=\"note\"><p><strong>Important:</strong> Please read this handbook carefully and keep it accessible for future reference. If you have any questions, please contact Human Resources and not me.</p>\n</div>",
             "headingValue": 1
         },
         {
             "url": "/getting-started",
             "title": "Getting started",
-            "content": "<pre><code class=\"language-section-title\">Getting Started\n</code></pre>\n<pre><code class=\"language-section-subtitle\">Everything you need to know about ...\n</code></pre>\n",
+            "content": "<div class=\"section-title\"><p>Getting started</p>\n</div><p>In this section we'll be teaching you various ways to get a project up and running.</p>\n<ol>\n<li><a href=\"/getting-started/creating-a-new-project\">Creating a new project</a></li>\n<li><a href=\"/getting-started/importing-an-existing-project\">Importing an existing project</a></li>\n</ol>\n",
             "headingValue": 1
         },
         {
-            "url": "/getting-started/creating-your-first-level",
-            "title": "Creating your first level",
-            "content": "",
-            "headingValue": 2
-        },
-        {
-            "url": "/getting-started/saving-&-loading",
-            "title": "Saving & loading",
-            "content": "",
+            "url": "/getting-started/creating-a-new-project",
+            "title": "Creating a new project",
+            "content": "<h1>Creating a new project</h1>\n<div class=\"note-blue\"><h3>Levels</h3>\n<p>Levels are employee-designed stages for runners to run around on. In case you were wondering</p>\n</div><p>Create your first level using the Level editor™!</p>\n<p>--</p>\n<h2>Importing an existing project</h2>\n<p>Here's how to do that</p>\n",
             "headingValue": 2
         },
         {
@@ -71,12 +65,6 @@
             "title": "Publishing your game",
             "content": "",
             "headingValue": 1
-        },
-        {
-            "url": "/publishing-your-game/exporting",
-            "title": "Exporting",
-            "content": "",
-            "headingValue": 2
         },
         {
             "url": "/publishing-your-game/uploading-to-steam-workshop",
