@@ -37,7 +37,7 @@ function goto(url, onpop) {
     const previousPageIndex = currentPageIndex;
     const previousPage = document.querySelector(`.page[data-page="${currentPageIndex}"]`);
 
-    const pageElement = document.querySelector(`[data-url="${url}"]`);
+    let pageElement = document.querySelector(`[data-url="${url}"]`);
     if (!pageElement)
         pageElement = document.querySelector("[data-page='0']");
     currentPageIndex = parseInt(pageElement.dataset.page);

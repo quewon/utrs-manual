@@ -3,13 +3,13 @@
         {
             "url": "/404",
             "title": "404",
-            "content": "whoops",
+            "content": "<h1>You're here</h1>\n",
             "headingValue": 0
         },
         {
             "url": "/",
             "title": "Handbook",
-            "content": "<div style=\"\ncolor: white;\nfont-size: 1.3em;\n\">\n<h1>LEVEL EDITOR</h1>\n<h1>HANDBOOK</h1>\n<h4><em>for Employees</em></h4>\n</div>\n<footer>\n    <p>\n        <span style=\"display: inline-block; font-family: monospace; padding: 0 3px; background: rgba(255, 255, 255, .8); color: red;\">\n        CONFIDENTIAL — FOR INTERNAL USE ONLY\n    </span>\n    </p>\n    © 20ZZ Z-corp\n</footer>\n<img class=\"background\" src=\"/media/utrs_sky.jpeg\" alt=\"\">",
+            "content": "<h1 style=\"line-height: 1.2em; color: white; font-size: 2.5rem\">\n    LEVEL EDITOR<br>HANDBOOK\n</h1>\n<i style=\"color: white; font-size: 1.3rem\">\n    <b>for Employees</b>\n</i>\n<footer>\n    <p>\n        <span style=\"display: inline-block; font-family: monospace; padding: 0 3px; background: rgba(255, 255, 255, .9); color: red;\">\n        CONFIDENTIAL — FOR INTERNAL USE ONLY\n    </span>\n    </p>\n    © 20ZZ Z-corp\n</footer>\n<img class=\"background\" src=\"/media/utrs_sky.jpeg\" alt=\"\">",
             "headingValue": 0
         },
         {
