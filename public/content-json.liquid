@@ -6,7 +6,7 @@ permalink: content.json
         {
             "url": "/404",
             "title": "404",
-            "content": "whoops",
+            "content": {% capture 404_content %}{% renderFile "./content/404.md" %}{% endcapture %}{{ 404_content | json }},
             "headingValue": 0
         },
         {

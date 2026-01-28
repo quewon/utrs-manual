@@ -1,18 +1,14 @@
-<div style="
-color: white;
-font-size: 1.3em;
-">
+<h1 style="line-height: 1.2em; color: white; font-size: 2.5rem">
+    LEVEL EDITOR<br>HANDBOOK
+</h1>
 
-# LEVEL EDITOR
-# HANDBOOK
-
-#### *for Employees*
-
-</div>
+<i style="color: white; font-size: 1.3rem">
+    <b>for Employees</b>
+</i>
 
 <footer>
     <p>
-        <span style="display: inline-block; font-family: monospace; padding: 0 3px; background: rgba(255, 255, 255, .8); color: red;">
+        <span style="display: inline-block; font-family: monospace; padding: 0 3px; background: rgba(255, 255, 255, .9); color: red;">
         CONFIDENTIAL — FOR INTERNAL USE ONLY
     </span>
     </p>
