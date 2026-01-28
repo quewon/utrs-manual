@@ -8,18 +8,19 @@
     --note-blue: #e3f2fd;
 
     --binder-holes-width: 2.5em;
-    --binder-holes-bg: url(res/Texturelabs_Paper_381M.jpg);
+    --binder-holes-bg: url(/res/Texturelabs_Paper_381M.jpg);
     --binder-hole-radius: .5em;
-    --page-bg: url(res/paper.png);
+    --page-bg: url(/res/paper.png);
     --page-aspect: 4/5;
-    --title-page-bg: url(res/Texturelabs_Paper_360M.jpg);
+    --title-page-bg: url(/res/Texturelabs_Paper_360M.jpg);
     --title-page-color: white;
-    --padding: 2em;
-
+    --wip-page-bg: url(/res/distressedblue.png);
+    
     --page-fade-distance: 70px;
     --page-fade-speed: .4s;
     --page-fade-angle: 2deg;
-
+    
+    --padding: 2em;
     --monospace: 'IBM Plex Mono', monospace;
 
     color-scheme: dark;
@@ -369,8 +370,20 @@ pre {
 
 /* page components */
 
+.page:has(.wip)::before {
+    background-image: var(--wip-page-bg);
+    width: 100%;
+}
+.page:has(.wip)::after {
+    display: none;
+}
+
 .page > h1, h2 {
     font-size: 1.5rem;
+}
+
+img {
+    max-width: 100%;
 }
 
 hr {

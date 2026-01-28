@@ -16,10 +16,14 @@ This is a manual created just for you guys my hard working employees!!!
 Getting started
 ```
 
-In this section we'll be teaching you various ways to get a project up and running.
+In this section we'll be teaching you how to get a project up and running.
+
+First, enter the level editor through the main menu of the game.
+
+Then, there are a few ways to begin a project...
 
 1. [Creating a new project](/getting-started/creating-a-new-project)
-2. [Importing an existing project](/getting-started/importing-an-existing-project)
+2. [Loading an existing project](/getting-started/loading-an-existing-project)
 
 ---
 
@@ -36,9 +40,13 @@ Create your first level using the Level editor™!
 
 ---
 
-## Importing an existing project
+## Loading an existing project
 
-Here's how to do that
+# Loading an existing project
+
+In the [Welcome menu](/glossary/welcome-menu), you can load any existing project file by selecting the **Open Project** button.
+
+
 
 ---
 
@@ -67,3 +75,25 @@ Here's how to do that
 ---
     
 ## Uploading to Steam Workshop
+
+---
+
+# Glossary
+
+---
+
+## Welcome menu
+
+# Welcome menu
+
+The first menu you see when you enter the level editor.
+
+![A screenshot of the welcome menu](/media/welcome-menu.png)
+
+---
+
+# WIP section
+
+```wip
+This page is a work in progress oh no!!! Don't look!!!!
+```
