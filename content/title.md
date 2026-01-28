@@ -19,4 +19,4 @@ font-size: 1.3em;
     © 20ZZ Z-corp
 </footer>
 
-<img class="background" src="media/utrs_sky.jpeg" alt="">
+<img class="background" src="/media/utrs_sky.jpeg" alt="">
