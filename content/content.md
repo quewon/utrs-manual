@@ -72,11 +72,11 @@ In the [Welcome menu](/glossary/welcome-menu), you can load any existing project
 
 ---
 
-## Welcome menu
-
-The first menu you see when you enter the level editor.
+### Welcome menu
 
 ![A screenshot of the welcome menu](/media/welcome-menu.png)
+
+The first menu you see when you enter the level editor.
 
 ---
 

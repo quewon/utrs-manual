@@ -488,6 +488,9 @@ hr {
 .page:has(.wip) footer {
     display: none;
 }
+.wip::selection {
+    background: transparent;
+}
 .wip code {
     font-family: inherit;
     font-size: inherit;
