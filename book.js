@@ -16,6 +16,9 @@ fetch("/content.json").then(res => res.json()).then(json => {
         if (pagenumber > 2) {
             div.innerHTML += `<footer>Page ${pagenumber - 2} of ${PAGES.length - 2}</footer>`;
         }
+        if (page.headingValue === 1) {
+            div.classList.add("section-title");
+        }
         // for (let a of div.querySelectorAll("a[href='RETURN']")) {
         //     a.href = "javascript:goback()";
         //     a.className = "return-link";

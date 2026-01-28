@@ -15,85 +15,85 @@
         {
             "url": "/introduction",
             "title": "Introduction",
-            "content": "<h1>Welcome</h1>\n<p>This is a manual created just for you guys my hard working employees!!!</p>\n<div class=\"note\"><p><strong>Important:</strong> Please read this handbook carefully and keep it accessible for future reference. If you have any questions, please contact Human Resources and not me.</p>\n</div>",
-            "headingValue": 1
+            "content": "<h2>Introduction</h2>\n<p>This is a manual created just for you guys my hard working employees!!!</p>\n<div class=\"note\"><p><strong>Important:</strong> Please read this handbook carefully and keep it accessible for future reference. If you have any questions, please contact Human Resources and not me.</p>\n</div>",
+            "headingValue": 2
         },
         {
             "url": "/getting-started",
             "title": "Getting started",
-            "content": "<div class=\"section-title\"><p>Getting started</p>\n</div><p>In this section we'll be teaching you how to get a project up and running.</p>\n<p>First, enter the level editor through the main menu of the game.</p>\n<p>Then, there are a few ways to begin a project...</p>\n<ol>\n<li><a href=\"/getting-started/creating-a-new-project\">Creating a new project</a></li>\n<li><a href=\"/getting-started/loading-an-existing-project\">Loading an existing project</a></li>\n</ol>\n",
+            "content": "<h1>Getting started</h1>\n<p>In this section we'll be teaching you how to get a project up and running.</p>\n<p>First, enter the level editor through the main menu of the game.</p>\n<p>Then, there are a few ways to begin a project...</p>\n<ol>\n<li><a href=\"/getting-started/creating-a-new-project\">Creating a new project</a></li>\n<li><a href=\"/getting-started/loading-an-existing-project\">Loading an existing project</a></li>\n</ol>\n",
             "headingValue": 1
         },
         {
             "url": "/getting-started/creating-a-new-project",
             "title": "Creating a new project",
-            "content": "<h1>Creating a new project</h1>\n<div class=\"note-blue\"><h3>Levels</h3>\n<p>Levels are employee-designed stages for runners to run around on. In case you were wondering</p>\n</div><p>Create your first level using the Level editor™!</p>\n",
+            "content": "<h2>Creating a new project</h2>\n<div class=\"note-blue\"><h3>Levels</h3>\n<p>Levels are employee-designed stages for runners to run around on. In case you were wondering</p>\n</div><p>Create your first level using the Level editor™!</p>\n",
             "headingValue": 2
         },
         {
             "url": "/getting-started/loading-an-existing-project",
             "title": "Loading an existing project",
-            "content": "<h1>Loading an existing project</h1>\n<p>In the <a href=\"/glossary/welcome-menu\">Welcome menu</a>, you can load any existing project file by selecting the <strong>Open Project</strong> button.</p>\n",
+            "content": "<h2>Loading an existing project</h2>\n<p>In the <a href=\"/glossary/welcome-menu\">Welcome menu</a>, you can load any existing project file by selecting the <strong>Open Project</strong> button.</p>\n",
             "headingValue": 2
         },
         {
             "url": "/editor",
             "title": "Editor",
-            "content": "",
+            "content": "<h1>Editor</h1>\n",
             "headingValue": 1
         },
         {
             "url": "/editor/inspector",
             "title": "Inspector",
-            "content": "",
+            "content": "<h2>Inspector</h2>\n",
             "headingValue": 2
         },
         {
             "url": "/editor/toolbar",
             "title": "Toolbar",
-            "content": "",
+            "content": "<h2>Toolbar</h2>\n",
             "headingValue": 2
         },
         {
             "url": "/editor/object-tray",
             "title": "Object tray",
-            "content": "",
+            "content": "<h2>Object tray</h2>\n",
             "headingValue": 2
         },
         {
             "url": "/editor/z-grid-slider",
             "title": "Z-grid slider",
-            "content": "",
+            "content": "<h2>Z-grid slider</h2>\n",
             "headingValue": 2
         },
         {
             "url": "/publishing-your-game",
             "title": "Publishing your game",
-            "content": "",
+            "content": "<h1>Publishing your game</h1>\n",
             "headingValue": 1
         },
         {
             "url": "/publishing-your-game/uploading-to-steam-workshop",
             "title": "Uploading to Steam Workshop",
-            "content": "",
+            "content": "<h2>Uploading to Steam Workshop</h2>\n",
             "headingValue": 2
         },
         {
             "url": "/glossary",
             "title": "Glossary",
-            "content": "",
+            "content": "<h1>Glossary</h1>\n",
             "headingValue": 1
         },
         {
             "url": "/glossary/welcome-menu",
             "title": "Welcome menu",
-            "content": "<h1>Welcome menu</h1>\n<p>The first menu you see when you enter the level editor.</p>\n<p><img src=\"/media/welcome-menu.png\" alt=\"A screenshot of the welcome menu\"></p>\n",
+            "content": "<h2>Welcome menu</h2>\n<p>The first menu you see when you enter the level editor.</p>\n<p><img src=\"/media/welcome-menu.png\" alt=\"A screenshot of the welcome menu\"></p>\n",
             "headingValue": 2
         },
         {
             "url": "/wip-section",
             "title": "WIP section",
-            "content": "<div class=\"wip\"><p>This page is a work in progress oh no!!! Don't look!!!!</p>\n</div>",
+            "content": "<h1>WIP section</h1>\n<div class=\"wip\"><p>This page <code>is a</code> work <code>in progress oh</code> no!<code>!! Don't look!!!!</code></p>\n<p><code>Blackout poetry, or erasure poetry,</code> is a <code>form of found poetry or found</code> object <code>art</code> created <code>by erasing words from an existing text in prose or verse and framing the result</code> on the page <code>as a poem.[1] The results can be allowed to stand in situ</code> or <code>they can be arranged into lines or stanzas.</code></p>\n<p><code>Writers and visual artists have adopted this form both to achieve a ra</code>n<code>ge of c</code>o<code>gnitive or symbolic effects and to focus on the social or political meanings of erasure. Blackout poetry is a way to give an existing piece of writing a new set of meanings, questions, or suggestions. It lessens the trace of authorship but also draws attention to the original text</code>.`</p>\n</div>",
             "headingValue": 1
         }
     ]
