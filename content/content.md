@@ -1,6 +1,4 @@
-# Introduction
-
-# Welcome
+## Introduction
 
 This is a manual created just for you guys my hard working employees!!!
 
@@ -11,10 +9,6 @@ This is a manual created just for you guys my hard working employees!!!
 ---
 
 # Getting started
-
-```section-title
-Getting started
-```
 
 In this section we'll be teaching you how to get a project up and running.
 
@@ -29,8 +23,6 @@ Then, there are a few ways to begin a project...
 
 ## Creating a new project
 
-# Creating a new project
-
 ```note-blue
 ### Levels
 Levels are employee-designed stages for runners to run around on. In case you were wondering
@@ -41,8 +33,6 @@ Create your first level using the Level editor™!
 ---
 
 ## Loading an existing project
-
-# Loading an existing project
 
 In the [Welcome menu](/glossary/welcome-menu), you can load any existing project file by selecting the **Open Project** button.
 
@@ -84,8 +74,6 @@ In the [Welcome menu](/glossary/welcome-menu), you can load any existing project
 
 ## Welcome menu
 
-# Welcome menu
-
 The first menu you see when you enter the level editor.
 
 ![A screenshot of the welcome menu](/media/welcome-menu.png)
@@ -95,5 +83,8 @@ The first menu you see when you enter the level editor.
 # WIP section
 
 ```wip
-This page is a work in progress oh no!!! Don't look!!!!
-```
+This page `is a` work `in progress oh` no!`!! Don't look!!!!`
+
+`Blackout poetry, or erasure poetry,` is a `form of found poetry or found` object `art` created `by erasing words from an existing text in prose or verse and framing the result` on the page `as a poem.[1] The results can be allowed to stand in situ` or `they can be arranged into lines or stanzas.`
+
+`Writers and visual artists have adopted this form both to achieve a ra`n`ge of c`o`gnitive or symbolic effects and to focus on the social or political meanings of erasure. Blackout poetry is a way to give an existing piece of writing a new set of meanings, questions, or suggestions. It lessens the trace of authorship but also draws attention to the original text`.`

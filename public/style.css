@@ -8,13 +8,10 @@
     --note-blue: #e3f2fd;
 
     --binder-holes-width: 2.5em;
-    --binder-holes-bg: url(/res/Texturelabs_Paper_381M.jpg);
     --binder-hole-radius: .5em;
     --page-bg: url(/res/paper.png);
     --page-aspect: 4/5;
-    --title-page-bg: url(/res/Texturelabs_Paper_360M.jpg);
-    --title-page-color: white;
-    --wip-page-bg: url(/res/distressedblue.png);
+    --title-page-bg: #333333;
     
     --page-fade-distance: 30px;
     --page-fade-speed: .4s;
@@ -75,7 +72,6 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    overflow: visible;
 }
 
 nav {
@@ -117,13 +113,6 @@ nav a.selected {
     border-left: 2px solid var(--accent);
 }
 
-nav a.subtitle {
-    color: var(--accent);
-}
-nav a.subtitle:hover {
-    background: none;
-}
-
 nav ol {
     list-style-type: none;
 }
@@ -158,6 +147,8 @@ nav > ol > li > ol h1 {
 
     color-scheme: light;
     color: rgba(0, 0, 0, .8);
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, .3));
+    counter-reset: section-count;
 }
 
 .page {
@@ -179,7 +170,7 @@ nav > ol > li > ol h1 {
 }
 .page::before {
     content: "";
-    width: calc(100% - var(--binder-holes-width));
+    width: 100%;
     height: 100%;
     position: absolute;
     top: 0;
@@ -198,9 +189,9 @@ nav > ol > li > ol h1 {
     position: absolute;
     top: 0;
     left: 0;
-    background: var(--binder-holes-bg);
-    background-size: cover;
-    box-shadow: 0 0 2px 1px inset rgba(0, 0, 0, .2), 0 0 1px 1px rgba(0, 0, 0, .05);
+    background: var(--accent);
+    mix-blend-mode: multiply;
+    pointer-events: none;
 }
 .page footer {
     position: absolute;
@@ -214,20 +205,6 @@ nav > ol > li > ol h1 {
     padding: var(--padding);
     box-sizing: border-box;
 }
-.page:has(.section-title) {
-    /* display: flex;
-    flex-direction: column;
-    justify-content: center; */
-    color: var(--title-page-color);
-}
-.page:has(.section-title)::after {
-    box-shadow: 0 0 2px 1px inset rgba(0, 0, 0, .5), 0 0 1px 1px rgba(0, 0, 0, .05);
-}
-.page:has(.section-title)::before {
-    background: var(--title-page-bg);
-    background-size: cover;
-    mix-blend-mode: color-dodge;
-}
 
 .page .background {
     position: absolute;
@@ -238,6 +215,9 @@ nav > ol > li > ol h1 {
     object-fit: cover;
     z-index: -1;
     pointer-events: none;
+}
+.page:has(.background)::after {
+    display: none;
 }
 
 .hidden {
@@ -385,16 +365,51 @@ pre {
 
 /* page components */
 
-.page:has(.wip)::before {
-    background-image: var(--wip-page-bg);
+.page.section-title {
+    counter-increment: section-count;
+}
+.page.section-title,
+.page[data-page="1"] {
+    padding-top: calc(var(--padding) * 4);
+}
+.page.section-title footer,
+.page[data-page="1"] footer {
+    bottom: calc(var(--padding) * 4);
+}
+.page.section-title::after {
+    background: none;
+}
+.page.section-title h1 {
+    border: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 2em;
+    margin-bottom: 1.5em;
+}
+.page.section-title h1::before {
+    content: "SECTION " counter(section-count);
+    display: block;
+    font-size: 1.2rem;
+    color: var(--accent);
+    margin-bottom: 1em;
+}
+.page.section-title::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
+    /* background: linear-gradient(to right, var(--accent) -10%, transparent var(--binder-holes-width), transparent calc(100% - var(--padding)), var(--accent) 110%); */
+    background: 
+        linear-gradient(to top, var(--accent) -100%, transparent 30%),
+        radial-gradient(circle at 200% 200%, var(--accent) 0%, transparent 70%),
+        radial-gradient(circle at 10% -20%, var(--accent) -10%, transparent 30%);
+    mask-image: url(/res/crosses.svg);
+    mask-size: 40px 40px;
 }
-.page:has(.wip)::after {
+.page.section-title footer {
     display: none;
-}
-
-.page > h1, h2 {
-    font-size: 1.5rem;
 }
 
 img {
@@ -406,40 +421,15 @@ hr {
     border-bottom: 1px solid white;
 }
 
-.page > h1 {
+.page > h2 {
+    font-size: 1.5rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid;
 }
-/* .page > h1::before {
-    content: "1.1";
-    font-size: .8rem;
-    color: var(--accent);
-    margin-right: 1rem;
-    font-family: var(--monospace);
-    vertical-align: middle;
-} */
 
 .page a {
     color: var(--accent);
     text-decoration: none;
-}
-
-.section-title {
-    padding: .5rem;
-    text-align: center;
-    font-weight: bold;
-    font-size: 1.5rem;
-    background-color: var(--accent);
-    margin: auto;
-    /* transform: translateX(calc(-1 * var(--binder-holes-width)) + var(--paddi)); */
-
-    background-image: var(--binder-holes-bg);
-    background-size: cover;
-}
-
-.section-subtitle {
-    text-align: center;
-    opacity: .75;
 }
 
 .note, .note-blue {
@@ -493,4 +483,16 @@ hr {
 
 .note strong {
     color: #8b6914;
+}
+
+.page:has(.wip) footer {
+    display: none;
+}
+.wip code {
+    font-family: inherit;
+    font-size: inherit;
+    background: black;
+}
+.wip code::selection {
+    color: white;
 }
