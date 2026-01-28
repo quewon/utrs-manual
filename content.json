@@ -9,7 +9,7 @@
         {
             "url": "/",
             "title": "Handbook",
-            "content": "<div style=\"\ncolor: white;\nfont-size: 1.3em;\n\">\n<h1>LEVEL EDITOR</h1>\n<h1>HANDBOOK</h1>\n<h4><em>for Employees</em></h4>\n</div>\n<footer>\n    <p>\n        <span style=\"display: inline-block; font-family: monospace; padding: 0 3px; background: rgba(255, 255, 255, .8); color: red;\">\n        CONFIDENTIAL — FOR INTERNAL USE ONLY\n    </span>\n    </p>\n    © 20ZZ Z-corp\n</footer>\n<img class=\"background\" src=\"media/utrs_sky.jpeg\" alt=\"\">",
+            "content": "<div style=\"\ncolor: white;\nfont-size: 1.3em;\n\">\n<h1>LEVEL EDITOR</h1>\n<h1>HANDBOOK</h1>\n<h4><em>for Employees</em></h4>\n</div>\n<footer>\n    <p>\n        <span style=\"display: inline-block; font-family: monospace; padding: 0 3px; background: rgba(255, 255, 255, .8); color: red;\">\n        CONFIDENTIAL — FOR INTERNAL USE ONLY\n    </span>\n    </p>\n    © 20ZZ Z-corp\n</footer>\n<img class=\"background\" src=\"/media/utrs_sky.jpeg\" alt=\"\">",
             "headingValue": 0
         },
         {
@@ -21,7 +21,7 @@
         {
             "url": "/getting-started",
             "title": "Getting started",
-            "content": "<div class=\"section-title\"><p>Getting started</p>\n</div><p>In this section we'll be teaching you various ways to get a project up and running.</p>\n<ol>\n<li><a href=\"/getting-started/creating-a-new-project\">Creating a new project</a></li>\n<li><a href=\"/getting-started/importing-an-existing-project\">Importing an existing project</a></li>\n</ol>\n",
+            "content": "<div class=\"section-title\"><p>Getting started</p>\n</div><p>In this section we'll be teaching you how to get a project up and running.</p>\n<p>First, enter the level editor through the main menu of the game.</p>\n<p>Then, there are a few ways to begin a project...</p>\n<ol>\n<li><a href=\"/getting-started/creating-a-new-project\">Creating a new project</a></li>\n<li><a href=\"/getting-started/loading-an-existing-project\">Loading an existing project</a></li>\n</ol>\n",
             "headingValue": 1
         },
         {
@@ -31,9 +31,9 @@
             "headingValue": 2
         },
         {
-            "url": "/getting-started/importing-an-existing-project",
-            "title": "Importing an existing project",
-            "content": "<p>Here's how to do that</p>\n",
+            "url": "/getting-started/loading-an-existing-project",
+            "title": "Loading an existing project",
+            "content": "<h1>Loading an existing project</h1>\n<p>In the <a href=\"/glossary/welcome-menu\">Welcome menu</a>, you can load any existing project file by selecting the <strong>Open Project</strong> button.</p>\n",
             "headingValue": 2
         },
         {
@@ -77,6 +77,24 @@
             "title": "Uploading to Steam Workshop",
             "content": "",
             "headingValue": 2
+        },
+        {
+            "url": "/glossary",
+            "title": "Glossary",
+            "content": "",
+            "headingValue": 1
+        },
+        {
+            "url": "/glossary/welcome-menu",
+            "title": "Welcome menu",
+            "content": "<h1>Welcome menu</h1>\n<p>The first menu you see when you enter the level editor.</p>\n<p><img src=\"/media/welcome-menu.png\" alt=\"A screenshot of the welcome menu\"></p>\n",
+            "headingValue": 2
+        },
+        {
+            "url": "/wip-section",
+            "title": "WIP section",
+            "content": "<div class=\"wip\"><p>This page is a work in progress oh no!!! Don't look!!!!</p>\n</div>",
+            "headingValue": 1
         }
     ]
 }

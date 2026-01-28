@@ -1,9 +1,3 @@
-// config
-
-const PAGE_ENTER_DELAY = 150;
-
-//
-
 var PAGES;
 var previousState;
 var currentPageIndex = -1;
@@ -22,6 +16,10 @@ fetch("/content.json").then(res => res.json()).then(json => {
         if (pagenumber > 2) {
             div.innerHTML += `<footer>Page ${pagenumber - 2} of ${PAGES.length - 2}</footer>`;
         }
+        // for (let a of div.querySelectorAll("a[href='RETURN']")) {
+        //     a.href = "javascript:goback()";
+        //     a.className = "return-link";
+        // }
         bookPage.appendChild(div);
     }
 
@@ -33,10 +31,10 @@ fetch("/content.json").then(res => res.json()).then(json => {
 })
 
 function goto(url, onpop) {
-    let previousPageIndex = currentPageIndex;
-    let previousPage = document.querySelector(`.page[data-page="${currentPageIndex}"]`);
+    const previousPageIndex = currentPageIndex;
+    const previousPage = document.querySelector(`.page[data-page="${currentPageIndex}"]`);
 
-    let pageElement = document.querySelector(`[data-url="${url}"]`);
+    const pageElement = document.querySelector(`[data-url="${url}"]`);
     if (!pageElement)
         pageElement = document.querySelector("[data-page='0']");
     currentPageIndex = parseInt(pageElement.dataset.page);
@@ -50,8 +48,14 @@ function goto(url, onpop) {
 
     if (!onpop) {
         if (!previousState) {
+            // for (let a of pageElement.querySelectorAll("a.return-link")) {
+            //     a.classList.add("hidden");
+            // }
             history.replaceState(data, "", location.origin + data.url);
         } else if (location.origin + data.url !== previousState) {
+            // for (let a of pageElement.querySelectorAll("a.return-link")) {
+            //     a.classList.remove("hidden");
+            // }
             history.pushState(data, "", location.origin + data.url);
         }
         previousState = location.origin + data.url;
@@ -62,7 +66,7 @@ function goto(url, onpop) {
     pageElement.classList.remove("exit-to-top");
     pageElement.classList.remove("exit-to-bottom");
     if (previousPage) {
-        previousPage.classList.add("hidden");
+        previousPage.classList.remove("hidden");
         previousPage.classList.remove("enter-from-bottom");
         previousPage.classList.remove("enter-from-top");
         previousPage.classList.remove("exit-to-bottom");
@@ -75,10 +79,14 @@ function goto(url, onpop) {
         if (previousPage) previousPage.classList.add("exit-to-bottom");
         pageElement.classList.add("enter-from-top");
     }
-    setTimeout(() => {
-        if (currentPageIndex === parseInt(pageElement.dataset.page))
-            pageElement.classList.remove("hidden");
-    }, PAGE_ENTER_DELAY);
+    if (currentPageIndex === parseInt(pageElement.dataset.page))
+        pageElement.classList.remove("hidden");
+    if (previousPage) {
+        previousPage.addEventListener("animationend", () => {
+            if (currentPageIndex !== parseInt(previousPage.dataset.page))
+                previousPage.classList.add("hidden");
+        }, { once: true })
+    }
 
     document.querySelector(`nav a.selected`)?.classList.remove("selected");
     document.querySelectorAll("nav a")[currentPageIndex].classList.add("selected");

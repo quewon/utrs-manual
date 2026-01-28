@@ -8,18 +8,19 @@
     --note-blue: #e3f2fd;
 
     --binder-holes-width: 2.5em;
-    --binder-holes-bg: url(res/Texturelabs_Paper_381M.jpg);
+    --binder-holes-bg: url(/res/Texturelabs_Paper_381M.jpg);
     --binder-hole-radius: .5em;
-    --page-bg: url(res/paper.png);
+    --page-bg: url(/res/paper.png);
     --page-aspect: 4/5;
-    --title-page-bg: url(res/Texturelabs_Paper_360M.jpg);
+    --title-page-bg: url(/res/Texturelabs_Paper_360M.jpg);
     --title-page-color: white;
-    --padding: 2em;
-
-    --page-fade-distance: 70px;
+    --wip-page-bg: url(/res/distressedblue.png);
+    
+    --page-fade-distance: 30px;
     --page-fade-speed: .4s;
-    --page-fade-angle: 2deg;
-
+    --page-fade-angle: 1deg;
+    
+    --padding: 2em;
     --monospace: 'IBM Plex Mono', monospace;
 
     color-scheme: dark;
@@ -185,8 +186,9 @@ nav > ol > li > ol h1 {
     right: 0;
     background: var(--page-bg);
     background-size: cover;
-    mix-blend-mode: color-burn;
-    z-index: 10;
+    mix-blend-mode: multiply;
+    filter: brightness(1.15);
+    z-index: 1;
     pointer-events: none;
 }
 .page::after {
@@ -235,9 +237,10 @@ nav > ol > li > ol h1 {
     height: 100%;
     object-fit: cover;
     z-index: -1;
+    pointer-events: none;
 }
 
-.page.hidden {
+.hidden {
     display: none;
 }
 
@@ -249,59 +252,72 @@ nav > ol > li > ol h1 {
 .exit-to-bottom {
     animation: exit-to-bottom var(--page-fade-speed);
     z-index: -1;
+    filter: brightness(0.5);
 }
 .exit-to-top {
-    animation: exit-to-top var(--page-fade-speed);
-    z-index: 1;
+    animation: exit-to-top calc(var(--page-fade-speed) / 1.5);
+    z-index: 2;
+    opacity: 0;
 }
 .enter-from-bottom {
     animation: enter-from-bottom var(--page-fade-speed);
+    z-index: 1;
 }
 .enter-from-top {
     animation: enter-from-top var(--page-fade-speed);
+    z-index: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+    .exit-to-bottom, .exit-to-top, .enter-from-bottom, .enter-from-top {
+        animation: none;
+    }
+}
+
+@keyframes exit-to-top {
+    0% {
+        transform: none;
+        opacity: 1;
+    }
+    40% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(calc(-1 * var(--page-fade-distance))) rotate(calc(-1 * var(--page-fade-angle)));
+        opacity: 0;
+    }
 }
 
 @keyframes exit-to-bottom {
     0% {
         display: block;
-        transform: translateY(0) rotate(0);
-        opacity: 1;
+        filter: brightness(1);
     }
     100% {
         display: block;
-        transform: translateY(var(--page-fade-distance)) rotate(var(--page-fade-angle));
-        opacity: 0;
-    }
-}
-@keyframes exit-to-top {
-    0% {
-        display: block;
-        transform: translateY(0) rotate(0);
-        opacity: 1;
-    }
-    100% {
-        display: block;
-        transform: translateY(calc(-1 * var(--page-fade-distance))) rotate(calc(-1 * var(--page-fade-angle)));
-        opacity: 0;
+        filter: brightness(0.5);
     }
 }
 @keyframes enter-from-bottom {
     0% {
-        transform: translateY(var(--page-fade-distance)) rotate(var(--page-fade-angle));
-        opacity: 0;
+        filter: brightness(0.5);
+    }
+    50% {
+        filter: brightness(1);
     }
     100% {
-        transform: translateY(0) rotate(0);
-        opacity: 1;
+        filter: brightness(1);
     }
 }
 @keyframes enter-from-top {
     0% {
         transform: translateY(calc(-1 * var(--page-fade-distance))) rotate(calc(-1 * var(--page-fade-angle)));
-        opacity: 0;
+        opacity: 1;
+    }
+    50% {
+        opacity: 1;
     }
     100% {
-        transform: translateY(0) rotate(0);
+        transform: none;
         opacity: 1;
     }
 }
@@ -369,8 +385,20 @@ pre {
 
 /* page components */
 
+.page:has(.wip)::before {
+    background-image: var(--wip-page-bg);
+    width: 100%;
+}
+.page:has(.wip)::after {
+    display: none;
+}
+
 .page > h1, h2 {
     font-size: 1.5rem;
+}
+
+img {
+    max-width: 100%;
 }
 
 hr {
@@ -422,6 +450,7 @@ hr {
     transform: rotate(-0.5deg);
     box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.1);
     font-size: .9rem;
+    z-index: 2;
 }
 .note-blue {
     background: var(--note-blue);
