@@ -87,8 +87,8 @@
         {
             "url": "/glossary/welcome-menu",
             "title": "Welcome menu",
-            "content": "<h2>Welcome menu</h2>\n<p>The first menu you see when you enter the level editor.</p>\n<p><img src=\"/media/welcome-menu.png\" alt=\"A screenshot of the welcome menu\"></p>\n",
-            "headingValue": 2
+            "content": "<h3>Welcome menu</h3>\n<p><img src=\"/media/welcome-menu.png\" alt=\"A screenshot of the welcome menu\"></p>\n<p>The first menu you see when you enter the level editor.</p>\n",
+            "headingValue": 3
         },
         {
             "url": "/wip-section",
