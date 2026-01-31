@@ -232,7 +232,8 @@ nav > ol > li > ol h1 {
 }
 
 .hidden {
-    display: none;
+    visibility: hidden;
+    position: absolute;
 }
 
 .exit-to-bottom, .exit-to-top {
