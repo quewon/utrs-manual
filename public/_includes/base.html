@@ -5,10 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
     <link rel="stylesheet" href="/style.css{{ nocache }}">
+    <link rel="stylesheet" href="/res/photoswipe/photoswipe.css">
 </head>
 <body>
+    
+    <aside>
+        <nav>
+            <a href="javascript:goto('/')" class="subtitle">UTRS</a>
+            {{ pages.nav }}
+        </nav>
+        <button type="button" id="sidebar-toggle" onclick="document.querySelector('aside').classList.toggle('toggled')"></button>
+    </aside>
 
-    {{ content }}
+    <main>
+        <div class="book-page">
+            {{ content }}
+        </div>
+    </main>
     
 </body>
+<script src="/book.js{{ nocache }}" type="module"></script>
 </html>
