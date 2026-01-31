@@ -19,10 +19,12 @@ fetch("/content.json").then(res => res.json()).then(json => {
         if (page.headingValue === 1) {
             div.classList.add("section-title");
         }
-        // for (let a of div.querySelectorAll("a[href='RETURN']")) {
-        //     a.href = "javascript:goback()";
-        //     a.className = "return-link";
-        // }
+        for (let a of div.querySelectorAll("a")) {
+            let url = new URL(a.href);
+            if (url.origin === location.origin) {
+                a.href = `javascript:goto("${url.pathname}")`;
+            }
+        }
         bookPage.appendChild(div);
     }
 
@@ -51,14 +53,8 @@ function goto(url, onpop) {
 
     if (!onpop) {
         if (!previousState) {
-            // for (let a of pageElement.querySelectorAll("a.return-link")) {
-            //     a.classList.add("hidden");
-            // }
             history.replaceState(data, "", location.origin + data.url);
         } else if (location.origin + data.url !== previousState) {
-            // for (let a of pageElement.querySelectorAll("a.return-link")) {
-            //     a.classList.remove("hidden");
-            // }
             history.pushState(data, "", location.origin + data.url);
         }
         previousState = location.origin + data.url;
