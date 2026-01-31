@@ -15,13 +15,13 @@
         {
             "url": "/introduction",
             "title": "Introduction",
-            "content": "<h2>Introduction</h2>\n<p>This is a manual created just for you guys my hard working employees!!!</p>\n<div class=\"note\"><p><strong>Important:</strong> Please read this handbook carefully and keep it accessible for future reference. If you have any questions, please contact Human Resources and not me.</p>\n</div>",
+            "content": "<h2>Introduction</h2>\n<p>This is a manual created just for you guys my hard working employees!!!</p>\n<div class=\"note-yellow\"><p><strong>Important:</strong> Please read this handbook carefully and keep it accessible for future reference. If you have any questions, please contact Human Resources and not me.</p>\n</div><!--\nFor anyone writing or editing this manual, here is how page sectioning works!\n\nIn Markdown, three dashes (---) create a line break. In this document, they will act as a page break instead.\n\nThe first header in a page acts as its title.\n\nIf the first header starts with a tilde (~), it won't be visible on the page.\n\nPages with an H1 header act as section titles, which means they're displayed differently on the sidebar, and their pages are styled differently. I recommend using them to write introductions to a section, as opposed to writing anything substantial or important.\n\nOh, and these comments don't get filtered out of the website's code, so don't write any of your personal information here.\n-->\n",
             "headingValue": 2
         },
         {
             "url": "/getting-started",
             "title": "Getting started",
-            "content": "<h1>Getting started</h1>\n<p>In this section we'll be teaching you how to get a project up and running.</p>\n<p>First, enter the level editor through the main menu of the game.</p>\n<p>Then, there are a few ways to begin a project...</p>\n<ol>\n<li><a href=\"/getting-started/creating-a-new-project\">Creating a new project</a></li>\n<li><a href=\"/getting-started/loading-an-existing-project\">Loading an existing project</a></li>\n</ol>\n",
+            "content": "<h1>Getting started</h1>\n<p>We're so excited to get you started on your journey to designing levels.</p>\n<div class=\"toc\"><p><a href=\"/getting-started/creating-a-new-project\">Creating a new project</a><br>\n<a href=\"/getting-started/loading-an-existing-project\">Loading an existing project</a></p>\n</div><!--\nNote on links:\nRelative links won't work! Make sure to use absolute links.\n-->\n",
             "headingValue": 1
         },
         {
@@ -39,8 +39,32 @@
         {
             "url": "/editor",
             "title": "Editor",
-            "content": "<h1>Editor</h1>\n",
+            "content": "<h1>Editor</h1>\n<p>Layout:</p>\n<ul>\n<li>Scene view</li>\n<li>Inspector</li>\n<li>Toolbar</li>\n<li>Object tray</li>\n</ul>\n",
             "headingValue": 1
+        },
+        {
+            "url": "/editor/scene-view",
+            "title": "Scene view",
+            "content": "<h2>Scene view</h2>\n",
+            "headingValue": 2
+        },
+        {
+            "url": "/editor/scene-view/camera-controls",
+            "title": "Camera controls",
+            "content": "<h3>Camera controls</h3>\n<table>\n<thead>\n<tr>\n<th>Key</th>\n<th>Action</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>W / Z / Up arrow</td>\n<td>Move forward</td>\n</tr>\n<tr>\n<td>A / Q / Left arrow</td>\n<td>Move left</td>\n</tr>\n<tr>\n<td>S / Down arrow</td>\n<td>Move backward</td>\n</tr>\n<tr>\n<td>D / Right arrow</td>\n<td>Move right</td>\n</tr>\n<tr>\n<td>Space</td>\n<td>Move up</td>\n</tr>\n<tr>\n<td>Shift + Space</td>\n<td>Move down</td>\n</tr>\n<tr>\n<td>Middle click + Mouse</td>\n<td>Look</td>\n</tr>\n</tbody>\n</table>\n<p><strong>Camera movement speed</strong> and <strong>camera rotation speed</strong> can be configured in the <a href=\"\">Level Settings menu</a>.</p>\n",
+            "headingValue": 3
+        },
+        {
+            "url": "/editor/scene-view/z-grid-slider",
+            "title": "Z grid slider",
+            "content": "<h3>Z grid slider</h3>\n",
+            "headingValue": 3
+        },
+        {
+            "url": "/editor/scene-view/object-controls",
+            "title": "Object controls",
+            "content": "<h3>Object controls</h3>\n",
+            "headingValue": 3
         },
         {
             "url": "/editor/inspector",
@@ -57,23 +81,83 @@
         {
             "url": "/editor/object-tray",
             "title": "Object tray",
-            "content": "<h2>Object tray</h2>\n",
+            "content": "<h2>Object tray</h2>\n<p>Left click action / number keys / scroll</p>\n<p>Right click action</p>\n",
             "headingValue": 2
         },
         {
-            "url": "/editor/z-grid-slider",
-            "title": "Z-grid slider",
-            "content": "<h2>Z-grid slider</h2>\n",
-            "headingValue": 2
-        },
-        {
-            "url": "/publishing-your-game",
-            "title": "Publishing your game",
-            "content": "<h1>Publishing your game</h1>\n",
+            "url": "/objects",
+            "title": "Objects",
+            "content": "<h1>Objects</h1>\n<p>Objects are the basic building block of any level.</p>\n<div class=\"toc\"><p><a href=\"/objects/shapes\">Shapes</a><br>\n<a href=\"/objects/objects\">Objects</a><br>\n<a href=\"/objects/special\">Special</a><br>\n<a href=\"/objects/models\">Models</a><br>\n<a href=\"/objects/tags\">Tags</a><br>\n<a href=\"/objects/structures\">Structures</a><br>\n<a href=\"/objects/custom\">Custom</a></p>\n</div>",
             "headingValue": 1
         },
         {
-            "url": "/publishing-your-game/uploading-to-steam-workshop",
+            "url": "/objects/shapes",
+            "title": "Shapes",
+            "content": "<h2>Shapes</h2>\n<p>Shapes are basic geometric objects. Don't be fooled by their simplicity, as they have a wide variety of uses ranging from blocking out levels to building <a href=\"\">custom structures</a>.</p>\n<table>\n<thead>\n<tr>\n<th>Name</th>\n<th>Variable parameters</th>\n<th>Right-click setter</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>Cube</td>\n<td>Shape, Material, Color</td>\n<td>Material</td>\n</tr>\n<tr>\n<td>Wedge</td>\n<td>Shape, Material, Color</td>\n<td>Material</td>\n</tr>\n<tr>\n<td>Prism</td>\n<td>Shape, Material, Color</td>\n<td>Material</td>\n</tr>\n<tr>\n<td>Pyramid</td>\n<td>Shape, Material, Color</td>\n<td>Material</td>\n</tr>\n<tr>\n<td>Corner Out</td>\n<td>Shape, Material, Color</td>\n<td>Material</td>\n</tr>\n<tr>\n<td>Corner In</td>\n<td>Shape, Material, Color</td>\n<td>Material</td>\n</tr>\n</tbody>\n</table>\n",
+            "headingValue": 2
+        },
+        {
+            "url": "/objects/objects",
+            "title": "Objects",
+            "content": "<h2>Objects</h2>\n<p>The most commonly used objects are grouped simply as &quot;Objects.&quot; Anything you'll typically find as a platform in a level can be found here.</p>\n<table>\n<thead>\n<tr>\n<th>Name</th>\n<th>Variable parameters</th>\n<th>Right-click setter</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>Wall</td>\n<td>Shape, Material, Color</td>\n<td>—</td>\n</tr>\n<tr>\n<td>Yellow Wall</td>\n<td>Shape, Material, Color</td>\n<td>—</td>\n</tr>\n<tr>\n<td>Tiled Floor</td>\n<td>Shape, Material, Color</td>\n<td>—</td>\n</tr>\n<tr>\n<td>Bounce Pad</td>\n<td>Shape, Material, Color</td>\n<td>—</td>\n</tr>\n<tr>\n<td>Speed Floor</td>\n<td>Shape, Material, Color</td>\n<td>—</td>\n</tr>\n<tr>\n<td>Plank</td>\n<td>Shape, Material, Color</td>\n<td>Color</td>\n</tr>\n<tr>\n<td>Metal Grate</td>\n<td>Shape, Material, Color</td>\n<td>—</td>\n</tr>\n<tr>\n<td>Container</td>\n<td>Shape, Material, Color</td>\n<td>Color</td>\n</tr>\n<tr>\n<td>Vent Pipe</td>\n<td>Shape, Material, Color</td>\n<td>—</td>\n</tr>\n<tr>\n<td>Power Box</td>\n<td>Shape, Material, Color</td>\n<td>—</td>\n</tr>\n<tr>\n<td>Cardboard Box</td>\n<td>Shape, Material, Color</td>\n<td>Color</td>\n</tr>\n</tbody>\n</table>\n",
+            "headingValue": 2
+        },
+        {
+            "url": "/objects/special",
+            "title": "Special",
+            "content": "<h2>Special</h2>\n<p>Special objects provide unique interactions. Some objects here, like Start Zone and End Zone, are necessary to play and complete a level.</p>\n<table>\n<thead>\n<tr>\n<th>Name</th>\n<th>Variable parameters</th>\n<th>Right-click setter</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>WIP</td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>.</td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>.</td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>.</td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>.</td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>.</td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>.</td>\n<td></td>\n<td></td>\n</tr>\n</tbody>\n</table>\n",
+            "headingValue": 2
+        },
+        {
+            "url": "/objects/models",
+            "title": "Models",
+            "content": "<h2>Models</h2>\n<p>Models are objects with unique geometry, material, and sometimes even animations that can be used to decorate your level.</p>\n<table>\n<thead>\n<tr>\n<th>Name</th>\n<th>Variable parameters</th>\n<th>Right-click setter</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>WIP</td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>.</td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>.</td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>.</td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>.</td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>.</td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>.</td>\n<td></td>\n<td></td>\n</tr>\n</tbody>\n</table>\n",
+            "headingValue": 2
+        },
+        {
+            "url": "/objects/tags",
+            "title": "Tags",
+            "content": "<h2>Tags</h2>\n<p>Tags are a unique object type that can only be placed on the surfaces of other objects.</p>\n<table>\n<thead>\n<tr>\n<th>Name</th>\n<th>Variable parameters</th>\n<th>Right-click setter</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>WIP</td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>.</td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>.</td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>.</td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>.</td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>.</td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>.</td>\n<td></td>\n<td></td>\n</tr>\n</tbody>\n</table>\n<div class=\"note-yellow\"><p>Tags should not be used for any personal creative expression. Make sure to consult the internal list of legally acceptable messaging and imagery before adding anything potentially incriminating!</p>\n</div>",
+            "headingValue": 2
+        },
+        {
+            "url": "/objects/structures",
+            "title": "Structures",
+            "content": "<h2>Structures</h2>\n<div class=\"censor\"><p>I think <code>our lead developer</code> has more to do here so I'm just going to leave this page as WIP for now.</p>\n<p>Also <code>OJ</code> if you're reading this then maybe consider combining the Custom and Structures category. I think that would make a lot of sense.</p>\n<p><code>Love,</code><br>\n<code>Guy that is taking way too long to write this manual</code></p>\n</div>",
+            "headingValue": 2
+        },
+        {
+            "url": "/objects/custom",
+            "title": "Custom",
+            "content": "<h2>Custom</h2>\n<p>Structures are prefabricated object groups that can be instantiated just like any other object. Custom structures can be defined on a per-project basis.</p>\n<div class=\"toc\"><p><a href=\"/objects/custom/creating-a-custom-structure\">Creating a custom structure</a><br>\n<a href=\"/objects/custom/variable-parameters\">Variable parameters</a><br>\n<a href=\"/objects/custom/custom-structure-example\">Custom structure example</a></p>\n</div>",
+            "headingValue": 2
+        },
+        {
+            "url": "/objects/custom/creating-a-custom-structure",
+            "title": "Creating a custom structure",
+            "content": "<h3>Creating a custom structure</h3>\n<p>You can create custom structures by first selecting 1 or more objects and then clicking on the <strong>Create Custom Structure</strong> <img src=\"/media/icons/CreateCustomStructure.svg#icon\" alt=\"Create Custom Structure icon\"> button in the <a href=\"\">toolbar</a>.</p>\n<p>You can manage your custom structures by navigating to <a href=\"\">Project menu</a> &gt; <strong>Resources</strong> &gt; <strong>Structures</strong>.</p>\n",
+            "headingValue": 3
+        },
+        {
+            "url": "/objects/custom/variable-parameters",
+            "title": "Variable parameters",
+            "content": "<h3>Variable parameters</h3>\n<p>When creating a custom structure, you can choose to add a variable parameter. This will enable a right-click action when clicking on your structure from the <a href=\"\">object tray</a>, which will allow you to set the value of the designated variable for every object within the structure.</p>\n<div class=\"note-blue\"><p><strong>Why can't I find the variable I want?</strong><br>\nSome objects, such as Start Zone or Secret, have limited or no parameterable variables. If you can't find the variable you're looking for, chances are the object(s) you're using doesn't support it.</p>\n</div>",
+            "headingValue": 3
+        },
+        {
+            "url": "/objects/custom/custom-structure-example",
+            "title": "Custom structure example",
+            "content": "<!-- The tilde (~) above prevents this header from being visible on the page. I did this here because I want to use an H4 header, but I don't want it to be a subsection of \"Variable parameters\". -->\n<h4>Custom structure example</h4>\n<p><img src=\"/media/custom-structure-example/1.png#full-image\" alt=\"\"></p>\n",
+            "headingValue": 3
+        },
+        {
+            "url": "/publishing-your-level",
+            "title": "Publishing your level",
+            "content": "<h1>Publishing your level</h1>\n",
+            "headingValue": 1
+        },
+        {
+            "url": "/publishing-your-level/uploading-to-steam-workshop",
             "title": "Uploading to Steam Workshop",
             "content": "<h2>Uploading to Steam Workshop</h2>\n",
             "headingValue": 2
@@ -87,13 +171,19 @@
         {
             "url": "/glossary/welcome-menu",
             "title": "Welcome menu",
-            "content": "<h3>Welcome menu</h3>\n<p><img src=\"/media/welcome-menu.png\" alt=\"A screenshot of the welcome menu\"></p>\n<p>The first menu you see when you enter the level editor.</p>\n",
-            "headingValue": 3
+            "content": "<h4>Welcome menu</h4>\n<p>The first menu you see when you enter the level editor.</p>\n<!--- adding \"#full-image\" to the end of the image url like this makes it ignore the page's default padding. -->\n<p><img src=\"/media/glossary/welcome.png#full-image\" alt=\"Welcome menu\"></p>\n",
+            "headingValue": 4
+        },
+        {
+            "url": "/glossary/project-menu",
+            "title": "Project menu",
+            "content": "<h4>Project menu</h4>\n<p>Toolbar &gt; Project <img src=\"/media/icons/ProjectManager.svg#icon\" alt=\"Project button icon\"></p>\n<p><img src=\"/media/glossary/project.png#full-image\" alt=\"Project menu\"></p>\n",
+            "headingValue": 4
         },
         {
             "url": "/wip-section",
             "title": "WIP section",
-            "content": "<h1>WIP section</h1>\n<div class=\"wip\"><p>This page <code>is a</code> work <code>in progress oh</code> no!<code>!! Don't look!!!!</code></p>\n<p><code>Blackout poetry, or erasure poetry,</code> is a <code>form of found poetry or found</code> object <code>art</code> created <code>by erasing words from an existing text in prose or verse and framing the result</code> on the page <code>as a poem.[1] The results can be allowed to stand in situ</code> or <code>they can be arranged into lines or stanzas.</code></p>\n<p><code>Writers and visual artists have adopted this form both to achieve a ra</code>n<code>ge of c</code>o<code>gnitive or symbolic effects and to focus on the social or political meanings of erasure. Blackout poetry is a way to give an existing piece of writing a new set of meanings, questions, or suggestions. It lessens the trace of authorship but also draws attention to the original text</code>.`</p>\n</div>",
+            "content": "<h1>WIP section</h1>\n<div class=\"censor\"><p>This page <code>is a</code> work <code>in progress oh</code> no!<code>!! Don't look!!!!</code></p>\n<p><code>Blackout poetry, or erasure poetry,</code> is a <code>form of found poetry or found</code> object <code>art</code> created <code>by erasing words from an existing text in prose or verse and framing the result</code> on the page <code>as a poem.[1] The results can be allowed to stand in situ</code> or <code>they can be arranged into lines or stanzas.</code></p>\n<p><code>Writers and visual artists have adopted this form both to achieve a ra</code>n<code>ge of c</code>o<code>gnitive or symbolic effects and to focus on the social or political meanings of erasure. Blackout poetry is a way to give an existing piece of writing a new set of meanings, questions, or suggestions. It lessens the trace of authorship but also draws attention to the original text</code>.</p>\n</div>",
             "headingValue": 1
         }
     ]

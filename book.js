@@ -14,15 +14,25 @@ fetch("/content.json").then(res => res.json()).then(json => {
         div.dataset.url = page.url;
         div.innerHTML = page.content;
         if (pagenumber > 2) {
-            div.innerHTML += `<footer>Page ${pagenumber - 2} of ${PAGES.length - 2}</footer>`;
+            // div.innerHTML += `<footer>Page ${pagenumber - 2} of ${PAGES.length - 2}</footer>`;
+            div.innerHTML += `<footer>${pagenumber - 2}</footer>`;
         }
         if (page.headingValue === 1) {
             div.classList.add("section-title");
         }
         for (let a of div.querySelectorAll("a")) {
-            let url = new URL(a.href);
+            const url = new URL(a.href);
             if (url.origin === location.origin) {
-                a.href = `javascript:goto("${url.pathname}")`;
+                a.onclick = () => {
+                    goto(url.pathname);
+                    return false;
+                }
+                for (let i=0; i<PAGES.length; i++) {
+                    if (PAGES[i].url === url.pathname) {
+                        a.dataset.pagenumber = i;
+                        break;
+                    }
+                }
             }
         }
         bookPage.appendChild(div);
