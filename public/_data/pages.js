@@ -67,7 +67,11 @@ export default function(config) {
 
         if (lookingForSection) {
             const header = line.split(" ").slice(1).join(" ");
-            const headingValue = line.split(" ")[0].length;
+            var headingValue = line.split(" ")[0].length;
+            if (line.includes("~")) {
+                line = "";
+                headingValue--;
+            }
             while (headingValue <= currentPage.headingValue) {
                 currentPage = currentPage.parent;
             }

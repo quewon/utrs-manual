@@ -4,11 +4,12 @@
     --sidebar-bg: #1a1a1a;
     --sidebar-border: #555555;
     --accent: #4A9EFF;
+    --link: #3A8EEF;
     --note-yellow: #fff9c4;
     --note-blue: #e3f2fd;
 
-    --binder-holes-width: 2.5em;
-    --binder-hole-radius: .5em;
+    --binder-holes-width: 2.5rem;
+    --binder-hole-radius: .5rem;
     --page-bg: url(/res/paper.png);
     --page-aspect: 4/5;
     --title-page-bg: #333333;
@@ -17,7 +18,7 @@
     --page-fade-speed: .4s;
     --page-fade-angle: 1deg;
     
-    --padding: 2em;
+    --padding: 2rem;
     --monospace: 'IBM Plex Mono', monospace;
 
     color-scheme: dark;
@@ -113,23 +114,33 @@ nav a.selected {
     border-left: 2px solid var(--accent);
 }
 
+a.subtitle, a.subtitle:hover {
+    color: var(--accent);
+}
+a.subtitle:hover {
+    background: unset;
+}
+
+nav ol {
+    padding-left: 0;
+}
+/* sub-subsections */
+nav > ol > li > ol > li > ol a {
+    padding-left: 2em;
+}
+/* sub-sub-subsections */
+nav > ol > li > ol > li > ol > li > ol a {
+    padding-left: 4em;
+}
+
 nav ol {
     list-style-type: none;
 }
-nav ol {
-    padding-left: 0;
-}
-nav > ol > li, nav > ol > li > ol > li {
-    padding-left: 0;
-}
-
 nav > ol > li > ol h1 {
     text-transform: none;
     font-size: 1rem;
 }
-
 nav > ol > li {
-    /* margin-bottom: 1.5em; */
     margin-bottom: 1em;
 }
 /* subsection headers */
@@ -198,7 +209,7 @@ nav > ol > li > ol h1 {
     bottom: 0;
     right: 0;
     width: 100%;
-    text-align: center;
+    text-align: right;
     font-family: var(--monospace);
     font-size: .8rem;
     opacity: .75;
@@ -368,28 +379,21 @@ pre {
 .page.section-title {
     counter-increment: section-count;
 }
-.page.section-title,
-.page[data-page="1"] {
-    padding-top: calc(var(--padding) * 4);
-}
-.page.section-title footer,
-.page[data-page="1"] footer {
-    bottom: calc(var(--padding) * 4);
-}
 .page.section-title::after {
     background: none;
 }
 .page.section-title h1 {
+    padding-top: 1.5em;
     border: none;
     font-weight: bold;
     text-transform: uppercase;
     font-size: 2em;
-    margin-bottom: 1.5em;
+    margin-bottom: 1em;
 }
 .page.section-title h1::before {
     content: "SECTION " counter(section-count);
     display: block;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: var(--accent);
     margin-bottom: 1em;
 }
@@ -415,24 +419,67 @@ pre {
 img {
     max-width: 100%;
 }
+p:has(img[src$='#full-image']) {
+    margin: 0 calc(-1 * var(--padding));
+}
+img[src$='#icon'] {
+    height: 1em;
+    vertical-align: middle;
+}
 
 hr {
     border: 1px solid var(--accent);
     border-bottom: 1px solid white;
 }
 
-.page > h2 {
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: .9em;
+}
+th {
+    background-color: rgba(0, 0, 0, .1);
+    font-weight: normal;
+    text-transform: uppercase;
+    font-size: .8em;
+    font-family: var(--monospace);
+    text-align: left;
+}
+td, th {
+    border-bottom: 1px solid rgba(0, 0, 0, .3);
+    padding: 5px .5rem;
+}
+td:not(:first-child) {
+    border-left: 1px solid rgba(0, 0, 0, .3);
+}
+
+.page h2 {
     font-size: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid;
+    padding-bottom: .5em;
+    border-bottom: 1px solid rgba(0, 0, 0, .3);
+}
+
+.page > h4 {
+    position: absolute;
+    top: var(--padding);
+    left: calc(var(--binder-holes-width) + var(--padding));
+    text-transform: uppercase;
+    font-weight: normal;
+    margin-top: 0;
+    font-family: var(--monospace);
+    font-size: .8rem;
+    opacity: .75;
+}
+.page:has(h4:first-child) {
+    padding-top: calc(var(--padding) * 2);
 }
 
 .page a {
-    color: var(--accent);
+    color: var(--link);
     text-decoration: none;
 }
 
-.note, .note-blue {
+.note-yellow, .note-blue {
     background: var(--note-yellow);
     padding: .5rem 2rem;
     margin: 24px 0;
@@ -446,7 +493,7 @@ hr {
     background: var(--note-blue);
     transform: rotate(0.5deg);
 }
-.note::before,
+.note-yellow::before,
 .note-blue::before {
     content: '';
     position: absolute;
@@ -458,7 +505,7 @@ hr {
     transform: rotate(-3deg);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
-.note::after,
+.note-yellow::after,
 .note-blue::after {
     content: '';
     position: absolute;
@@ -480,19 +527,51 @@ hr {
     left: 1.2rem;
     transform: rotate(-3deg);
 }
-
-.note strong {
+.note-yellow strong {
     color: #8b6914;
 }
 
-.page:has(.wip) footer {
-    display: none;
-}
-.wip code {
+.censor code {
     font-family: inherit;
     font-size: inherit;
     background: black;
 }
-.wip code::selection {
+.censor code::selection {
     color: transparent;
+}
+
+.toc::before {
+    content: "Table of Contents";
+    text-transform: uppercase;
+    font-size: .8rem;
+    position: absolute;
+    top: -1.75rem;
+}
+.toc {
+    position: relative;
+    margin-top: 3.5rem;
+}
+.toc a {
+    position: relative;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, .3);
+    margin-bottom: 3px;
+    padding-bottom: 3px;
+}
+.toc br {
+    display: none;
+}
+.toc a::after {
+    content: "Page " attr(data-pagenumber);
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: var(--bg);
+    font-style: italic;
+    font-size: .8em;
+}
+.toc a::before {
+    content: "→ ";
+    color: var(--bg);
+    margin-right: .5em;
 }
