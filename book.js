@@ -1,3 +1,8 @@
+import PhotoSwipeLightbox from "/res/photoswipe/photoswipe-lightbox.esm.min.js";
+import PhotoSwipe from "/res/photoswipe/photoswipe.esm.min.js";
+
+//
+
 var PAGES;
 var previousState;
 var currentPageIndex = -1;
@@ -21,6 +26,7 @@ fetch("/content.json").then(res => res.json()).then(json => {
             div.classList.add("section-title");
         }
         for (let a of div.querySelectorAll("a")) {
+            if (!a.href || a.dataset["pswp-src"]) continue;
             const url = new URL(a.href);
             if (url.origin === location.origin) {
                 a.onclick = () => {
@@ -36,6 +42,20 @@ fetch("/content.json").then(res => res.json()).then(json => {
             }
         }
         bookPage.appendChild(div);
+    }
+
+    pagenumber = 0;
+    for (let page of bookPage.querySelectorAll(".page")) {
+        if (page.querySelector("[data-pswp-src]")) {
+            page.id = "gallery" + pagenumber;
+            const lightbox = new PhotoSwipeLightbox({
+                gallery: "#" + page.id,
+                children: "a",
+                pswpModule: PhotoSwipe
+            })
+            lightbox.init();
+        }
+        pagenumber++;
     }
 
     goto(location.pathname);
@@ -186,3 +206,5 @@ document.addEventListener("touchmove", e => {
         }
     }
 })
+
+window.goto = goto;
