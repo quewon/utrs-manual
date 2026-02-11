@@ -14,7 +14,11 @@ function pageToNavHTML(page) {
 
 function setURLs(page) {
     if (page.headingValue > 0) {
-        let url = encodeURI(page.title.toLowerCase().replaceAll(" ", "-"));
+        let url = encodeURI(
+            page.title.toLowerCase()
+            .replaceAll(" ", "-")
+            .replaceAll(/[!?./'":;]/g, "")
+        );
         if (page.parent?.parent) {
             url = page.parent.url + "/" + url;
         }

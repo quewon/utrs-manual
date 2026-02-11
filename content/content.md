@@ -1,57 +1,80 @@
-## Introduction
+# Introduction
 
-This is a manual created just for you guys my hard working employees!!!
+Congratulations on your new role as Enterprise Level Designer for Z-corp™. Here at Z-corp™, we are committed to upholding our standards of competency in every position, no matter the level of experience. We hope that this Handbook™ can get you started on your journey to becoming a knowledgable and efficient designer.
 
-```note-yellow
-**Important:** Please read this handbook carefully and keep it accessible for future reference. If you have any questions, please contact Human Resources and not me.
+This Handbook™ may be changed without notice. In order to stay up-to-date with the changes, make sure to keep the Handbook™ accessible for future reference.
+
+```toc
+[Navigating this handbook](/introduction/navigating-this-handbook)
+[What's in a level?](/introduction/whats-in-a-level)
+
+##### Last updated XX/XX/XXXX
+
+---
+
+~## Navigating this handbook
+
+#### Navigating this handbook
+
+```center
+You can navigate to each section and page of this Handbook™ from the left-hand sidebar. Additionally, you can use the arrow keys (←, →, ↑, ↓), scroll wheel, or swipe on mobile to turn the pages.
 ```
-
-<!--
-For anyone writing or editing this manual, here is how page sectioning works!
-
-In Markdown, three dashes (---) create a line break. In this document, they will act as a page break instead.
-
-The first header in a page acts as its title.
-
-If the first header starts with a tilde (~), it won't be visible on the page.
-
-Pages with an H1 header act as section titles, which means they're displayed differently on the sidebar, and their pages are styled differently. I recommend using them to write introductions to a section, as opposed to writing anything substantial or important.
-
-Oh, and these comments don't get filtered out of the website's code, so don't write any of your personal information here.
--->
 
 ---
 
 # Getting started
 
-We're so excited to get you started on your journey to designing levels.
+If this is your first time using the Level Editor™, here is a step-by-step guide to creating your first project.
 
 ```toc
-[Creating a new project](/getting-started/creating-a-new-project)
-[Loading an existing project](/getting-started/loading-an-existing-project)
+[Opening the level editor]()
+[Creating a new project]()
+[Next steps]()
 ```
 
-<!--
-Note on links:
-Relative links won't work! Make sure to use absolute links.
--->
+---
+
+## Opening the level editor
+
+From the title screen of Under The Red Sky (the very first screen you see when you load up the game), find and click on the **Level Editor** button.
+
+This will take you to the **Welcome menu**.
+
+![The welcome menu.](/media/welcome-menu.png)
 
 ---
 
 ## Creating a new project
 
 ```note-blue
-### Levels
-Levels are employee-designed stages for runners to run around on. In case you were wondering
+A **project** contains a series of levels. If a project has more than one level, runners will be made to complete it in sequence.
 ```
 
-Create your first level using the Level editor™!
+#  Creating a project from scratch
 
----
+To begin a project from scratch, simply click on the **Create New Project** button from the [Welcome menu]().
 
 ## Loading an existing project
 
-In the [Welcome menu](/glossary/welcome-menu), you can load any existing project file by selecting the **Open Project** button.
+If you have an existing project that you'd like to work on, you can load any local project file by selecting the **Open Project** button instead.
+
+If you've recently worked on a projected, you'll find it listed under **Recent Projects**.
+
+## Opening an example project
+
+If you'd like to check out the example project showcased in the background of the [Welcome menu](), you can open it by clicking on **Open Example Project** on the top left.
+
+---
+
+## Next steps
+
+Now that you've got your project set up, you can begin building out your very first level. Try adding an [object](/objects) from the [Object tray](/editor/scene-view/object-placement), then give it a spin by [playing the level]().
+
+If you want to add another level to your project, ...
+
+Once you're done with your project, [publish it to the Workshop]() it so that our runners can test your levels.
+
+Good luck.
 
 ---
 
@@ -70,7 +93,7 @@ Layout:
 
 ---
 
-### Camera controls
+### Camera navigation
 
 | Key                  | Action        |
 |-                     |-              |
@@ -86,11 +109,45 @@ Layout:
 
 ---
 
-### Z grid slider
+### Object selection
+
+Pick (click)
+
+Multiselect (click drag / shift click)
 
 ---
 
-### Object controls
+### Object placement
+
+Snapping can be configured in the Level Settings
+
+---
+
+#### Grid snapping
+
+Z grid slider bottom left
+
+Toggle Grid Snapping button in toolbar
+
+Grid color, size, and toggle in level settings
+
+---
+
+### Object transformation
+
+---
+
+### Undo
+
+Undo by Ctrl+Z, Cmd+Z, or clicking on undo button in toolbar
+
+What can and can't you undo?
+
+---
+
+### Changing the scene view background color
+
+"Background color" setting in Level settings
 
 ---
 
@@ -102,11 +159,43 @@ Layout:
 
 ---
 
-## Object tray
+### Project Manager
 
-Left click action / number keys / scroll
+---
 
-Right click action
+### Steam Workshop
+
+--- 
+
+### Ghost Paths Manager
+
+---
+
+### Issues
+
+errors and warnings
+
+---
+
+### Settings
+
+---
+
+### Playing your level(s)
+
+To return to the level editor from the level, just hit pause and click on Level Editor
+
+---
+
+#### Changing the level environment
+
+Skybox, sky color, fog color, fog density can be configured in Level settings
+
+---
+
+#### Changing the level music
+
+Level playlist can be set in the Level settings
 
 ---
 
@@ -208,27 +297,20 @@ Tags are a unique object type that can only be placed on the surfaces of other o
 | . | | |
 
 ```note-yellow
-Tags should not be used for any personal creative expression. Make sure to consult the internal list of legally acceptable messaging and imagery before adding anything potentially incriminating!
+Tags should not be used for any personal creative expression. You are obligated to consult the internal list of legally acceptable messaging and imagery before adding anything potentially incriminating.
 ```
 
 ---
 
 ## Structures
 
-```censor
-I think `our lead developer` has more to do here so I'm just going to leave this page as WIP for now.
-
-Also `OJ` if you're reading this then maybe consider combining the Custom and Structures category. I think that would make a lot of sense.
-
-`Love,`
-`Guy that is taking way too long to write this manual`
-```
+Structures are prefabricated object groups that can be instantiated just like any other object.
 
 ---
 
 ## Custom
 
-Structures are prefabricated object groups that can be instantiated just like any other object. Custom structures can be defined on a per-project basis.
+Custom structures can be defined on a per-project basis.
 
 ```toc
 [Creating a custom structure](/objects/custom/creating-a-custom-structure)
@@ -267,7 +349,7 @@ Some objects, such as Start Zone or Secret, have limited or no parameterable var
 
 ---
 
-# Publishing your level
+# Publishing your project
 
 ---
     
@@ -289,20 +371,6 @@ The first menu you see when you enter the level editor.
 
 ---
 
-#### Project menu
+#### Object tray
 
-Toolbar > Project ![Project button icon](/media/icons/ProjectManager.svg#icon)
-
-![Project menu](/media/glossary/project.png#full-image)
-
----
-
-# WIP section
-
-```censor
-This page `is a` work `in progress oh` no!`!! Don't look!!!!`
-
-`Blackout poetry, or erasure poetry,` is a `form of found poetry or found` object `art` created `by erasing words from an existing text in prose or verse and framing the result` on the page `as a poem.[1] The results can be allowed to stand in situ` or `they can be arranged into lines or stanzas.`
-
-`Writers and visual artists have adopted this form both to achieve a ra`n`ge of c`o`gnitive or symbolic effects and to focus on the social or political meanings of erasure. Blackout poetry is a way to give an existing piece of writing a new set of meanings, questions, or suggestions. It lessens the trace of authorship but also draws attention to the original text`.
-```
+The tray on the bottom of the editor screen

@@ -1,10 +1,18 @@
-<h1 style="line-height: 1.2em; color: white; font-size: 2.5rem">
-    LEVEL EDITOR<br>HANDBOOK
-</h1>
-
-<i style="color: white; font-size: 1.3rem">
-    <b>for Employees</b>
-</i>
+<div style="
+    margin-top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    font-weight: bold;
+">
+    The Official Z-corp™
+    <div style="
+        font-size: 2em;
+        line-height: 1em;
+    ">
+        LEVEL EDITOR HANDBOOK<br>
+        FOR EMPLOYEES
+    </div>
+</div>
 
 <footer>
     <p>
@@ -14,5 +22,3 @@
     </p>
     © 20ZZ Z-corp
 </footer>
-
-<img class="background" src="/media/utrs_sky.jpeg" alt="">
