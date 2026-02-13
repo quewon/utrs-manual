@@ -56,6 +56,7 @@ export default function(config) {
     const structure = {
         title: config.sitename,
         url: "",
+        content: fs.readFileSync("./content/title.md", { encoding: "utf8" }),
         pages: [],
         headingValue: 0
     }
@@ -98,8 +99,16 @@ export default function(config) {
 
     setURLs(structure);
 
+    var pages = pageData(structure);
+    pages.unshift({
+        url: "404",
+        title: "404",
+        content: fs.readFileSync("./content/404.md", { encoding: "utf8" }),
+        headingValue: 0
+    });
+
     return {
-        pages: pageData(structure).slice(1),
+        pages: pages,
         nav: pageToNavHTML(structure)
     };
 }
