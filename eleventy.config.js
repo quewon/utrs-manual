@@ -25,6 +25,15 @@ export default function (config) {
         linkify: true
     });
 
+    const defaultTextRenderer = md.renderer.rules.text;
+    md.renderer.rules.text = function(tokens, idx, options, env, self) {
+        const token = tokens[idx];
+        if (token.content === "[Table of contents]") {
+            return `<ul class="toc"></ul>`;
+        }
+        return defaultTextRenderer(tokens, idx, options, env, self);
+    }
+
     const defaultFenceRenderer = md.renderer.rules.fence;
     md.renderer.rules.fence = function(tokens, idx, options, env, self) {
         const token = tokens[idx];
@@ -36,6 +45,7 @@ export default function (config) {
         }
         return defaultFenceRenderer(tokens, idx, options, env, self);
     }
+
     const defaultImageRenderer = md.renderer.rules.image;
     md.renderer.rules.image = function(tokens, idx, options, env, self) {
         let token = tokens[idx];
