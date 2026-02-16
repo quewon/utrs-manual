@@ -5,39 +5,59 @@ import PhotoSwipe from "/res/photoswipe/photoswipe.esm.min.js";
 
 var pages;
 var previousState;
-var currentPageIndex = -1;
+var currentPageNumber = -1;
 const book = document.querySelector(".book");
 const rem = parseFloat(getComputedStyle(book).fontSize);
 
-fetch("/content.json").then(res => res.json()).then(json => {
+window.onload = () => {
     pages = document.querySelectorAll(".page");
 
     for (let page of pages) {
         const toc = page.querySelector(".toc");
         if (toc) {
             const hv = parseInt(page.dataset.hv);
-            for (let i=parseInt(page.dataset.page) + 1; i<pages.length; i++) {
+            let number = parseInt(page.dataset.page);
+            for (let i=number + 2; i<pages.length; i++) {
                 const phv = parseInt(pages[i].dataset.hv);
                 if (phv <= hv) {
                     break;
                 }
                 const li = document.createElement("li");
-                li.dataset.page = pages[i].dataset.page;
+                li.dataset.page = parseInt(pages[i].dataset.page);
                 const a = document.createElement("a");
-                a.href = location.origin + pages[i].dataset.url;
-                a.onclick = () => {
-                    goto(pages[i].dataset.url);
-                    return false;
-                }
+                a.href = pages[i].dataset.url;
                 a.textContent = pages[i].dataset.title;
                 li.style.paddingLeft = (phv - hv - 1) * 1.5 * rem + "px";
                 li.appendChild(a);
                 toc.appendChild(li);
             }
         }
+
+        const input = page.querySelector("footer input");
+        input.onkeydown = e => {
+            e.stopPropagation();
+        }
+        input.onchange = function() {
+            let value = input.value;
+            if (!document.querySelector(`.page[data-page="${value}"]`)) {
+                value = Math.min(parseInt(value), pages.length - 2);
+                value = Math.max(0, value);
+            }
+            goto(document.querySelector(`.page[data-page="${value}"]`).dataset.url);
+            this.value = value;
+        }
     }
 
-    for (let a of book.querySelectorAll("a")) {
+    let i = 1;
+    for (let section of book.querySelectorAll(".page.section-title")) {
+        let icon = document.createElement("img");
+        icon.src = `/media/icons/Roman/${i}.svg#icon`;
+        icon.alt = "";
+        section.prepend(icon);
+        i++;
+    }
+
+    for (let a of document.body.querySelectorAll("a")) {
         if (!a.href || a.dataset["pswp-src"]) continue;
         const url = new URL(a.href);
         if (url.origin === location.origin) {
@@ -45,21 +65,15 @@ fetch("/content.json").then(res => res.json()).then(json => {
                 goto(url.pathname);
                 return false;
             }
-            for (let i=0; i<pages.length; i++) {
-                if (pages[i].dataset.url === url.pathname) {
-                    a.dataset.pagenumber = i;
-                    break;
-                }
-            }
         }
     }
 
     for (let page of book.querySelectorAll(".page")) {
-        if (page.querySelector("[data-pswp-src]")) {
+        if (page.querySelector("a[data-pswp-src]")) {
             page.id = "gallery" + page.dataset.page;
             const lightbox = new PhotoSwipeLightbox({
                 gallery: "#" + page.id,
-                children: "a",
+                children: "a[data-pswp-src]",
                 pswpModule: PhotoSwipe
             })
             lightbox.init();
@@ -71,18 +85,18 @@ fetch("/content.json").then(res => res.json()).then(json => {
     window.addEventListener('popstate', function() {
         goto(location.pathname, true);
     });
-})
+}
 
 function goto(url, onpop) {
-    const previousPageIndex = currentPageIndex;
-    const previousPage = document.querySelector(`.page[data-page="${currentPageIndex}"]`);
+    const previousPageNumber = currentPageNumber;
+    const previousPage = document.querySelector(`.page[data-page="${currentPageNumber}"]`);
 
     let pageElement = document.querySelector(`[data-url="${url}"]`);
     if (!pageElement)
-        pageElement = document.querySelector("[data-page='0']");
-    currentPageIndex = parseInt(pageElement.dataset.page);
+        pageElement = document.querySelector("[data-page='404']");
+    currentPageNumber = parseInt(pageElement.dataset.page);
 
-    if (currentPageIndex === previousPageIndex && previousState)
+    if (currentPageNumber === previousPageNumber && previousState)
         return;
 
     document.title = pageElement.dataset.title;
@@ -96,78 +110,61 @@ function goto(url, onpop) {
         previousState = location.origin + url;
     }
 
-    pageElement.classList.remove("enter-from-top");
-    pageElement.classList.remove("enter-from-bottom");
-    pageElement.classList.remove("exit-to-top");
-    pageElement.classList.remove("exit-to-bottom");
+    pageElement.querySelector("footer input").value = pageElement.dataset.page;
+
+    pageElement.classList.remove("enter-from-left");
+    pageElement.classList.remove("enter-from-right");
+    pageElement.classList.remove("exit-to-left");
+    pageElement.classList.remove("exit-to-right");
     if (previousPage) {
-        previousPage.classList.remove("hidden");
-        previousPage.classList.remove("enter-from-bottom");
-        previousPage.classList.remove("enter-from-top");
-        previousPage.classList.remove("exit-to-bottom");
-        previousPage.classList.remove("exit-to-top");
+        // previousPage.classList.remove("hidden");
+        previousPage.classList.remove("enter-from-right");
+        previousPage.classList.remove("enter-from-left");
+        previousPage.classList.remove("exit-to-right");
+        previousPage.classList.remove("exit-to-left");
     }
-    if (previousPageIndex < currentPageIndex) {
-        if (previousPage) previousPage.classList.add("exit-to-top");
-        pageElement.classList.add("enter-from-bottom");
+    if (previousPageNumber < currentPageNumber) {
+        if (previousPage) previousPage.classList.add("exit-to-left");
+        pageElement.classList.add("enter-from-right");
     } else {
-        if (previousPage) previousPage.classList.add("exit-to-bottom");
-        pageElement.classList.add("enter-from-top");
+        if (previousPage) previousPage.classList.add("exit-to-right");
+        pageElement.classList.add("enter-from-left");
     }
-    if (currentPageIndex === parseInt(pageElement.dataset.page))
+    if (currentPageNumber === parseInt(pageElement.dataset.page))
         pageElement.classList.remove("hidden");
     if (previousPage) {
         previousPage.addEventListener("animationend", () => {
-            if (currentPageIndex !== parseInt(previousPage.dataset.page))
+            if (currentPageNumber !== parseInt(previousPage.dataset.page))
                 previousPage.classList.add("hidden");
         }, { once: true })
     }
 
     document.querySelector(`nav a.selected`)?.classList.remove("selected");
-    document.querySelectorAll("nav a")[currentPageIndex].classList.add("selected");
+    document.querySelector(`nav a[data-page="${pageElement.dataset.page}"]`).classList.add("selected");
 
     document.querySelector("aside").classList.remove("toggled");
 }
 
 document.addEventListener("keydown", e => {
-    if ((e.code === "ArrowRight" || e.code === "ArrowDown") && currentPageIndex < pages.length - 1) {
-        goto(pages[currentPageIndex + 1].dataset.url);
-    } else if ((e.code === "ArrowLeft" || e.code === "ArrowUp") && currentPageIndex > 1) {
-        goto(pages[currentPageIndex - 1].dataset.url);
-    }
-})
-
-let scrollAmount = 0;
-let wheelTimeout;
-let direction = 0;
-document.addEventListener("wheel", e => {
-    if (e.target.closest("nav"))
-        return;
-
-    scrollAmount += e.deltaY;
-
-    if (currentPageIndex <= 0)
-        scrollAmount = Math.max(0, scrollAmount);
-    if (currentPageIndex >= pages.length - 1)
-        scrollAmount = Math.min(0, scrollAmount);
-
-    if (scrollAmount > 50 && direction <= 0) {
-        if (currentPageIndex < pages.length - 1) {
-            goto(pages[currentPageIndex + 1].dataset.url);
-            direction = 1;
+    let dir = 0;
+    let i = null;
+    if (e.code === "ArrowRight") {
+        if (currentPageNumber < pages.length - 2) {
+            i = (currentPageNumber + 1) + 1;
+            dir = 1;
         }
-    } else if (scrollAmount < -50 && direction >= 0) {
-        if (currentPageIndex > 1) {
-            goto(pages[currentPageIndex - 1].dataset.url);
-            direction = -1;
+    } else if (e.code === "ArrowLeft") {
+        if (currentPageNumber > 0) {
+            i = (currentPageNumber + 1) - 1;
+            dir = -1;
         }
     }
-
-    if (wheelTimeout) clearTimeout(wheelTimeout);
-    wheelTimeout = setTimeout(() => {
-        scrollAmount = 0;
-        direction = 0;
-    }, 50);
+    if (i !== null) {
+        while (pages[i].dataset.title === "HIDDEN") {
+            i += dir;
+        }
+        goto(pages[i].dataset.url);
+    }
 })
 
 document.addEventListener("mousedown", e => {
@@ -184,29 +181,35 @@ document.addEventListener("pointerdown", e => {
         return;
     }
     touchLocked = false;
-    touch = { x: e.screenX, y: e.screenY };
+    touch = { x: e.screenX };
 })
 document.addEventListener("pointermove", e => {
     if (e.pointerType !== "touch") return;
 
     if (!touchLocked) {
-        let deltaY = e.screenY - touch.y;
-        let deltaX = e.screenX - touch.x;
-
-        touch.y = e.screenY;
+        let delta = e.screenX - touch.x;
         touch.x = e.screenX;
 
-        let delta = Math.abs(deltaY) > Math.abs(deltaX) ? deltaY : deltaX;
+        let dir = 0;
+        let i = null;
         if (delta < -2) {
-            if (currentPageIndex < pages.length - 1) {
-                goto(pages[currentPageIndex + 1].dataset.url);
+            if (currentPageNumber < pages.length - 2) {
+                i = (currentPageNumber + 1) + 1;
+                dir = 1;
                 touchLocked = true;
             }
         } else if (delta > 2) {
-            if (currentPageIndex > 1) {
-                goto(pages[currentPageIndex - 1].dataset.url);
+            if (currentPageNumber > 0) {
+                i = (currentPageNumber + 1) - 1;
+                dir = -1;
                 touchLocked = true;
             }
+        }
+        if (i !== null) {
+            while (pages[i].dataset.title === "HIDDEN") {
+                i += dir;
+            }
+            goto(pages[i].dataset.url);
         }
     }
 })
