@@ -1,7 +1,11 @@
 import fs from 'fs';
 
+var sectionCounter;
+
 function pageToNavHTML(page) {
-    let html = `<a href="javascript:goto('/${page.url}')"><h1>${page.title}</h1></a>`;
+    if (page.title === "HIDDEN")
+        return "";
+    let html = `<a data-page="${page.number}" href="${page.url}"><h1>${page.headingValue === 1 ? `<img src="/media/icons/Roman/og/${sectionCounter++}.svg#icon" /> ` : ""}${page.title}</h1></a>`;
     if (page.pages.length > 0) {
         html += "<ol>";
         for (let subpage of page.pages) {
@@ -13,14 +17,14 @@ function pageToNavHTML(page) {
 }
 
 function setURLs(page) {
-    if (page.headingValue > 0) {
+    if (page.parents.length > 0) {
         let url = encodeURI(
             page.title.toLowerCase()
             .replaceAll(" ", "-")
             .replaceAll(/[!?./'":;]/g, "")
         );
-        if (page.parent?.parent) {
-            url = page.parent.url + "/" + url;
+        if (page.parents.length > 0) {
+            url = page.parents[page.parents.length - 1].url + "/" + url;
         }
         page.url = url;
     }
@@ -50,15 +54,20 @@ function pageData(page) {
 }
 
 export default function(config) {
+    sectionCounter = 1;
+    
     const content = fs.readFileSync("./content/content.md", { encoding: "utf8" });
 
+    let pagenumber = 0;
     const lines = content.split("\n");
     const structure = {
         title: config.sitename,
         url: "",
         content: fs.readFileSync("./content/title.md", { encoding: "utf8" }),
         pages: [],
-        headingValue: 0
+        parents: [],
+        headingValue: 0,
+        number: pagenumber++
     }
     var currentPage = structure;
     var lookingForSection = true;
@@ -71,23 +80,26 @@ export default function(config) {
         if (line.trim() === "") continue;
 
         if (lookingForSection) {
+            let previousPage = currentPage;
+
             const header = line.split(" ").slice(1).join(" ");
             var headingValue = line.split(" ")[0].length;
             if (line.includes("~")) {
                 line = "";
                 headingValue--;
             }
-            while (headingValue <= currentPage.headingValue) {
-                currentPage = currentPage.parent;
+            while (headingValue <= previousPage.parents.length) {
+                previousPage = previousPage.parents[previousPage.parents.length - 1];
             }
             const page = {
                 title: header,
                 content: line,
                 pages: [],
-                parent: currentPage,
-                headingValue: headingValue,
+                parents: [...previousPage.parents, previousPage],
+                headingValue,
+                number: pagenumber++
             }
-            currentPage.pages.push(page);
+            previousPage.pages.push(page);
             currentPage = page;
             lookingForSection = false;
         } else {
@@ -101,11 +113,21 @@ export default function(config) {
 
     var pages = pageData(structure);
     pages.unshift({
-        url: "404",
+        url: "/404",
         title: "404",
         content: fs.readFileSync("./content/404.md", { encoding: "utf8" }),
-        headingValue: 0
+        parents: [],
+        headingValue: 0,
+        number: 404
     });
+    pages[1].url = "/";
+
+    for (let i=1; i<pages.length; i++) {
+        if (i < pages.length - 1)
+            pages[i].next = pages[i + 1];
+        if (i > 1)
+            pages[i].previous = pages[i - 1];
+    }
 
     return {
         pages: pages,

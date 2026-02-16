@@ -1,7 +1,6 @@
 The Official Z-corp™
 
 # Level Editor Handbook
-
 ## for Employees
 
 ```

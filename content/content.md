@@ -1,22 +1,36 @@
-## Introduction
+~## Introduction
+
+# Introduction
 
 Congratulations on your new role as Enterprise Level Designer for Z-corp™. Here at Z-corp, we are committed to upholding our standards of competency in every position, no matter the level of experience. We hope that this Handbook™ can get you started on your journey to becoming a knowledgable and efficient designer.
 
-This Handbook may be changed without notice. In order to stay up-to-date with the changes, make sure to keep the Handbook accessible for future reference.
+This Handbook may be changed without notice. Make sure to keep the Handbook accessible for future reference in order to stay up-to-date with any changes.
 
-##### Last updated XX/XX/20XX
+`Last updated XX/XX/20XX`
 
 ---
 
-~### Navigating this handbook
+~## Navigating this handbook
 
-You can navigate to each section and page of this Handbook™ from the left-hand sidebar. Additionally, you can use the arrow keys ![up](/media/icons/ArrowUp.svg#icon) ![down](/media/icons/ArrowDown.svg#icon) ![left](/media/icons/ArrowLeft.svg#icon) ![right](/media/icons/ArrowRight.svg#icon), scroll, or swipe on mobile to turn the pages.
+## Navigating this handbook
+
+You can navigate to each section and page of this Handbook™ from the left-hand sidebar.
+
+Additionally, you can use the arrow keys ![left](/media/icons/ArrowLeft.svg#icon) ![right](/media/icons/ArrowRight.svg#icon) or swipe side to side on mobile to turn the pages.
+
+---
+
+## HIDDEN
+
+This is a hidden page that can only be navigated to via the page number input.
+
+Maybe this page could look like it's been ripped out or something.
 
 ---
 
 # Getting started
 
-If this is your first time using the Level Editor™, here is a step-by-step guide to creating your first project.
+Step-by-step instructions to getting a project up and running.
 
 [Table of contents]
 
@@ -24,31 +38,25 @@ If this is your first time using the Level Editor™, here is a step-by-step gui
 
 ## Opening the level editor
 
-From the title screen of Under The Red Sky (the very first screen you see when you load up the game), find and click on the **Level Editor** button.
+The level editor can be accessed from the title screen of *Under The Red Sky* (the very first screen you see when you load the game).
 
-This will take you to the **Welcome menu**.
-
-![The welcome menu.](/media/welcome-menu.png)
+Clicking on the **Level Editor** button will take you to the [Welcome menu]().
 
 ---
 
 ## Creating a new project
 
-```note-blue
-A **project** contains a series of levels. If a project has more than one level, runners will be made to complete it in sequence.
-```
-
-#  Creating a project from scratch
-
 To begin a project from scratch, simply click on the **Create New Project** button from the [Welcome menu]().
 
-## Loading an existing project
+Alternatively, if you want to start from an existing project...
 
-If you have an existing project that you'd like to work on, you can load any local project file by selecting the **Open Project** button instead.
+### Loading an existing project
 
-If you've recently worked on a projected, you'll find it listed under **Recent Projects**.
+You can load any local project file by selecting the **Open Project** button.
 
-## Opening an example project
+If you've recently worked on a project, you'll find it listed under **Recent Projects**.
+
+### Opening the example project
 
 If you'd like to check out the example project showcased in the background of the [Welcome menu](), you can open it by clicking on **Open Example Project** on the top left.
 
@@ -56,11 +64,15 @@ If you'd like to check out the example project showcased in the background of th
 
 # Designing your level
 
+The meat of your work.
+
 [Table of contents]
 
 ---
 
 ## Controlling the camera
+
+Use your keyboard and mouse to move around the scene or change your viewing angle.
 
 | Key                  | Action        |
 |-                     |-              |
@@ -77,6 +89,14 @@ If you'd like to check out the example project showcased in the background of th
 ---
 
 ## Placing objects
+
+First, choose an object preset from the [Object Preset menu]().
+
+```note-blue
+You can access the [Object Preset menu]() by clicking on an empty slot in the [Object tray](), or by hovering over a non-empty slot and clicking on the pencil icon ![](/media/icons/pencil.svg#icon).
+```
+
+First, load your [object tray]() with the object that you'd like to place.
 
 Snapping can be configured in the Level Settings
 
@@ -110,6 +130,10 @@ Multiselect (click drag / shift click)
 
 ## Playing your project
 
+```note-blue
+Projects can contain a series of levels. If a project has more than one level, runners will be made to complete it in sequence.
+```
+
 To return to the level editor from the level, just hit pause and click on Level Editor
 
 ---
@@ -139,6 +163,8 @@ To return to the level editor from the level, just hit pause and click on Level 
 You can create custom structures by first selecting 1 or more objects and then clicking on the **Create Custom Structure** ![Create Custom Structure icon](/media/icons/CreateCustomStructure.svg#icon) button in the [toolbar]().
 
 You can manage your custom structures by navigating to [Project menu]() > **Resources** > **Structures**.
+
+[Table of contents]
 
 ---
 
