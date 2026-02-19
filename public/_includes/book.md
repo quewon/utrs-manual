@@ -16,13 +16,13 @@ layout: base.html
     {%- endif -%}
     {{ bookpage.content | renderContent: "md" }}
     <footer>
-        {%- if bookpage.previous and bookpage.title != "HIDDEN" -%}
+        {%- if bookpage.previous -%}
             <a class="pagination" href="{{ bookpage.previous.url }}"><img src="/media/icons/ChevronBlue/ChevronLeft.svg#icon" /></a>
         {%- else -%}
             <span class="pagination"></span>
         {%- endif -%}
         <input type="number" value="{{ bookpage.number }}" min="1" max="404">
-        {%- if bookpage.next and bookpage.title != "HIDDEN" -%}
+        {%- if bookpage.next -%}
             <a class="pagination" href="{{ bookpage.next.url }}"><img src="/media/icons/ChevronBlue/ChevronRight.svg#icon" /></a>
         {%- else -%}
             <span class="pagination"></span>

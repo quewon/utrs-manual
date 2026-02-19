@@ -140,7 +140,7 @@ function goto(url, onpop) {
     }
 
     document.querySelector(`nav a.selected`)?.classList.remove("selected");
-    document.querySelector(`nav a[data-page="${pageElement.dataset.page}"]`).classList.add("selected");
+    document.querySelector(`nav a[data-page="${pageElement.dataset.page}"]`)?.classList.add("selected");
 
     document.querySelector("aside").classList.remove("toggled");
 }
@@ -172,6 +172,43 @@ document.addEventListener("mousedown", e => {
         document.querySelector("aside").classList.remove("toggled");
     }
 })
+
+// let wheelLocked = false;
+// let wheelTimeout;
+// document.addEventListener("wheel", e => {
+//     if (!wheelLocked) {
+//         let delta = e.deltaX;
+
+//         let dir = 0;
+//         let i = null;
+//         if (delta < -2) {
+//             if (currentPageNumber < pages.length - 2) {
+//                 i = (currentPageNumber + 1) + 1;
+//                 dir = 1;
+//                 wheelLocked = true;
+//             }
+//         } else if (delta > 2) {
+//             if (currentPageNumber > 0) {
+//                 i = (currentPageNumber + 1) - 1;
+//                 dir = -1;
+//                 wheelLocked = true;
+//             }
+//         }
+//         if (i !== null) {
+//             while (pages[i].dataset.title === "HIDDEN") {
+//                 i += dir;
+//             }
+//             goto(pages[i].dataset.url);
+//         }
+//     }
+
+//     clearTimeout(wheelTimeout);
+//     wheelTimeout = setTimeout(() => {
+//         wheelLocked = false;
+//     }, 100)
+
+//     e.preventDefault();
+// }, { passive: false })
 
 let touchLocked = false;
 let touch;

@@ -82,7 +82,7 @@ export default function(config) {
         if (lookingForSection) {
             let previousPage = currentPage;
 
-            const header = line.split(" ").slice(1).join(" ");
+            const header = line.trim().split(" ").slice(1).join(" ");
             var headingValue = line.split(" ")[0].length;
             if (line.includes("~")) {
                 line = "";
@@ -122,11 +122,20 @@ export default function(config) {
     });
     pages[1].url = "/";
 
-    for (let i=1; i<pages.length; i++) {
-        if (i < pages.length - 1)
-            pages[i].next = pages[i + 1];
-        if (i > 1)
-            pages[i].previous = pages[i - 1];
+    var visiblePages = pages.filter(page => {
+        return page.title !== "HIDDEN"
+    })
+
+    for (let i=1; i<visiblePages.length; i++) {
+        let page = pages[pages.indexOf(visiblePages[i])];
+        if (page.title === "HIDDEN")
+            continue;
+        if (i < visiblePages.length - 1) {
+            page.next = visiblePages[i + 1];
+        }
+        if (i > 1) {
+            page.previous = visiblePages[i - 1];
+        }
     }
 
     return {
