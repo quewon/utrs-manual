@@ -2,29 +2,27 @@
 
 # Introduction
 
-Congratulations on your new role as Enterprise Level Designer for Z-corp™. Here at Z-corp, we are committed to upholding our standards of competency in every position, no matter the level of experience. We hope that this Handbook™ can get you started on your journey to becoming a knowledgable and efficient designer.
+Congratulations on your new role as Builder™. Here at Z-corp™, we are committed to upholding our standards of competency in every position, no matter the level of experience. We hope that this Handbook™ can get you started on your journey to becoming a knowledgable and efficient designer.
 
 This Handbook may be changed without notice. Make sure to keep the Handbook accessible for future reference in order to stay up-to-date with any changes.
+
+```note-blue
+Employees needing a physical copy of the Handbook should speak to Human Resources.
+```
 
 `Last updated XX/XX/20XX`
 
 ---
 
-~## Navigating this handbook
+~## Navigating this Handbook
 
-## Navigating this handbook
+## Navigating this Handbook
 
-You can navigate to each section and page of this Handbook™ from the left-hand sidebar.
+If you're using the physical copy, simply turn the pages.
+
+Otherwise, use the left-hand sidebar to navigate to each section and page of this Handbook™, or click through the footer of each page.
 
 Additionally, you can use the arrow keys ![left](/media/icons/ArrowLeft.svg#icon) ![right](/media/icons/ArrowRight.svg#icon) or swipe side to side on mobile to turn the pages.
-
----
-
-## HIDDEN
-
-This is a hidden page that can only be navigated to via the page number input.
-
-Maybe this page could look like it's been ripped out or something.
 
 ---
 
@@ -33,14 +31,6 @@ Maybe this page could look like it's been ripped out or something.
 Step-by-step instructions to getting a project up and running.
 
 [Table of contents]
-
----
-
-## Opening the level editor
-
-The level editor can be accessed from the title screen of *Under The Red Sky* (the very first screen you see when you load the game).
-
-Clicking on the **Level Editor** button will take you to the [Welcome menu]().
 
 ---
 
@@ -356,8 +346,4 @@ Structures are prefabricated object groups that can be instantiated just like an
 
 Custom structures can be defined on a per-project basis.
 
-```toc
-[Creating a custom structure](/objects/custom/creating-a-custom-structure)
-[Variable parameters](/objects/custom/variable-parameters)
-[Custom structure example](/objects/custom/custom-structure-example)
-```
+[Table of contents]
