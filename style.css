@@ -30,7 +30,6 @@ body, html {
     margin: 0;
     font-family: var(--body-font);
     overflow: hidden;
-    /* font-family: 'IBM Plex Sans', -apple-system, sans-serif; */
 }
 
 * {
