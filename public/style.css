@@ -193,29 +193,23 @@ nav > ol > li > ol h1 {
     background: var(--page-bg);
     width: 100%;
     height: 100%;
-    padding: var(--padding);
-    padding-left: calc(var(--binder-holes-width) + var(--padding));
-    padding-bottom: calc(var(--padding) * 1.5);
     box-sizing: border-box;
     position: relative;
-
-    mask-image: 
+    overflow-y: scroll;
+    /* mask-image: 
         radial-gradient(circle at calc(var(--binder-holes-width) / 2) 10%, transparent var(--binder-hole-radius), black var(--binder-hole-radius)),
         radial-gradient(circle at calc(var(--binder-holes-width) / 2) 35%, transparent var(--binder-hole-radius), black var(--binder-hole-radius)),
         radial-gradient(circle at calc(var(--binder-holes-width) / 2) 50%, transparent var(--binder-hole-radius), black var(--binder-hole-radius)),
         radial-gradient(circle at calc(var(--binder-holes-width) / 2) 65%, transparent var(--binder-hole-radius), black var(--binder-hole-radius)),
         radial-gradient(circle at calc(var(--binder-holes-width) / 2) 90%, transparent var(--binder-hole-radius), black var(--binder-hole-radius));
-    mask-composite: intersect;
+    mask-composite: intersect; */
 }
-.page::after {
-    content: "";
-    width: var(--binder-holes-width);
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: var(--accent);
-    pointer-events: none;
+.page-content {
+    min-height: 100%;
+    padding: var(--padding) calc(var(--padding) * 2);
+    box-sizing: border-box;
+    position: relative;
+    padding-bottom: calc(var(--padding) * 1.5);
 }
 .page header, .page footer {
     font-family: var(--monospace);
@@ -224,16 +218,23 @@ nav > ol > li > ol h1 {
 .page footer {
     padding: var(--padding);
     position: absolute;
-    width: calc(100% - var(--binder-holes-width));
+    width: 100%;
     box-sizing: border-box;
-    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center;
 }
 .page header {
     text-transform: uppercase;
 }
-.page footer {
-    bottom: 0;
-    text-align: right;
+.page::after {
+    content: "";
+    width: 100%;
+    height: 0;
+    border-bottom: 1px dashed lightgray;
+    position: absolute;
+    top: 100%;
+    left: 0;
 }
 
 .hidden {
@@ -379,22 +380,18 @@ img {
 }
 .page.section-title h1:first-of-type {
     text-transform: uppercase;
-    margin-top: 0.25em;
     margin-bottom: 1em;
 }
 .page.section-title > img:first-child {
     vertical-align: baseline;
-    margin-top: 2em;
+    position: absolute;
+    top: 4.2em;
+    right: calc(100% - var(--padding) * 1.5);
 }
 .page footer .pagination {
-    text-align: center;
-    position: absolute;
-}
-.page footer .pagination:first-child {
-    right: 4.6em;
-}
-.page footer .pagination:last-child {
-    right: .9em;
+    width: 2ch;
+    display: inline-block;
+    min-height: 1em;
 }
 .page.section-title footer, .page.title footer, .page footer a {
     opacity: 0;

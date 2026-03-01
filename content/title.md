@@ -1,9 +1,24 @@
-The Official Z-corp™
+```
+CONFIDENTIAL
+INTERNAL COPY — DO NOT DISTRIBUTE
+```
 
-# Level Editor Handbook
-## for Employees
+<br>
+
+TRIALS™ BY Z–CORP LABS
+
+# Development
+# Handbook
+# for Builders™
+
+EDITION XXVII
+
+20ZZ
+
+<br>
 
 ```
-CONFIDENTIAL — FOR INTERNAL USE ONLY
-© 20ZZ Z-corp
+“YOUR BEST WORK IS ONE DESIGN AWAY.”
+
+Z®
 ```
