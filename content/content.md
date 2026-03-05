@@ -191,6 +191,14 @@ Before you publish your project, consider the following:
 
 - Have you set the correct [difficulty]() for your project?
 - Have you set reasonable [star times]()?
+- Have you surpassed yourself by creating something better than anything else before?
+
+```note-yellow
+Please note that once your project is published, your creation will represent Z-corp and you alone will be held accountable in the event of said Trials to be either impossible, unfair, or not up to our standards of quality.
+Please consult the QA department before [uploading to the Steam Workshop]()
+```
+
+![QA Seal of Approval.](/media/QA_seal_certified.png#full-image)
 
 ---
 
