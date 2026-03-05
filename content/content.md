@@ -195,7 +195,7 @@ Before you publish your project, consider the following:
 
 ```note-yellow
 Please note that once your project is published, your creation will represent Z-corp and you alone will be held accountable in the event of said Trials to be either impossible, unfair, or not up to our standards of quality.
-Please consult the QA department before [uploading to the Steam Workshop]()
+Please consult the QA department before [uploading to the Steam Workshop](https://utrs-manual.netlify.app/publishing-your-project/uploading-to-the-steam-workshop)
 ```
 
 ![QA Seal of Approval.](/media/QA_seal_certified.png#full-image)
