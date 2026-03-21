@@ -409,6 +409,10 @@ footer input::-webkit-outer-spin-button {
     -webkit-appearance: none;
 }
 
+.hidden {
+    display: none;
+}
+
 #book {
     flex-grow: 1;
     position: relative;
@@ -421,13 +425,10 @@ footer input::-webkit-outer-spin-button {
     position: relative;
     margin: auto;
     margin-top: 2.5em;
-    width: 60%;
+    width: 50em;
+    max-width: calc(100% - 5em);
     aspect-ratio: 3/4;
     background: white;
     color: var(--bg);
     color-scheme: light;
-}
-
-.hidden {
-    display: none;
 }

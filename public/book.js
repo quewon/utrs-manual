@@ -115,6 +115,7 @@ function updatePageMarker() {
             navPageMarker.classList.remove("hidden");
         }
     } else {
+        navPageMarker.style.top = "0";
         navPageMarker.classList.add("hidden");
     }
 }
