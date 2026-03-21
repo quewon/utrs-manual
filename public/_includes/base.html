@@ -62,12 +62,12 @@
                 {{ content }}
             </div>
             <footer>
-                <button disabled>← Prev</button>
+                <button id="pagePrevious" disabled>← Prev</button>
                 <div class="page-indicator">
-                    <input type="number" min="1" value="1">
+                    <input id="pageNumberInput" type="number" min="1" value="0">
                     <strong class="tertiary">/ <span id="pageTotal">29</span></strong>
                 </div>
-                <button>Next →</button>
+                <button id="pageNext">Next →</button>
             </footer>
         </div>
     </main>

@@ -193,6 +193,11 @@ button {
     display: flex;
     align-items: center;
     cursor: pointer;
+    transition: opacity 0.1s;
+}
+button:disabled {
+    opacity: 0.25;
+    cursor: default;
 }
 
 main {
@@ -421,9 +426,6 @@ footer input::-webkit-outer-spin-button {
     background: white;
     color: var(--bg);
     color-scheme: light;
-}
-.page.vis-hidden {
-    display: none;
 }
 
 .hidden {

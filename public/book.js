@@ -19,7 +19,28 @@ window.addEventListener("load", () => {
         lightbox.init();
     }
 
+    pageNumberInput.addEventListener("change", () => {
+        const page = book.querySelector(`.page[data-page="${pageNumberInput.value}"]`);
+        if (page) {
+            navigate(page.dataset.url);
+        } else {
+            navigate("/404");
+        }
+    })
+    pagePrevious.addEventListener("click", () => {
+        const page = book.querySelector(`.page[data-page="${parseInt(pageNumberInput.value) - 1}"]`);
+        navigate(page.dataset.url);
+    })
+    pageNext.addEventListener("click", () => {
+        const page = book.querySelector(`.page[data-page="${parseInt(pageNumberInput.value) + 1}"]`);
+        navigate(page.dataset.url);
+    })
+    pageTotal.textContent = book.querySelectorAll(".page").length - 2;
+
     navigate(location.pathname);
+    if (location.pathname === "/404") {
+        pageNumberInput.value = 404;
+    }
 })
 
 document.addEventListener("click", e => {
@@ -53,10 +74,24 @@ function navigate(url, pop) {
     book.querySelector(".page:not(.hidden)")?.classList.add("hidden");
     page.classList.remove("hidden");
 
+    const pageNumber = parseInt(page.dataset.page);
+
+    if (url !== "/404") {
+        pageNumberInput.value = pageNumber;
+    }
+    pagePrevious.setAttribute("disabled", true);
+    pageNext.setAttribute("disabled", true);
+    if (book.querySelector(`.page[data-page="${pageNumber - 1}"]`)) {
+        pagePrevious.removeAttribute("disabled");
+    }
+    if (book.querySelector(`.page[data-page="${pageNumber + 1}"]`)) {
+        pageNext.removeAttribute("disabled");
+    }
+
     document.querySelector("nav a.selected")?.classList.remove("selected");
     const pageButton = document.querySelector(`nav a[data-page="${page.dataset.page}"]`);
-    const pageCount = book.querySelectorAll(".page:not(.glossary)").length - 1;
-    const progress = Math.min((parseInt(page.dataset.page) + 1) / pageCount * 100, 100);
+    const pageCount = book.querySelectorAll(".page:not(.glossary)").length - 2;
+    const progress = Math.min(pageNumber / pageCount * 100, 100);
     progressFill.style.width = progress + "%";
     progressPercentage.textContent = Math.floor(progress) + "%";
     if (pageButton) {
@@ -72,14 +107,13 @@ function updatePageMarker() {
             while (!pageButton.offsetTop) {
                 pageButton = pageButton.closest("ol").parentElement.querySelector("a");
             }
-            navPageMarker.style.opacity = "0";
+            navPageMarker.classList.add("hidden");
             navPageMarker.style.top = pageButton.offsetTop + "px";
         } else {
-            navPageMarker.style.opacity = "1";
             navPageMarker.style.height = pageButton.offsetHeight + "px";
             navPageMarker.style.top = pageButton.offsetTop + "px";
+            navPageMarker.classList.remove("hidden");
         }
-        navPageMarker.classList.remove("hidden");
     } else {
         navPageMarker.classList.add("hidden");
     }
