@@ -8,18 +8,67 @@
     <link rel="stylesheet" href="/res/photoswipe/photoswipe.css">
 </head>
 <body>
+
+    <header class="gap1">
+        <img class="header-logo" src="/res/icons/z-corp_symbolmark_white.svg" alt="Z-Corp®">
+        <div class="vertical-div"></div>
+        <div class="secondary upper overflow-ellipsis">
+            <strong class="primary">Z–corp® Labs</strong> <span class="light">— Development Handbook for Builders™</span>
+        </div>
+        <div class="grow"></div>
+        <div class="search">
+            <img src="/res/icons/search.svg" alt="" class="search-icon">
+            <input type="text" placeholder="Search document...">
+        </div>
+        <button class="upper danger leave-button" onclick="location.href = 'https://dedragames.com'">Leave</button>
+    </header>
     
-    <aside>
-        <nav>
-            <a href="/" class="subtitle"><h1>UTRS</h1></a>
-            {{ pages.nav }}
-        </nav>
-        <button type="button" id="sidebar-toggle" onclick="document.querySelector('aside').classList.toggle('toggled')"></button>
-    </aside>
+    <header class="gap2 flex tertiary upper">
+        <div>Doc ref: <span class="secondary-dark">ZC/OPS-X.H-TDVB.ZZ03</span></div>
+        <div>Edition: <span class="secondary-dark">V (20ZZ)</span></div>
+        <div class="clf b">Classification · &nbsp;[B] Partial view</div>
+    </header>
 
     <main>
-        <div class="book">
-            {{ content }}
+        <aside>
+            <div>
+                <div class="upper quaternary">Table of Contents</div>
+                <a href="/" class="title">
+                    <h2 class="upper secondary">
+                        Z–CORP® LABS <span class="quaternary">/</span>
+                    </h2>
+                    <h1 class="upper primary">
+                        Development Handbook<br>for Builders™
+                    </h1>
+                </a>
+                <div class="progress">
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" id="progressFill" style="width: 50%"></div>
+                    </div>
+                    <div class="progress-label">
+                        <span>Reading progress</span>
+                        <span id="progressPercentage">50%</span>
+                    </div>
+                </div>
+            </div>
+            <nav>
+                <div id="navPageMarker" class="hidden"></div>
+                {{ pages.nav }}
+            </nav>
+        </aside>
+
+        <div class="viewer">
+            <div id="book">
+                {{ content }}
+            </div>
+            <footer>
+                <button disabled>← Prev</button>
+                <div class="page-indicator">
+                    <input type="number" min="1" value="1">
+                    <strong class="tertiary">/ <span id="pageTotal">29</span></strong>
+                </div>
+                <button>Next →</button>
+            </footer>
         </div>
     </main>
     

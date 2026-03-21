@@ -1,4 +1,38 @@
-~## Introduction
+UNLISTED~# Z-CORP® / DEVELOPMENT HANDBOOK FOR BUILDERS™
+
+© 20ZZ Z–CORP® LABS
+
+```
+ISBN:		978-0-8975-8949-5
+Job number:	ZC/OPS-X.H-TDVB.ZZ03
+DOI:		[docs.zcorp.org/10.03.00122/00305](/404)
+```
+
+This publication may not be reproduced in whole or in part and in any form for any purposes without special permission from the copyright holder, provided acknowledgement of the source is made. 
+
+Z–CORP® would appreciate receiving a copy of any publication that uses this publication as a source.
+
+No use of this publication may be made for resale or any other commercial purpose whatsoever without prior permission in writing from Z–CORP®. Applications for such permission, with a statement of the purpose and extent of the reproduction, should be addressed to the Directorate of Labs Public Relations, Communication Division, Z–CORP®, [public-cd-labs@zcorp.org](mailto:???).
+
+Disclaimers
+
+The designations employed and the presentation of material in this publication do not imply the expression of any opinion whatsoever on the part of the Z–CORP® Headquarters concerning the legal status of any dimension, galaxy, planet, country, territory, city or area or of its authorities, or concerning the delimitation of its frontiers or boundaries.
+
+Mention of a commercial company or product in this document does not imply endorsement by 
+Z–CORP® or the authors. The use of information from this document for publicity or advertising is not permitted. Trademark names and symbols are used in an editorial fashion with no intention on infringement of trademark or copyright laws.
+
+The views expressed in this publication are those of the authors and do not necessarily reflect the views of Z–CORP® and DEDRA®. We regret any errors or omissions that may have been unwittingly made.
+
+© Maps, photos and illustrations as specified.
+
+Suggested citation:
+Z–CORP® LABS et al. (20ZZ): Development Handbook for Builders™. Z–CORP LABS Handbook. Aubervilliers. [docs.zcorp.org/10.510.00122/00027](/404)
+
+URL: [zcorp.org/labs/resources/handbook/trials-builders-development-handbook-20zz](/404)
+
+---
+
+~# Introduction
 
 # Introduction
 
@@ -8,24 +42,23 @@ This Handbook may be changed without notice. Make sure to keep the Handbook acce
 Failure to comply with every rule stated in the Handbook will result in immediate termination of contract.
 
 ```note-blue
-Employees requiring a physical copy of the Handbook should consult Human Resources.
+Builders™ requiring an updated copy of the Development Handbook™ for Builders™ should consult the Builder™ & Runner™ Liaison Department, located in Floor A23-1637B in the ABV Office, France. Internal extension no. is: 1002.
 ```
 
 `Last updated XX/XX/20XX`
 
----
 
 ## Navigating this Handbook
 
 If you're using the physical copy, simply turn the pages using either hand and/or fingers.
 
-Otherwise, use the left-hand sidebar or click through the footer of each page. Additionally, you can use the arrow keys ![left](/media/icons/ArrowLeft.svg#icon) ![right](/media/icons/ArrowRight.svg#icon) or swipe side to side on your mobile device to turn the pages.
+If using the digital copy, use the left-hand sidebar or click through the footer of each page. Additionally, you can use the arrow keys ![left](/media/icons/ArrowLeft.svg#icon) ![right](/media/icons/ArrowRight.svg#icon) or swipe side to side on your mobile device to turn the pages.
 
 ---
 
 # Getting started
 
-Step-by-step instructions to get a project initialized and set up.
+Step-by-step instructions to get a project initialised and set up.
 
 [Table of contents]
 
@@ -33,17 +66,17 @@ Step-by-step instructions to get a project initialized and set up.
 
 ## Locating the level editor
 
-On the startup menu of your machine, you will find a program simply titled **Level Editor**. Click the program to open it. You will then be greeted by the [Welcome menu]().
+On the startup menu of your machine, you will find a program simply titled **Level Editor**. Click the program to open it. You will then be greeted by the [Welcome menu](/glossary/w/welcome-menu).
 
 ```note-yellow
-Although there is no clear visible trademark (™) on this occurrence of the Level Editor™, Z-corp emphases that the Level Editor™ is indeed trademarked and any breach of said trademark will result in legal pursuit.
+Although there is no clear visible trademark (™) on this occurrence of the Level Editor™, Z–CORP® emphases that the Level Editor™ is indeed trademarked and any breach of said trademark will result in legal pursuit.
 ```
 
 ---
 
 ## Creating a new project
 
-To create a new project, simply click on the **Create New Project** button from the [Welcome menu]().
+To create a new project, simply click on the **Create New Project** button from the [Welcome menu](/glossary/w/welcome-menu).
 
 Alternatively, if you want to start from an existing project...
 
@@ -55,7 +88,7 @@ If you've recently worked on a project, you'll find it listed under **Recent Pro
 
 ### Opening the example project
 
-If you'd like to check out the example project showcased in the background of the [Welcome menu](), you can open it by clicking on **Open Example Project** on the top left. This action is recommended if this is your first time creating a Trial™.
+If you'd like to check out the example project showcased in the background of the [Welcome menu](/glossary/w/welcome-menu), you can open it by clicking on **Open Example Project** on the top left. This action is recommended if this is your first time creating a Trial™.
 
 ---
 
@@ -79,21 +112,21 @@ Use your keyboard and mouse to move around the scene or change your viewing angl
 | Shift + Space        | Move down     |
 | Middle click + Mouse | Look          |
 
-**Camera movement speed** and **camera rotation speed** can be configured in the [Level Settings menu]().
+**Camera movement speed** and **camera rotation speed** can be configured in the [Level Settings menu](/glossary/l/level-settings).
 
 ---
 
 ## Placing objects
 
-To place an object, first choose a preset from the [Object Preset menu]().
+To place an object, first choose a preset from the [Object Preset menu](/glossary/o/object-preset-menu).
 
 ```note-blue
-You can access the [Object Preset menu]() by clicking on an empty slot in the [Object tray](), or by hovering over a non-empty slot and clicking on the pencil icon (icon).
+You can access the [Object Preset menu](/glossary/o/object-preset-menu) by clicking on an empty slot in the [Object tray](/glossary/o/object-tray), or by hovering over a non-empty slot and clicking on the pencil icon (icon).
 ```
 
-Once you've loaded your preset of choice into the [Object tray](), **right-click** in the [scene view](/glossary) to instantiate the object. Objects can be placed against other objects or on top of the [grid floor]().
+Once you've loaded your preset of choice into the [Object tray](/glossary/o/object-tray), **right-click** in the [scene view](/glossary/s/scene-view) to instantiate the object. Objects can be placed against other objects or on top of the grid floor.
 
-By default, objects will snap to a 64x64x64 grid. You can toggle grid snapping from the [toolbar]() (icon). Snapping behavior can also be further configured in the [Level Settings]().
+By default, objects will snap to a 64x64x64 grid. You can toggle grid snapping from the [toolbar](/glossary/t/toolbar) (icon). Snapping behavior can also be further configured in the [Level Settings](/glossary/l/level-settings).
 
 ```note-blue
 Use the bottom left slider to change the z-position of the grid floor.
@@ -103,7 +136,7 @@ Use the bottom left slider to change the z-position of the grid floor.
 
 ### Moving, rotating, and scaling objects
 
-When an object is selected, you can alter it using the transform tools in the toolbar or by modifying its values in the [inspector]().
+When an object is selected, you can alter it using the transform tools in the toolbar or by modifying its values in the [inspector](/glossary/i/inspector).
 
 ```note-blue
 You can press **Tab** to quickly cycle between the different transform tools.
@@ -131,7 +164,7 @@ The scale tool (icon) enables axis and face handles that allow you to resize the
 
 ### Selecting objects
 
-If you are familiar with similar digital editing programs, you will have noticed that you can **select** an object by left-clicking it.
+If you are familiar with similar digital editing programs, you will have noticed that you can **select** an object by left clicking it.
 
 You can select multiple objects at once by dragging out a selection field or holding shift and clicking. Any transformations (moving, rotating, scaling) done to this selection will be applied to all objects.
 
@@ -142,7 +175,7 @@ You can select multiple objects at once by dragging out a selection field or hol
 
 ### Deleting objects
 
-Press **Delete** or **Backspace**, or select the **Delete Instance** action from the [inspector]() to delete selected objects.
+Press **Delete** or **Backspace**, or select the **Delete Instance** action from the [inspector](/glossary/i/inspector) to delete selected objects.
 
 ```note-yellow
 **Deleted the wrong thing?**
@@ -159,19 +192,19 @@ Projects can contain a series of levels. If a project has more than one level, r
 
 As a Builder, it is vital to test a project before shipping it. Playing a level will provide you with the data and insights necessary to ensure that the map has been designed to the correct specifications.
 
-Simply select the **Play** button (icon) from the [toolbar]() to test your level. You can return to the level editor at any point from the pause menu.
+Simply select the **Play** (icon) button from the [toolbar](/glossary/t/toolbar) to test your level. You can return to the level editor at any point from the pause menu.
 
-If your level contains issues, you will not be able to play it. Turn to the next page for more detail on [handling issues]().
+If your level contains issues, you will not be able to play it. Turn to the next page for more detail on handling issues.
 
 ---
 
 ### Handling issues
 
-The [Issues window]() contains information on any mistakes or potential game-breaking bugs your level may contain.
+The [Issues menu](/glossary/i/issues-menu) contains information on any mistakes or potential game-breaking bugs your level may contain.
 
 For example, if your level is missing a Start Zone or End Zone, a Runner will not be able to begin or complete the level. This will be flagged as an error that will prevent you from playing or submitting a level.
 
-![An example of an error and warning in the Issues window.]()
+![An example of an error and warning in the Issues menu.]()
 
 ```note-blue
 If an issue is related to a specific object type or instance, you will be able to find a reference to it linked under the issue.
@@ -189,14 +222,20 @@ If an issue is related to a specific object type or instance, you will be able t
 
 Before you publish your project, consider the following:
 
-- Have you set the correct [difficulty]() for your project?
-- Have you set reasonable [star times]()?
+- [ ] Have you set the correct [difficulty](/glossary/s/steam-workshop-menu) for your project?
+- [ ] Have you set reasonable [level times](/glossary/l/level-settings/level-times)?
+- [ ] Have you surpassed yourself by creating something better than anything else before?
+
+```note-yellow
+Please note that once your project is published, your creation will represent Z-corp and you alone will be held accountable in the event of said Trials to be either impossible, unfair, or not up to our standards of quality.
+Please consult the QA department before [uploading to the Steam Workshop](/publishing-your-project/uploading-to-the-steam-workshop).
+```
 
 ---
 
 ## Uploading to the Steam Workshop
 
-Navigate to the [Steam Workshop window]() by clicking on the **Steam Workshop** (icon) button from the [toolbar]().
+Navigate to the [Steam Workshop menu](/glossary/s/steam-workshop-menu) by clicking on the **Steam Workshop** (icon) button from the [toolbar](/glossary/t/toolbar).
 
 If the project is not linked to a Steam Workshop item, you will be prompted to create one.
 
@@ -204,7 +243,7 @@ If the project is not linked to a Steam Workshop item, you will be prompted to c
 
 Once the item has been created, you will be able to fill out the project's metadata, including its title, preview thumbnail, difficulty level, description, and visibility.
 
-![Steam Workshop metadata menu.]()
+![The Steam Workshop menu.]()
 
 Once you've finished filling out the correct information, click the blue **Upload** (icon) button to publish your project. Once published, Runners around the world will immediately be able to play your project via the Workshop.
 
@@ -222,15 +261,15 @@ The more complex capabilities of our level editor.
 
 A single project can contain multiple levels. Runners will move through these levels in sequence.
 
-You can add, manage, and open levels from the [Project window]().
+You can add, manage, and open levels from the [Project Manager](/glossary/p/project-manager).
 
-![The Levels section of the Project window.]()
+![The Levels section of the Project Manager.](/glossary/p/project-manager)
 
 ---
 
 ## Analyzing your test playthrough
 
-When you've [played through a level](), you will be provided with a visualization of the path you took within the editor. This visual is called a "ghost path." Ghost paths can be played in order to analyze real-time movement. All relevant settings can be found in the [toolbar]() next to the **Toggle Ghost Visibility** (icon) button.
+When you've [played through a level](/designing-your-trials™/playing-your-project), you will be provided with a visualization of the path you took within the editor. This visual is called a "ghost path." Ghost paths can be played in order to analyze real-time movement. All relevant settings can be found in the [toolbar](/glossary/t/toolbar) next to the **Toggle Ghost Visibility** (icon) button.
 
 ![Real-time movement playback via ghost paths.]()
 
@@ -238,7 +277,7 @@ When you've [played through a level](), you will be provided with a visualizatio
 
 ## Assigning level times
 
-In every level, stars can be awarded for efficient traversal. In the [Level Settings window](), you can set the minimum required completion time to earn up to 4 stars. If you assign a time of 0 seconds to a star, that star will not be available.
+In every level, stars can be awarded for efficient traversal. In the [Level Settings menu](/glossary/l/level-settings), you can set the minimum required completion time to earn up to 4 stars. If you assign a time of 0 seconds to a star, that star will not be available.
 
 Make sure to set star times that are achievable and rewarding.
 
@@ -246,11 +285,11 @@ Make sure to set star times that are achievable and rewarding.
 
 ## Creating a custom structure
 
-[Structures]() are preset object groups. They can be useful for defining and instantiating custom objects per project.
+[Structures](/glossary/s/structure) are preset object groups. They can be useful for defining and instantiating custom objects per project.
 
-You can create custom structures by first selecting 1 or more objects and then clicking on the **Create Custom Structure** ![Create Custom Structure icon](/media/icons/CreateCustomStructure.svg#icon) button in the [toolbar]().
+You can create custom structures by first selecting 1 or more objects and then clicking on the **Create Custom Structure** ![](/media/icons/CreateCustomStructure.svg#icon) button in the [toolbar](/glossary/t/toolbar).
 
-You can manage your custom structures by navigating to [Project menu]() > **Resources** > **Structures**.
+You can manage your custom structures by navigating to [Project Manager](/glossary/p/project-manager) > **Resources** > **Structures**.
 
 [Table of contents]
 
@@ -258,7 +297,7 @@ You can manage your custom structures by navigating to [Project menu]() > **Reso
 
 ### Variable parameters
 
-Several object presets have what we call a *variable parameter*, a value that can be set before object instantiation by right-clicking the preset in the [object tray](). This will allow you to set the parameter of an object before you place it in the scene.
+Several object presets have what we call a *variable parameter*, a value that can be set before object instantiation by right-clicking the preset in the [object tray](/glossary/o/object-tray). This will allow you to set the parameter of an object before you place it in the scene.
 
 ![Variable parameter tooltip.]()
 
@@ -277,7 +316,7 @@ Some objects, such as Start Zone or Secret, have limited or no parameterable var
 
 Picture a scenario in which a Builder must design a level set in a town with many small houses. It would be useful for this Builder to define a custom "house" structure so that they can easily place several of these houses.
 
-First, the Builder begins by creating the structure within the scene. They decide to create a house using the Prism and Cube [shape objects]().
+First, the Builder begins by creating the structure within the scene. They decide to create a house using the Prism and Cube [shape objects](/glossary/o/object-preset/shapes).
 
 ![A house composed of a prism and a cube.](/media/custom-structure-example/1.png#full-image)
 
@@ -285,9 +324,9 @@ Next, the Builder selects all the objects that make up the house before clicking
 
 ![Custom structure creation.]()
 
-The Builder fills out the information for this structure and decides that they want to set a [variable **Color** parameter]() so that they can easily create different colored versions of this house.
+The Builder fills out the information for this structure and decides that they want to set a [variable **Color** parameter](/going-deeper/creating-a-custom-structure/variable-parameters) so that they can easily create different colored versions of this house.
 
-Once they click **Create**, they are able to find the preset within the [Object Preset menu]() under **Custom Structures**.
+Once they click **Create**, they are able to find the preset within the [Object Preset menu](/glossary/o/object-preset-menu) under **Custom Structures**.
 
 ![Custom structures section of the Object Preset menu.]()
 
@@ -301,13 +340,13 @@ Now they can place this house structure like any other object preset.
 
 Every detail, even those that don't directly affect the geography of a level, can have an impact on a Runner's experience. This is why the Z-corp™ proprietary Level Editor™ provides tools to change even the color of the sky if a Builder deems it necessary.
 
-Skybox, sky color, fog color, and fog density are all values that can be set in the [Level Settings menu]().
+Skybox, sky color, fog color, and fog density are all values that can be set in the [Level Settings menu](/glossary/l/level-settings).
 
 ---
 
 ## Changing the level music
 
-You can change the level music in the [Level Settings menu](/glossary/editor-interface/level-settings) under **General Settings > Level Playlist**. Choose from our selection of [Z-corp approved Playlists™](/glossary/editor-interface/toolbar/level-settings/general-settings/level-playlist).
+You can change the level music in the [Level Settings menu](/glossary/l/level-settings) under **General Settings > Level Playlist**. Choose from our selection of [Z-corp approved Playlists™](/glossary/l/level-settings/general-settings/level-playlist).
 
 ---
 
@@ -325,7 +364,7 @@ You can change the level music in the [Level Settings menu](/glossary/editor-int
 
 ### Camera
 
-The scene camera is what allows you to view and move around the [scene](). For more detail, read the page on [controlling the camera]().
+The scene camera is what allows you to view and move around the [scene](/glossary/s/scene). For more detail, read the page on [controlling the camera](/designing-your-trials™/controlling-the-camera).
 
 ---
 
@@ -335,23 +374,23 @@ The Color Palette Manager allows you to set the preset colors used in color pick
 
 ![The Color Palette Manager.]()
 
-This window can be opened from the [Project Manager]() by clicking on the (icon) **Colors** button.
+This menu can be opened from the [Project Manager](/glossary/p/project-manager) by clicking on the **Colors** (icon) button.
 
 ---
 
 ### Custom structure
 
-Custom structures are [structures]() that have been defined by the Builder on a per-project basis. To learn how to define them, read the page on [creating custom structures]().
+Custom structures are [structures](/glossary/s/structure) that have been defined by the Builder on a per-project basis. To learn how to define them, read the page on [creating custom structures](/going-deeper/creating-a-custom-structure).
 
 ---
 
-### Custom Structures window
+### Custom Structures menu
 
-The Custom Structures window allows you to easily add or delete structures. Custom structures can be imported and exported from this menu.
+The Custom Structures menu allows you to easily add or delete structures. Custom structures can be imported and exported from this menu.
 
-![The Custom Structures window.]()
+![The Custom Structures menu.]()
 
-This window can be opened from the [Project Manager]() by clicking on the (icon) **Structures** button.
+This menu can be opened from the [Project Manager](/glossary/p/project-manager) by clicking on the **Structures** (icon) button.
 
 ---
 
@@ -367,15 +406,15 @@ Ghost paths are playtesting data visualized within the scene. They show the path
 
 ![An example of a ghost path.]()
 
-Ghost paths are automatically recorded and visualized once you [play through a level](). They can be played, stopped, hidden, and managed all through the various (icon) [toolbar]() actions.
+Ghost paths are automatically recorded and visualized once you [play through a level](/designing-your-trials™/playing-your-project). They can be played, stopped, hidden, and managed all through the various [toolbar](/glossary/t/toolbar) (icon) actions.
 
 ---
 
 ### Ghost Paths Manager
 
-The Ghost Paths Manager allows you to easily control the playback, visibility, and availability of all of the [ghost paths]() in a level.
+The Ghost Paths Manager allows you to easily control the playback, visibility, and availability of all of the [ghost paths](/glossary/g/ghost-path) in a level.
 
-This window can opened from the [toolbar]() by clicking on the dropdown next to the (icon) **Toggle Ghost Visibility** button and selecting **Open Ghost Paths Manager**.
+This menu can opened from the [toolbar](/glossary/t/toolbar) by clicking on the dropdown next to the **Toggle Ghost Visibility** (icon) button and selecting **Open Ghost Paths Manager**.
 
 ![The Ghost Paths manager.]()
 
@@ -399,15 +438,15 @@ The Inspector appears on the right-hand side of the editor when object(s) are se
 
 An issue is any error or warning present in the level. An **error** is an issue that will prevent the level from playing. A **warning** is an issue that may cause problems, but does not strictly require fixing.
 
-Issues can be tracked in the [Issues window]().
+Issues can be tracked in the [Issues menu](/glossary/i/issues-menu).
 
 ---
 
-### Issues window
+### Issues menu
 
-The Issues window lists any [issues]() that may be present in the level.
+The Issues menu lists any [issues](/glossary/i/issue) that may be present in the level.
 
-![The Issues window.]()
+![The Issues menu.]()
 
 ---
 
@@ -440,13 +479,13 @@ The Issues window lists any [issues]() that may be present in the level.
 
 ### Level
 
-A level is a single scene in a [project](). For a level to be publishable, it must meet the following requirements:
+A level is a single scene in a [project](/glossary/p/project). For a level to be publishable, it must meet the following requirements:
 
 1. There is a Start Zone.
 2. There is an End Zone.
-3. There must not be a low star time that is greater than a higher star time. (See: [level times]())
+3. There must not be a low star time that is greater than a higher star time. (See: [level times](/glossary/l/level-settings/level-times))
 
-If a level does not meet any of these requirements, an [error]() will be thrown.
+If a level does not meet any of these requirements, an [error](/glossary/i/issue) will be thrown.
 
 ---
 
@@ -463,8 +502,8 @@ Allows configuration of level and editor settings.
 | Name               | Description |
 | -                  | -           |
 | Level Name         | Appears upon entering a level and in the pause menu. |
-| Level Size         | The level's width and height. Objects outside of these bounds will create a warning in the [Issues window](). Set to 3000x3000 by default. |
-| [Level Playlist]() | The level's soundtrack. |
+| Level Size         | The level's width and height. Objects outside of these bounds will create a warning in the [Issues menu](/glossary/i/issues-menu). Set to 3000x3000 by default. |
+| [Level Playlist](/glossary/l/level-settings/general-settings/level-playlist) | The level's soundtrack. |
 
 ---
 
@@ -493,7 +532,7 @@ Allows configuration of level and editor settings.
 
 #### Level Times
 
-Setting level times will allow you to award stars to Runners who beat the map within the specified number of seconds. For a detailed guide, read the page on [setting level times]().
+Setting level times will allow you to award stars to Runners who beat the map within the specified number of seconds. For a detailed guide, read the page on [setting level times](/going-deeper/assigning-level-times).
 
 | Name        | Description                                             |
 | -           | -                                                       |
@@ -510,7 +549,7 @@ If the time requirement for a star is set to 0, the star will not be available t
 
 The Levels menu allows you to open, add, and reorganize levels.
 
-This is a submenu that can be found within the [Project Manager window]().
+This is a submenu that can be found within the [Project Manager](/glossary/p/project-manager).
 
 ---
 
@@ -524,13 +563,13 @@ This is a submenu that can be found within the [Project Manager window]().
 
 Objects are the basic building block of any level. These are your platforms, bounce pads, traffic cones, et cetera.
 
-For a guide on how to add and manipulate objects, read the Getting Started page on [placing objects]().
+For a guide on how to add and manipulate objects, read the page on [placing objects](/designing-your-trials™/placing-objects).
 
 ---
 
 ### Object preset
 
-Object presets are specific predefined object types that can be used to [generate new objects](). A list of object presets can be found from the [Object Preset menu]().
+Object presets are specific predefined object types that can be used to [generate new objects](/designing-your-trials™/placing-objects). A list of object presets can be found from the [Object Preset menu](/glossary/o/object-preset-menu).
 
 All object presets have a position, size, and rotation/angle parameter.
 
@@ -540,7 +579,7 @@ All object presets have a position, size, and rotation/angle parameter.
 
 #### Shapes
 
-Shapes are basic geometric objects. Don't be fooled by their simplicity, as they have a wide variety of uses ranging from blocking out levels to building [custom structures]().
+Shapes are basic geometric objects. Don't be fooled by their simplicity, as they have a wide variety of uses ranging from blocking out levels to building [custom structures](/glossary/c/custom-structure).
 
 | Name       | Parameters             | Right-click setter |
 | -          | -                      | -                  |
@@ -575,7 +614,7 @@ The most commonly used objects are grouped simply as "Objects." Anything you'll 
 
 #### Special
 
-Special objects provide unique interactions. Some objects here, like Start Zone and End Zone, are necessary to play and complete a level.
+Special objects provide unique interactions. Some objects here, like **Start Zone** and **End Zone**, are necessary to play and complete a level.
 
 | Name        | Parameters                     | Right-click setter |
 | -           | -                              | -                  |
@@ -630,7 +669,7 @@ Tags should not be used for any personal creative expression. You are obligated 
 
 #### Structures
 
-See the glossary page on [structures]().
+See the glossary page on [structures](/glossary/s/structure).
 
 | Name         | Objects             | Right-click setter |
 | -            | -                   | -                  |
@@ -641,23 +680,23 @@ See the glossary page on [structures]().
 
 #### Custom
 
-See the glossary page on [custom structures]().
+See the glossary page on [custom structures](/glossary/c/custom-structure).
 
 ---
 
 ### Object Preset menu
 
-The Object Preset menu contains every [object preset]() at your disposal.
+The Object Preset menu contains every [object preset](/glossary/o/object-preset) at your disposal.
 
-This menu can be opened by clicking on an empty slot in the [Object tray](), or by hovering over a non-empty slot and clicking on the pencil icon (icon).
+This menu can be opened by clicking on an empty slot in the [Object tray](/glossary/o/object-tray), or by hovering over a non-empty slot and clicking on the pencil icon (icon).
 
-![The Object Preset menu]().
+![The Object Preset menu.]()
 
 ---
 
 ### Object tray
 
-The object tray is located at the bottom of your editor, and contains slots for loading [object presets]() 
+The object tray is located at the bottom of your editor, and contains slots for loading [object presets](/glossary/o/object-preset). 
 
 ![The object tray.]()
 
@@ -671,19 +710,19 @@ The object tray is located at the bottom of your editor, and contains slots for 
 
 ### Project
 
-A project is a sequence of levels. To work on a level, you must first create a **project**. For a detailed guide on how to do that, read the page on [creating a new project]().
+A project is a sequence of levels. To work on a level, you must first create a **project**. For a detailed guide on how to do that, read the page on [creating a new project](/getting-started/creating-a-new-project).
 
-You can manage your projects from the [Welcome menu](), and edit any project information from the [Project Manager]().
+You can manage your projects from the [Welcome menu](/glossary/w/welcome-menu), and edit any project information from the [Project Manager](/glossary/p/project-manager).
 
 ---
 
 ### Project Manager
 
-The Project Manager window contains information about your current project.
+The Project Manager contains information about your current project.
 
-This window can be opened from the [toolbar]() by clicking on the (icon) **Project** button.
+This menu can be opened from the [toolbar](/glossary/t/toolbar) by clicking on the **Project** (icon) button.
 
-![The Project Manager window.]()
+![The Project Manager.]()
 
 ---
 
@@ -695,7 +734,7 @@ This window can be opened from the [toolbar]() by clicking on the (icon) **Proje
 
 ### Scene view
 
-The scene view is the area in which you will build the level. It is easily [navigable via the scene camera]().
+The scene view is the area in which you will build the level. It is easily [navigable via the scene camera](/designing-your-trials™/controlling-the-camera).
 
 ![The scene view.]()
 
@@ -707,11 +746,33 @@ The Steam Workshop (also known simply as Workshop) is where we store levels gene
 
 The Workshop is accessible directly from your machine (next to the **Level Editor**) or via an external Steam program.
 
+If your project is linked to a Workshop item, the item's metadata will be configurable via the [Steam Workshop menu](/glossary/s/steam-workshop-menu).
+
+---
+
+### Steam Workshop menu
+
+Allows configuration of Workshop item metadata.
+
+The following properties can be configured:
+
+| Name        | Description |
+| -           | -           |
+| Title       | The title of the item. |
+| Preview     | The preview image that will be seen by users viewing the item. |
+| Visibility  | The item's visibility. Can be set to public, friends only, private, or unlisted. |
+| Difficulty  | The project's difficulty. |
+| Description | A description of the project. |
+
+This menu can be opened from the [toolbar](/glossary/t/toolbar) by clicking on the **Steam Workshop** (icon) button.
+
+![The Steam Workshop menu.]()
+
 ---
 
 ### Structure
 
-Structures are prefabricated [object]() groups that can be instantiated just like any other object. Structures can also be user-defined—see also [the glossary page on custom structures]().
+Structures are prefabricated [object](/glossary/o/object) groups that can be instantiated just like any other object. Structures can also be user-defined—see also the glossary page on [custom structures](/glossary/c/custom-structure).
 
 ---
 
@@ -727,25 +788,25 @@ The toolbar is a row of buttons above the scene view that contains various funct
 
 | Icon   | Label                   | Description |
 | -      | -                       | - |
-| (icon) | Project                 | Opens the [Project Manager window](/glossary/toolbar/project-manager). |
-| (icon) | Steam Workshop          | Opens the [Steam Workshop window](/glossary/toolbar/steam-workshop). |
+| (icon) | Project                 | Opens the [Project Manager](/glossary/p/project-manager). |
+| (icon) | Steam Workshop          | Opens the [Steam Workshop menu](/glossary/s/steam-workshop-menu). |
 | (icon) | Save Project            | Indicates whether there are unsaved changes. Saves project on click. |
 | (icon) | Undo                    | Undoes the last change. |
 | (icon) | Redo                    | Redoes the last undoed change. |
-| (icon) | Move Tool               | If an object is selected, enables the [move tool](). |
-| (icon) | Rotate Tool             | If an object is selected, enables the [rotate tool](). |
-| (icon) | Scale Tool              | If an object is selected, enables the [scale tool](). |
+| (icon) | Move Tool               | If an object is selected, enables the [move tool](/designing-your-trials™/moving-rotating-and-scaling-objects#move). |
+| (icon) | Rotate Tool             | If an object is selected, enables the [rotate tool](/designing-your-trials™/moving-rotating-and-scaling-objects#rotate). |
+| (icon) | Scale Tool              | If an object is selected, enables the [scale tool](/designing-your-trials™/moving-rotating-and-scaling-objects#scale). |
 | (icon) | Copy                    | Copies the selected object(s). |
 | (icon) | Paste                   | Pastes the copied object(s). |
 | (icon) | Cut                     | Copies and removes the selected object(s). |
 | (icon) | Duplicate               | Duplicates the selected object(s). |
 | (icon) | Delete                  | Deletes the selected object(s). |
 | (icon) | Create Custom Structure | Creates a custom structure composed of the selected object(s). |
-| (icon) | Toggle Ghost Visibility | Toggles the visibility of [ghost paths](). |
+| (icon) | Toggle Ghost Visibility | Toggles the visibility of [ghost paths](/glossary/g/ghost-path). |
 | (icon) | Toggle Grid Snapping | Toggles whether objects snap to the grid when being moved or placed. |
-| (icon) | (Variable)              | Indicates whether the level contains issues. Opens the [Issues window](). |
+| (icon) | (Variable)              | Indicates whether the level contains issues. Opens the [Issues menu](/glossary/i/issues-menu). |
 | (icon) | Play                    | Plays the level. |
-| (icon) | Settings                | Opens the [Level Settings window.]() |
+| (icon) | Settings                | Opens the [Level Settings menu](/glossary/l/level-settings). |
 
 ---
 
@@ -757,6 +818,6 @@ The toolbar is a row of buttons above the scene view that contains various funct
 
 ### Welcome menu
 
-This is the menu that greets you when you open the Level Editor™. From here, you can create and open [projects]().
+This is the menu that greets you when you open the Level Editor™. From here, you can create and open [projects](/glossary/p/project).
 
-![The Welcome menu.]()
+![The Welcome menu.](/media/glossary/welcome-menu.png)

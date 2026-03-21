@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 2476 2709" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-10561,-1047)">
+        <g id="handbook-z_poly-page1" transform="matrix(0.873439,0,0,3.7988,3652.04,-2930.34)">
+            <rect x="7910.15" y="1047" width="2834.58" height="712.944" style="fill:none;"/>
+            <clipPath id="_clip1">
+                <rect x="7910.15" y="1047" width="2834.58" height="712.944"/>
+            </clipPath>
+            <g clip-path="url(#_clip1)">
+                <g transform="matrix(-13.0902,0,0,-3.00975,19542.4,3693.93)">
+                    <path d="M672.069,719.92L672.086,650.271L743.909,642.573L850.096,650.272L888.629,642.573L888.629,719.92L672.069,719.92Z" style="fill:rgb(102,179,255);fill-rule:nonzero;"/>
+                </g>
+                <g transform="matrix(-13.0902,0,0,-3.00975,19542.4,3693.93)">
+                    <path d="M672.069,879.451L672.069,685.845L888.629,642.573L888.629,879.451L672.069,879.451Z" style="fill:rgb(58,142,239);fill-rule:nonzero;"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

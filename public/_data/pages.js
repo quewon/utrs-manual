@@ -2,16 +2,52 @@ import fs from 'fs';
 
 var sectionCounter;
 
+function twoDigit(number) {
+    if (number < 10) {
+        number = "0" + number;
+    }
+    return number;
+}
+
+function parseSectionCounter() {
+    let s = sectionCounter[0];
+    for (let i=1; i<sectionCounter.length; i++) {
+        s += "." + sectionCounter[i];
+    }
+    return s;
+}
+
 function pageToNavHTML(page) {
-    if (page.title === "HIDDEN")
-        return "";
-    let html = `<a data-page="${page.number}" href="${page.url}"><h1>${page.headingValue === 1 ? `<img src="/media/icons/Roman/og/${sectionCounter++}.svg#icon" /> ` : ""}${page.title}</h1></a>`;
+    let html = "";
+    if (!page.unlisted && !page.hidden) {
+        html = `<div>
+                <a data-page="${page.number}" href="${page.url}" class="hv${page.headingValue}">
+                    <div class="number">
+                        ${page.headingValue === 1
+                            ? twoDigit(sectionCounter[0]) 
+                            : parseSectionCounter()
+                        }
+                    </div>
+                    ${page.title}
+                </a>
+                ${page.headingValue > 0 && page.pages.length > 0
+                    ? `<button class="dropdown-button${page.headingValue > 1 || page.title === "Glossary" ? " toggled" : ""}" title="Toggle collapse"></button>`
+                    : ""
+                }
+            </div>`;
+    }
     if (page.pages.length > 0) {
+        sectionCounter.push(1);
         html += "<ol>";
         for (let subpage of page.pages) {
-            html += `<li>${pageToNavHTML(subpage)}</li>`;
+            let subpageHTML = pageToNavHTML(subpage);
+            if (subpageHTML) {
+                html += `<li>${subpageHTML}</li>`;
+                sectionCounter[sectionCounter.length - 1]++;
+            }
         }
         html += "</ol>";
+        sectionCounter.pop();
     }
     return html;
 }
@@ -54,7 +90,7 @@ function pageData(page) {
 }
 
 export default function(config) {
-    sectionCounter = 1;
+    sectionCounter = [];
     
     const content = fs.readFileSync("./content/content.md", { encoding: "utf8" });
 
@@ -67,49 +103,70 @@ export default function(config) {
         pages: [],
         parents: [],
         headingValue: 0,
-        number: pagenumber++
+        number: pagenumber++,
+        unlisted: true,
+        hidden: false
     }
     var currentPage = structure;
-    var lookingForSection = true;
+    var lookingForHeader = true;
 
     for (let line of lines) {
-        if (!lookingForSection && line.trim() !== "---") {
+        if (!lookingForHeader && line.trim() !== "---") {
             currentPage.content += "\n" + line;
         }
 
         if (line.trim() === "") continue;
 
-        if (lookingForSection) {
+        if (lookingForHeader) {
             let previousPage = currentPage;
 
-            const header = line.trim().split(" ").slice(1).join(" ");
+            var unlisted = false;
+            var hidden = false;
             var headingValue = line.split(" ")[0].length;
-            if (line.includes("~")) {
-                line = "";
-                headingValue--;
+            const header = line.trim().split(" ").slice(1).join(" ");
+            if (line.indexOf("UNLISTED") == 0) {
+                headingValue -= "UNLISTED".length;
+                line = line.slice("UNLISTED".length);
+                unlisted = true;
+            } else if (line.indexOf("HIDDEN") == 0) {
+                headingValue -= "HIDDEN".length;
+                line = line.slice("HIDDEN".length);
+                unlisted = true;
+                hidden = true;
             }
-            while (headingValue <= previousPage.parents.length) {
+            if (line.includes("~")) {
+                headingValue--;
+                line = "";
+            }
+            while (headingValue <= previousPage.headingValue) {
                 previousPage = previousPage.parents[previousPage.parents.length - 1];
             }
             const page = {
                 title: header,
                 content: line,
                 pages: [],
-                parents: [...previousPage.parents, previousPage],
+                parents: headingValue === previousPage.headingValue ? previousPage.parents : [...previousPage.parents, previousPage],
                 headingValue,
-                number: pagenumber++
+                number: pagenumber++,
+                unlisted,
+                hidden,
+                glossary: header === "Glossary"
+            }
+            for (let parent of page.parents) {
+                if (parent.title === "Glossary") {
+                    page.glossary = true;
+                    break;
+                }
             }
             previousPage.pages.push(page);
             currentPage = page;
-            lookingForSection = false;
+            lookingForHeader = false;
         } else {
             if (line.trim() === "---") {
-                lookingForSection = true;
+                lookingForHeader = true;
             }
         }
     }
-
-    setURLs(structure);
 
     var pages = pageData(structure);
     pages.unshift({
@@ -118,8 +175,12 @@ export default function(config) {
         content: fs.readFileSync("./content/404.md", { encoding: "utf8" }),
         parents: [],
         headingValue: 0,
-        number: 404
+        number: 404,
+        unlisted: true,
+        hidden: true
     });
+
+    setURLs(structure);
     pages[1].url = "/";
 
     var visiblePages = pages.filter(page => {
