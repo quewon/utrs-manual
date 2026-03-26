@@ -16,6 +16,9 @@
     --quaternary: #333333;
     --danger: #FE4445;
     --accent: #388FF0;
+
+    --page-bg: white;
+    --page-primary: var(--bg);
 }
 
 html, body {
@@ -388,6 +391,10 @@ footer button {
     border: 1px solid var(--quaternary);
     color: var(--tertiary-light);
     letter-spacing: 0.05em;
+    transition: color 0.1s;
+}
+footer button:hover {
+    color: var(--secondary);
 }
 footer input {
     border: 1px solid var(--quaternary);
@@ -420,15 +427,203 @@ footer input::-webkit-outer-spin-button {
     display: flex;
     flex-direction: column;
 }
+#book:focus {
+    outline: none
+}
 
 .page {
     position: relative;
-    margin: auto;
-    margin-top: 2.5em;
-    width: 50em;
-    max-width: calc(100% - 5em);
+    margin: 2.5rem auto;
+    width: 50rem;
+    max-width: calc(100% - 5rem);
     aspect-ratio: 3/4;
-    background: white;
-    color: var(--bg);
+    background: var(--page-bg);
+    color: var(--page-primary);
     color-scheme: light;
+    container-type: inline-size;
+
+    --default-padding: 2.5em;
+    --default-line-height: 1.5em;
+    --h1-size: 2em;
+    --h2-size: 1.75em;
+    --h3-size: 1.5em;
+    --h4-size: 1.25em;
+    --h5-size: 1em;
+    --h6-size: 0.75em;
+}
+
+.page-content {
+    position: relative;
+    font-size: 2.3cqi;
+    padding: var(--default-padding);
+}
+.page-content p {
+    line-height: var(--default-line-height);
+}
+.page-content a {
+    color: var(--accent);
+    text-decoration: underline;
+}
+.page-content h1:first-child,
+.page-content h2:first-child,
+.page-content h3:first-child,
+.page-content h4:first-child,
+.page-content h5:first-child,
+.page-content h6:first-child {
+    margin-top: 0;
+}
+.page-content h1 {
+    font-size: var(--h1-size);
+}
+.page-content h2 {
+    font-size: var(--h2-size);
+    background-color: var(--accent);
+    color: var(--page-bg);
+}
+.page-content h3 {
+    font-size: var(--h3-size);
+    color: var(--accent);
+}
+.page-content h4 {
+    font-weight: normal;
+    font-size: var(--h4-size);
+    color: var(--accent);
+}
+.page-content h5 {
+    font-size: var(--h5-size);
+}
+.page-content h6 {
+    font-size: var(--h6-size);
+}
+
+.page-content pre:has(code) {
+    overflow: scroll;
+}
+
+.title .page-content {
+    padding: 0;
+}
+
+.breadcrumbs {
+    font-size: 0.8em;
+    position: absolute;
+    top: 2.5em;
+    text-transform: uppercase;
+}
+.breadcrumbs a {
+    font-weight: 700;
+    text-decoration: none;
+}
+
+/* page templates */
+
+.section-title::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url(/res/doc_template/handbook-z_poly-page1.svg);
+    background-repeat: no-repeat;
+}
+.section-title {
+    color: var(--page-bg);
+}
+.section-title .toc,
+.section-title:has(.toc) p {
+    max-width: 50%;
+}
+.section-title .toc a {
+    color: inherit;
+}
+.section-title:has(.toc) .page-content {
+    padding: 10em 5em;
+}
+.section-title:has(.toc) .page-content h1 {
+    font-size: 5em;
+    margin: 0;
+    font-weight: 800;
+}
+.section-title:has(.toc) .page-content p {
+    font-style: italic;
+}
+.section-title .breadcrumbs {
+    right: 5em;
+}
+.section-title .breadcrumbs a {
+    color: inherit;
+}
+
+/* page components */
+
+.toc {
+    list-style-type: none;
+    padding: 0;
+    font-size: 0.8em;
+}
+.toc li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+    margin-bottom: 0.75em;
+}
+.toc li::after {
+    content: attr(data-page);
+}
+.toc a {
+    text-decoration: none;
+}
+
+.task-list {
+    list-style-type: none;
+    padding-left: 2em;
+}
+.task-list-item {
+    display: flex;
+    gap: 0.5em;
+    align-items: flex-start;
+}
+.task-list-item input {
+    cursor: pointer;
+}
+
+.page-content table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.page-content th {
+    font-weight: 700;
+}
+.page-content th, td {
+    border: 1px solid var(--secondary-light);
+    padding: .5em;
+}
+
+.note-yellow, .note-blue {
+    border: 1px solid black;
+    padding: 1em;
+}
+
+/* bespoke pages */
+
+#page-development-handbook-for-builders-E2-84-A2::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url(/res/doc_template/handbook-z_poly-page2.svg);
+    background-repeat: no-repeat;
+}
+#page-development-handbook-for-builders-E2-84-A2 .page-content {
+    padding-top: 3em;
+    color: var(--page-bg);
+}
+#page-development-handbook-for-builders-E2-84-A2 .page-content p {
+    font-size: 0.8em;
+}
+#page-development-handbook-for-builders-E2-84-A2 .page-content a {
+    color: inherit;
 }

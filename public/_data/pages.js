@@ -1,7 +1,5 @@
 import fs from 'fs';
 
-var sectionCounter;
-
 function twoDigit(number) {
     if (number < 10) {
         number = "0" + number;
@@ -9,23 +7,23 @@ function twoDigit(number) {
     return number;
 }
 
-function parseSectionCounter() {
-    let s = sectionCounter[0];
-    for (let i=1; i<sectionCounter.length; i++) {
+function parseSectionCounter(sectionCounter) {
+    let s = sectionCounter[1];
+    for (let i=2; i<sectionCounter.length; i++) {
         s += "." + sectionCounter[i];
     }
     return s;
 }
 
-function pageToNavHTML(page) {
+function pageToNavHTML(page, sectionCounter = [0]) {
     let html = "";
-    if (!page.unlisted && !page.hidden) {
+    if (!page.unlisted) {
         html = `<div>
                 <a data-page="${page.number}" href="${page.url}" class="hv${page.headingValue}">
                     <div class="number">
                         ${page.headingValue === 1
-                            ? twoDigit(sectionCounter[0]) 
-                            : parseSectionCounter()
+                            ? twoDigit(sectionCounter[1]) 
+                            : parseSectionCounter(sectionCounter)
                         }
                     </div>
                     ${page.title}
@@ -37,17 +35,20 @@ function pageToNavHTML(page) {
             </div>`;
     }
     if (page.pages.length > 0) {
-        sectionCounter.push(1);
         html += "<ol>";
         for (let subpage of page.pages) {
-            let subpageHTML = pageToNavHTML(subpage);
+            for (let i=sectionCounter.length; i<=subpage.headingValue; i++) {
+                sectionCounter[i] = 0;
+            }
+            sectionCounter = sectionCounter.slice(0, subpage.headingValue + 1);
+            if (!subpage.unlisted)
+                sectionCounter[subpage.headingValue]++;
+            let subpageHTML = pageToNavHTML(subpage, sectionCounter);
             if (subpageHTML) {
                 html += `<li>${subpageHTML}</li>`;
-                sectionCounter[sectionCounter.length - 1]++;
             }
         }
         html += "</ol>";
-        sectionCounter.pop();
     }
     return html;
 }
@@ -79,19 +80,26 @@ function setURLs(page) {
     }
 }
 
-function pageData(page) {
+function pageData(page, sectionCounter = [0]) {
     let data = [page];
 
-    for (let subpage of page.pages) {
-        data = [...data, ...pageData(subpage)];
+    if (page.pages.length > 0) {
+        for (let subpage of page.pages) {
+            for (let i=sectionCounter.length; i<=subpage.headingValue; i++) {
+                sectionCounter[i] = 0;
+            }
+            sectionCounter = sectionCounter.slice(0, subpage.headingValue + 1);
+            sectionCounter[subpage.headingValue]++;
+            if (sectionCounter[1])
+                subpage.sectionNumber = sectionCounter[1];
+            data = [...data, ...pageData(subpage, sectionCounter)];
+        }
     }
 
     return data;
 }
 
 export default function(config) {
-    sectionCounter = [];
-    
     const content = fs.readFileSync("./content/content.md", { encoding: "utf8" });
 
     let pagenumber = 0;

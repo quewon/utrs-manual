@@ -1,12 +1,10 @@
-UNLISTED~# Z-CORP® / DEVELOPMENT HANDBOOK FOR BUILDERS™
+UNLISTED~## DEVELOPMENT HANDBOOK FOR BUILDERS™
 
-© 20ZZ Z–CORP® LABS
+**© 20ZZ Z–CORP® LABS**
 
-```
-ISBN:		978-0-8975-8949-5
-Job number:	ZC/OPS-X.H-TDVB.ZZ03
-DOI:		[docs.zcorp.org/10.03.00122/00305](/404)
-```
+**ISBN:**		978-0-8975-8949-5
+**Job number:**	ZC/OPS-X.H-TDVB.ZZ03
+**DOI:**		[docs.zcorp.org/10.03.00122/00305](/404)
 
 This publication may not be reproduced in whole or in part and in any form for any purposes without special permission from the copyright holder, provided acknowledgement of the source is made. 
 
@@ -14,7 +12,7 @@ Z–CORP® would appreciate receiving a copy of any publication that uses this p
 
 No use of this publication may be made for resale or any other commercial purpose whatsoever without prior permission in writing from Z–CORP®. Applications for such permission, with a statement of the purpose and extent of the reproduction, should be addressed to the Directorate of Labs Public Relations, Communication Division, Z–CORP®, [public-cd-labs@zcorp.org](mailto:???).
 
-Disclaimers
+**Disclaimers**
 
 The designations employed and the presentation of material in this publication do not imply the expression of any opinion whatsoever on the part of the Z–CORP® Headquarters concerning the legal status of any dimension, galaxy, planet, country, territory, city or area or of its authorities, or concerning the delimitation of its frontiers or boundaries.
 
@@ -32,9 +30,9 @@ URL: [zcorp.org/labs/resources/handbook/trials-builders-development-handbook-20z
 
 ---
 
-~# Introduction
+~## Introduction
 
-# Introduction
+## Introduction
 
 Congratulations on your new role as Builder™. Here at Z-corp™, we are committed to upholding our standards of competency in every position, no matter the level of experience. This Handbook™ will get you started on your journey to becoming a knowledgeable and efficient designer, and will serve as an absolute reference for any question you may have regarding the Level Editor™.
 
@@ -47,12 +45,13 @@ Builders™ requiring an updated copy of the Development Handbook™ for Builder
 
 `Last updated XX/XX/20XX`
 
+---
 
 ## Navigating this Handbook
 
 If you're using the physical copy, simply turn the pages using either hand and/or fingers.
 
-If using the digital copy, use the left-hand sidebar or click through the footer of each page. Additionally, you can use the arrow keys ![left](/media/icons/ArrowLeft.svg#icon) ![right](/media/icons/ArrowRight.svg#icon) or swipe side to side on your mobile device to turn the pages.
+If using the digital copy, use the left-hand sidebar or click through the footer of each page. Additionally, you can use the arrow keys ← → or swipe side to side on your mobile device to turn the pages.
 
 ---
 

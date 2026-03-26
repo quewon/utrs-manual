@@ -1,4 +1,5 @@
 import markdownIt from "markdown-it";
+import markdownItTaskCheckbox from "markdown-it-task-checkbox";
 import { RenderPlugin } from "@11ty/eleventy";
 import { readFileSync } from "fs";
 import { imageSize } from "image-size";
@@ -23,6 +24,9 @@ export default function (config) {
         html: true,
         breaks: true,
         linkify: true
+    }).use(markdownItTaskCheckbox, {
+        disabled: false,
+        divWrap: false
     });
 
     const defaultTextRenderer = md.renderer.rules.text;

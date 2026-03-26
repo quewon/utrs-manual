@@ -1,7 +1,30 @@
 import PhotoSwipeLightbox from "/res/photoswipe/photoswipe-lightbox.esm.min.js";
 import PhotoSwipe from "/res/photoswipe/photoswipe.esm.min.js";
 
-window.addEventListener("load", () => {
+window.addEventListener("DOMContentLoaded", () => {
+    const pages = book.querySelectorAll(".page");
+    for (let page of pages) {
+        const toc = page.querySelector(".toc");
+        if (toc) {
+            const hv = parseInt(page.dataset.hv);
+            let number = parseInt(page.dataset.page);
+            for (let i=number + 2; i<pages.length; i++) {
+                const phv = parseInt(pages[i].dataset.hv);
+                if (phv <= hv) {
+                    break;
+                }
+                const li = document.createElement("li");
+                li.dataset.page = parseInt(pages[i].dataset.page);
+                const a = document.createElement("a");
+                a.href = pages[i].dataset.url;
+                a.textContent = pages[i].dataset.title;
+                li.style.paddingLeft = (phv - hv - 1) * 0.5 + "em";
+                li.appendChild(a);
+                toc.appendChild(li);
+            }
+        }
+    }
+
     for (let button of document.querySelectorAll(".dropdown-button")) {
         button.onclick = () => {
             button.classList.toggle("toggled");
@@ -27,14 +50,18 @@ window.addEventListener("load", () => {
             navigate("/404");
         }
     })
-    pagePrevious.addEventListener("click", () => {
+    pagePrevious.onclick = () => {
         const page = book.querySelector(`.page[data-page="${parseInt(pageNumberInput.value) - 1}"]`);
-        navigate(page.dataset.url);
-    })
-    pageNext.addEventListener("click", () => {
+        if (page) {
+            navigate(page.dataset.url);
+        }
+    }
+    pageNext.onclick = () => {
         const page = book.querySelector(`.page[data-page="${parseInt(pageNumberInput.value) + 1}"]`);
-        navigate(page.dataset.url);
-    })
+        if (page) {
+            navigate(page.dataset.url);
+        }
+    }
     pageTotal.textContent = book.querySelectorAll(".page").length - 2;
 
     navigate(location.pathname);
@@ -62,6 +89,24 @@ window.addEventListener("popstate", () => {
 
 window.addEventListener("resize", updatePageMarker);
 
+document.addEventListener("keydown", e => {
+    switch (e.key) {
+        case "ArrowLeft":
+            pagePrevious.click();
+            book.focus();
+            break;
+        case "ArrowUp":
+        case "ArrowDown":
+            autoScroll = false;
+            book.focus();
+            break;
+        case "ArrowRight":
+            pageNext.click();
+            book.focus();
+            break;
+    }
+})
+
 function navigate(url, pop) {
     const page = book.querySelector(`.page[data-url="${url}"]`);
 
@@ -73,6 +118,7 @@ function navigate(url, pop) {
 
     book.querySelector(".page:not(.hidden)")?.classList.add("hidden");
     page.classList.remove("hidden");
+    scrollToTop();
 
     const pageNumber = parseInt(page.dataset.page);
 
@@ -99,6 +145,30 @@ function navigate(url, pop) {
     }
     updatePageMarker();
 }
+
+function lerp(a, b, t) {
+    return (1 - t) * a + t * b;
+}
+
+var autoScroll = false;
+async function scrollToTop() {
+    autoScroll = true;
+    while (book.scrollTop > 0) {
+        if (!autoScroll) return;
+        book.scrollTop = lerp(book.scrollTop, 0, 0.2);
+        await new Promise(resolve => {
+            requestAnimationFrame(() => {
+                resolve();
+            })
+        })
+    }
+    autoScroll = false;
+    book.scrollTop = 0;
+}
+
+book.addEventListener("wheel", () => {
+    autoScroll = false;
+})
 
 function updatePageMarker() {
     var pageButton = document.querySelector("nav a.selected");
