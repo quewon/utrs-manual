@@ -620,8 +620,27 @@ footer input::-webkit-outer-spin-button {
 }
 
 .note-yellow, .note-blue {
-    border: 1px solid black;
     padding: 1em;
+    padding-top: 3em;
+    position: relative;
+}
+.note-yellow::before, .note-blue::before {
+    content: "";
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 2em;
+    background-color: rgba(0, 0, 0, .05);
+}
+.note-blue {
+    background: #64B3FE;
+}
+.note-yellow {
+    background: #FEB743;
+}
+.note-yellow p, .note-blue p {
+    margin: 0;
 }
 
 .page-content ul {

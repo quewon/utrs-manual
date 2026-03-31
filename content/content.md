@@ -58,6 +58,14 @@ LOCATION:	ABV/FR
 
 ---
 
+UNLISTED~## Table of Contents
+
+## Table of Contents
+
+[Global table of contents]
+
+---
+
 ~## Introduction
 
 ## Introduction
@@ -72,7 +80,7 @@ Failure to comply with every rule stated in the Handbook will result in immediat
 Builders™ requiring an updated copy of the Development Handbook™ for Builders™ should consult the Builder™ & Runner™ Liaison Department, located in Floor A23-1637B in the ABV Office, France. Internal extension no. is: 1002.
 ```
 
-`Last updated XX/XX/20XX`
+Last updated XX/XX/20XX
 
 ---
 
