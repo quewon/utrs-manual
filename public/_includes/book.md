@@ -3,7 +3,7 @@ layout: base.html
 ---
 
 {%- for bookpage in pages.pages -%}
-<div id="page-{{ bookpage.title | downcase | url_encode | replace: '%', '-' | replace: '+', '-' }}" class="hidden page{% if bookpage.headingValue == 1 %} section-title{% endif %}{% if bookpage.headingValue == 0 %} title{% endif %}{% if bookpage.hidden %} vis-hidden{% endif %}{% if bookpage.hidden %} vis-unlisted{% endif %}{% if bookpage.glossary %} glossary{% endif %}" data-url="{{ bookpage.url }}" data-page="{{ bookpage.number }}" data-title="{{ bookpage.title }}" data-hv="{{ bookpage.parents.length }}">
+<div id="page-{{ bookpage.title | downcase | url_encode | replace: '%', '-' | replace: '+', '-' }}" class="hidden page{% if bookpage.headingValue == 1 %} section-title{% endif %}{% if bookpage.hidden %} vis-hidden{% endif %}{% if bookpage.hidden %} vis-unlisted{% endif %}{% if bookpage.glossary %} glossary{% endif %}" data-url="{{ bookpage.url }}" data-page="{{ bookpage.number }}" data-title="{{ bookpage.title }}" data-hv="{{ bookpage.parents.length }}">
     <div class="page-content">
         {%- if bookpage.parents.length > 1 -%}
             <div class="breadcrumbs">

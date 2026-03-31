@@ -32,8 +32,8 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    for (let page of book.querySelectorAll(".page:has(a[data-pswp-src])")) {
-        page.id = "gallery" + page.dataset.page;
+    for (let page of book.querySelectorAll(".page-content:has(a[data-pswp-src])")) {
+        page.id = "gallery" + page.parentElement.dataset.page;
         const lightbox = new PhotoSwipeLightbox({
             gallery: "#" + page.id,
             children: "a[data-pswp-src]",
@@ -43,11 +43,15 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     pageNumberInput.addEventListener("change", () => {
-        const page = book.querySelector(`.page[data-page="${pageNumberInput.value}"]`);
-        if (page) {
-            navigate(page.dataset.url);
-        } else {
+        if (pageNumberInput.value == 404) {
             navigate("/404");
+        } else {
+            var page = book.querySelector(`.page[data-page="${pageNumberInput.value}"]`);
+            if (!page) {
+                var pages = book.querySelectorAll(".page");
+                page = pages[pages.length - 1];
+            }
+            navigate(page.dataset.url);
         }
     })
     pagePrevious.onclick = () => {

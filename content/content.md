@@ -2,9 +2,11 @@ UNLISTED~## DEVELOPMENT HANDBOOK FOR BUILDERS™
 
 **© 20ZZ Z–CORP® LABS**
 
+```preserve-spacing
 **ISBN:**		978-0-8975-8949-5
 **Job number:**	ZC/OPS-X.H-TDVB.ZZ03
 **DOI:**		[docs.zcorp.org/10.03.00122/00305](/404)
+```
 
 This publication may not be reproduced in whole or in part and in any form for any purposes without special permission from the copyright holder, provided acknowledgement of the source is made. 
 
@@ -28,6 +30,32 @@ Z–CORP® LABS et al. (20ZZ): Development Handbook for Builders™. Z–CORP LA
 
 URL: [zcorp.org/labs/resources/handbook/trials-builders-development-handbook-20zz](/404)
 
+<b class="danger">CLASSIFICATION [C] CLASSIFIED DOCUMENT</b>
+
+<span style="color: #f9dbdb">Not for public access in any form whatsoever. Do not redistribute.</span>
+
+<img style="
+    position: absolute;
+    bottom: 6em;
+    right: 8em;
+    width: 17.5em;
+" src="/res/seals/seal-trust.svg" alt="">
+<img style="
+    position: absolute;
+    bottom: 3em;
+    right: 5em;
+    width: 11em;
+" src="/res/seals/seal-qa.svg" alt="">
+
+```preserve-spacing
+Z–CORP INTERNAL PRINT CENTRE IDENTIFICATION RECEIPT
+
+ID:		OPSX
+PRINTER ID:	ZPC?01032150
+DATE:		20ZZ-03-08 22:00
+LOCATION:	ABV/FR
+```
+
 ---
 
 ~## Introduction
@@ -37,6 +65,7 @@ URL: [zcorp.org/labs/resources/handbook/trials-builders-development-handbook-20z
 Congratulations on your new role as Builder™. Here at Z-corp™, we are committed to upholding our standards of competency in every position, no matter the level of experience. This Handbook™ will get you started on your journey to becoming a knowledgeable and efficient designer, and will serve as an absolute reference for any question you may have regarding the Level Editor™.
 
 This Handbook may be changed without notice. Make sure to keep the Handbook accessible for future reference in order to stay up-to-date with any changes.
+
 Failure to comply with every rule stated in the Handbook will result in immediate termination of contract.
 
 ```note-blue

@@ -44,8 +44,13 @@ export default function (config) {
         const info = token.info.trim();
         if (info) {
             const content = token.content;
-            const renderedContent = md.render(content);
-            return `<div class="${info}">${renderedContent}</div>`;
+            var renderedContent = md.render(content);
+            if (info === "preserve-spacing") {
+                renderedContent = renderedContent.replaceAll("<br>", "");
+                return `<pre class="${info}">${renderedContent}</pre>`;
+            } else {
+                return `<div class="${info}">${renderedContent}</div>`;
+            }
         }
         return defaultFenceRenderer(tokens, idx, options, env, self);
     }
