@@ -280,8 +280,11 @@ async function navigate(pageNumber, pop) {
         pageNext.removeAttribute("disabled");
     }
 
-    document.querySelector("nav a.selected")?.classList.remove("selected");
+    
     const pageButton = document.querySelector(`nav a[href="${page.dataset.url}"]`);
+    if (pageButton || pageNumber <= 0) {
+        document.querySelector("nav a.selected")?.classList.remove("selected");
+    }
     const pageCount = book.querySelectorAll(".page:not(.glossary)").length - 2;
     const progress = Math.min(pageNumber / pageCount * 100, 100);
     progressFill.style.width = progress + "%";

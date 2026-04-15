@@ -17,6 +17,13 @@ function parseSectionCounter(sectionCounter) {
 
 function pageToNavHTML(page, sectionCounter = [0]) {
     let html = "";
+    let hasVisibleChildren = false;
+    for (let subpage of page.pages) {
+        if (!subpage.unlisted && !subpage.hidden) {
+            hasVisibleChildren = true;
+            break;
+        }
+    }
     if (!page.unlisted) {
         html = `<div>
                 <a href="${page.url}" class="hv${page.headingValue}">
@@ -28,7 +35,7 @@ function pageToNavHTML(page, sectionCounter = [0]) {
                     </div>
                     ${page.title}
                 </a>
-                ${page.headingValue > 0 && page.pages.length > 0
+                ${page.headingValue > 0 && hasVisibleChildren
                     ? `<button class="dropdown-button${page.headingValue > 1 || page.title === "Glossary" ? " toggled" : ""}" title="Toggle collapse"></button>`
                     : ""
                 }
@@ -128,11 +135,17 @@ export default function(config) {
         if (lookingForHeader) {
             let previousPage = currentPage;
 
+            var continued = false;
             var unlisted = false;
             var hidden = false;
             var headingValue = line.split(" ")[0].length;
             const header = line.trim().split(" ").slice(1).join(" ");
-            if (line.indexOf("UNLISTED") == 0) {
+            if (line.indexOf("CONTD") == 0) {
+                headingValue = previousPage.headingValue + 1;
+                line = "";
+                unlisted = true;
+                continued = true;
+            } else if (line.indexOf("UNLISTED") == 0) {
                 headingValue -= "UNLISTED".length;
                 line = line.slice("UNLISTED".length);
                 unlisted = true;
@@ -158,6 +171,7 @@ export default function(config) {
                 number: pagenumber++,
                 unlisted,
                 hidden,
+                continued,
                 glossary: header === "Glossary"
             }
             for (let parent of page.parents) {

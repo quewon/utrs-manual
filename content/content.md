@@ -170,17 +170,29 @@ When an object is selected, you can alter it using the transform tools in the to
 You can press **Tab** to quickly cycle between the different transform tools.
 ```
 
+---
+
+CONTD~
+
 #### Move
 
 ![A selected object with the move tool active.](/media/tool-move.png)
 
 The move tool ![](/media/icons/Move.svg#icon) enables axis and face handles that allow you to precisely position the selected object. Simply click and drag a handle to move the object along that axis or face. This will modify the object's **position** variable.
 
+---
+
+CONTD~
+
 #### Rotate
 
 ![A selected object with the rotate tool active.](/media/tool-rotate.png)
 
 The rotate tool ![](/media/icons/Rotate.svg#icon) enables a circular rotation handle. Simply click and drag the handle to turn the selected object. This will modify the object's **angle** variable.
+
+---
+
+CONTD~
 
 #### Scale
 
@@ -195,6 +207,10 @@ The scale tool ![](/media/icons/Scale.svg#icon) enables axis and face handles th
 If you are familiar with similar digital editing programs, you will have noticed that you can **select** an object by left clicking it.
 
 You can select multiple objects at once by dragging out a selection field or holding shift and clicking. Any transformations (moving, rotating, scaling) done to this selection will be applied to all objects.
+
+---
+
+CONTD~
 
 ![Clicking and dragging a selection field.](/media/select-drag.gif)
 ![Shift-clicking multiple objects.](/media/select-pick.gif)
@@ -268,6 +284,10 @@ Navigate to the [Steam Workshop menu](/glossary/s/steam-workshop-menu) by clicki
 If the project is not linked to a Steam Workshop item, you will be prompted to create one.
 
 ![Item creation prompt.](/media/glossary/steam-workshop-no-item.png)
+
+---
+
+CONTD~
 
 Once the item has been created, you will be able to fill out the project's metadata, including its title, preview thumbnail, difficulty level, description, and visibility.
 
@@ -348,11 +368,19 @@ First, the Builder begins by creating the structure within the scene. They decid
 
 ![A house composed of a prism and a cube.](/media/custom-structure-example/1.png)
 
+---
+
+CONTD~
+
 Next, the Builder selects all the objects that make up the house before clicking on the **Create Custom Structure** ![](/media/icons/CreateCustomStructure.svg#icon) button.
 
 ![The creation menu.](/media/custom-structure-example/2.png)
 
 The Builder fills out the information for this structure and decides that they want to set a [variable **Color** parameter](/going-deeper/creating-a-custom-structure/variable-parameters) so that they can easily create different colored versions of this house.
+
+---
+
+CONTD~
 
 Once they click **Create**, they are able to find the preset within the [Object Preset menu](/glossary/o/object-preset-menu) under **Custom Structures**.
 
