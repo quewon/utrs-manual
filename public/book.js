@@ -76,7 +76,7 @@ async function initPages() {
     // break up pages
 
     var pages = book.querySelectorAll(".page");
-    for (let i=pages.length-1; i>=0; i--) {
+    for (let i=pages.length-1; i>=2; i--) {
         var originalPage = pages[i];
         var page = pages[i];
         var pageContent = page.querySelector(".page-content");
@@ -86,7 +86,7 @@ async function initPages() {
                 break;
 
             const newPage = document.createElement("div");
-            newPage.className = originalPage.className + " vis-unlisted hidden";
+            newPage.className = originalPage.className + " vis-unlisted hidden vis-contd";
             newPage.dataset.url = originalPage.dataset.url;
             newPage.dataset.title = originalPage.dataset.title;
             newPage.dataset.page = parseInt(page.dataset.page) + 1;
@@ -97,21 +97,38 @@ async function initPages() {
             
             while (pageContent.scrollHeight > pageContent.clientHeight) {
                 if (
-                    pageContent.lastElementChild.classList.contains("breadcrumbs") ||
-                    pageContent.lastElementChild.clientHeight >= pageContent.clientHeight * 3/4
+                    pageContent.scrollHeight > pageContent.clientHeight &&
+                    pageContent.lastElementChild.tagName === "UL"
+                ) {
+                    const element = pageContent.lastElementChild;
+                    var secondList = pageContent.lastElementChild.cloneNode();
+                    while (pageContent.scrollHeight > pageContent.clientHeight) {
+                        secondList.prepend(element.lastElementChild);
+                        pageContent.scrollHeight;
+                    }
+                    newContent.prepend(secondList);
+                    break;
+                }
+
+                const element = pageContent.lastElementChild;
+
+                if (
+                    element.classList.contains("breadcrumbs") ||
+                    element.clientHeight >= pageContent.clientHeight * 3/4
                 )
                     break;
 
-                if (pageContent.lastElementChild.innerHTML === "") {
-                    pageContent.lastElementChild.remove();
+                if (element.innerHTML === "") {
+                    element.remove();
                     continue;
                 }
 
-                newContent.prepend(pageContent.lastElementChild);
+                newContent.prepend(element);
                 newContent.offsetHeight;
             }
             if (newContent.innerHTML === "") continue;
-            newContent.prepend(originalPage.querySelector(".breadcrumbs").cloneNode(true));
+            if (originalPage.querySelector(".breadcrumbs"))
+                newContent.prepend(originalPage.querySelector(".breadcrumbs").cloneNode(true));
 
             newPage.appendChild(newContent);
             page.after(newPage);
@@ -256,6 +273,8 @@ async function navigate(pageNumber, pop) {
     const previousPage = book.querySelector(".page:not(.hidden)");
     const page = book.querySelector(`.page[data-page="${pageNumber}"]`);
 
+    if (previousPage === page) return;
+
     document.title = page.dataset.title;
 
     if (!pop && previousPage?.dataset.url !== page.dataset.url) {
@@ -279,7 +298,6 @@ async function navigate(pageNumber, pop) {
     if (book.querySelector(`.page[data-page="${pageNumber + 1}"]`)) {
         pageNext.removeAttribute("disabled");
     }
-
     
     const pageButton = document.querySelector(`nav a[href="${page.dataset.url}"]`);
     if (pageButton || pageNumber <= 0) {

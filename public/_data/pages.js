@@ -62,15 +62,19 @@ function pageToNavHTML(page, sectionCounter = [0]) {
 
 function setURLs(page) {
     if (page.parents.length > 0) {
-        let url = encodeURI(
-            page.title.toLowerCase()
-            .replaceAll(" ", "-")
-            .replaceAll(/[!?./'":;]/g, "")
-        );
-        if (page.parents.length > 0) {
-            url = page.parents[page.parents.length - 1].url + "/" + url;
+        if (page.continued) {
+            page.url = page.parents[page.parents.length - 1].url;
+        } else {
+            let url = encodeURI(
+                page.title.toLowerCase()
+                .replaceAll(" ", "-")
+                .replaceAll(/[!?./'":;]/g, "")
+            );
+            if (page.parents.length > 0) {
+                url = page.parents[page.parents.length - 1].url + "/" + url;
+            }
+            page.url = url;
         }
-        page.url = url;
     }
 
     for (let subpage of page.pages) {

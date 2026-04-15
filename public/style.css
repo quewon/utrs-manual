@@ -759,7 +759,7 @@ footer input::-webkit-outer-spin-button {
     padding-bottom: 2.5em;
     position: relative;
     z-index: 1;
-    font-size: 0.9rem;
+    font-size: calc(0.9 * var(--rem));
 }
 .note-yellow::before, .note-blue::before {
     content: "";
@@ -805,83 +805,83 @@ footer input::-webkit-outer-spin-button {
 
 /* bespoke pages */
 
-#page-level-editor-handbook .page-content {
+[data-url="/"] .page-content {
     padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
-#page-level-editor-handbook .title-header {
+[data-url="/"] .title-header {
     padding: 3.5em 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.75em;
 }
-#page-level-editor-handbook .title-classified {
+[data-url="/"] .title-classified {
     color: var(--danger);
     font-weight: 900;
     text-transform: uppercase;
 }
-#page-level-editor-handbook .title-tag::before {
+[data-url="/"] .title-tag::before {
     content: "C";
     background: var(--danger);
     color: #911c14;
     padding: .3em .5em;
 }
-#page-level-editor-handbook .title-tag div {
+[data-url="/"] .title-tag div {
     background: #eaeaea;
     width: fit-content;
     padding: .3em .5em;
 }
-#page-level-editor-handbook .title-warning {
+[data-url="/"] .title-warning {
     background: #fdf1dc;
     padding: 1em;
     width: 100%;
     font-size: 0.8em;
 }
-#page-level-editor-handbook .title-title {
+[data-url="/"] .title-title {
     margin-top: 1em;
 }
-#page-level-editor-handbook .title-title h2 {
+[data-url="/"] .title-title h2 {
     background-color: transparent;
     color: var(--accent-light);
     font-size: 1em;
 }
-#page-level-editor-handbook .title-title h1,
-#page-level-editor-handbook .title-edition,
-#page-level-editor-handbook .title-warning {
+[data-url="/"] .title-title h1,
+[data-url="/"] .title-edition,
+[data-url="/"] .title-warning {
     color: #f2ba5a;
 }
-#page-level-editor-handbook .title-title h1 {
+[data-url="/"] .title-title h1 {
     font-size: 3.5em;
     text-align: left;
     line-height: 1.1em;
     margin: 0;
 }
-#page-level-editor-handbook .title-subtitle {
+[data-url="/"] .title-subtitle {
     margin-top: 15%;
     display: flex;
     flex-direction: column;
     gap: 0.75em;
 }
-#page-level-editor-handbook .title-edition {
+[data-url="/"] .title-edition {
     font-weight: 700;
 }
-#page-level-editor-handbook .title-graphic {
+[data-url="/"] .title-graphic {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
 }
-#page-level-editor-handbook .title-logo {
+[data-url="/"] .title-logo {
     position: absolute;
     bottom: 2.5em;
     right: 3.5em;
     height: 8.5em;
 }
-#page-level-editor-handbook .title-quote {
+[data-url="/"] .title-quote {
     position: absolute;
     bottom: 3.5em;
     left: 7em;
@@ -889,7 +889,7 @@ footer input::-webkit-outer-spin-button {
     font-weight: 700;
 }
 
-#page-development-handbook-for-builders-E2-84-A2::before {
+[data-url="/development-handbook-for-builders%E2%84%A2"]::before {
     content: "";
     width: 100%;
     height: 100%;
@@ -899,30 +899,41 @@ footer input::-webkit-outer-spin-button {
     background-image: url(/res/doc_template/handbook-z_poly-page2.svg);
     background-repeat: no-repeat;
 }
-#page-development-handbook-for-builders-E2-84-A2 .page-content {
+[data-url="/development-handbook-for-builders%E2%84%A2"] .page-content {
     padding-top: calc(4.5 * var(--rem));
     color: var(--page-bg);
     text-align: justify;
     font-size: calc(0.7 * var(--rem));
 }
-#page-development-handbook-for-builders-E2-84-A2 .breadcrumbs {
+[data-url="/development-handbook-for-builders%E2%84%A2"] .breadcrumbs {
     font-size: inherit;
 }
-#page-development-handbook-for-builders-E2-84-A2 .page-content a {
+[data-url="/development-handbook-for-builders%E2%84%A2"] .page-content a {
     color: inherit;
 }
-#page-development-handbook-for-builders-E2-84-A2 .preserve-spacing:last-child {
-    margin-top: 10em;
+[data-url="/development-handbook-for-builders%E2%84%A2"] .preserve-spacing:last-of-type {
+    position: absolute;
+    bottom: 5em;
     color: black;
+    font-size: calc(0.6 * var(--rem));
 }
 
-#page-404 p:first-child {
+[data-url="/404"] p:first-child {
     margin-top: 0;
 }
 
-#page-glossary::before {
-    top: -32.5em;
+[data-url="/glossary"] .page-content {
+    padding-bottom: 5em !important;
 }
-#page-glossary .toc {
+[data-url="/glossary"].vis-contd .page-content {
+    padding: 5em !important;
+}
+[data-url="/glossary"]::before {
+    top: -48.5%;
+}
+[data-url="/glossary"] .toc {
     color: black;
+}
+[data-url="/glossary"].vis-contd::before {
+    background-image: none;
 }
