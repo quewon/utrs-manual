@@ -464,7 +464,7 @@ This menu can be opened from the [Project Manager](/glossary/p/project-manager) 
 
 ![Two ghost paths playing simultaneously.](/media/glossary/ghost-path.gif)
 
-Ghost paths are automatically recorded when you [play through a level](/designing-your-trials™/playing-your-project). They can be managed via the various [toolbar](/glossary/t/toolbar) ![](/media/icon/GhostPaths.svg#icon) actions.
+Ghost paths are automatically recorded when you [play through a level](/designing-your-trials™/playing-your-project). They can be managed via the various [toolbar](/glossary/t/toolbar) ![](/media/icons/GhostPaths.svg#icon) actions.
 
 ---
 
@@ -867,6 +867,13 @@ The **toolbar** is a row of buttons above the scene view that contains various f
 | ![](/media/icons/Cut.svg#icon) | Cut | Copies and removes the selected object(s). |
 | ![](/media/icons/Duplicate.svg#icon) | Duplicate | Duplicates the selected object(s). |
 | ![](/media/icons/Delete.svg#icon) | Delete | Deletes the selected object(s). |
+
+---
+
+CONTD~
+
+| Icon   | Label | Description |
+| -      | -     | -           |
 | ![](/media/icons/CreateCustomStructure.svg#icon) | Create Custom Structure | Creates a custom structure composed of the selected object(s). |
 | ![](/media/icons/GhostPaths.svg#icon) | Toggle Ghost Visibility | Toggles the visibility of [ghost paths](/glossary/g/ghost-path). |
 | ![](/media/icons/Grid.svg#icon) | Toggle Grid Snapping | Toggles whether objects snap to the grid when being moved or placed. |

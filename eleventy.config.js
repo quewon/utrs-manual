@@ -67,15 +67,24 @@ export default function (config) {
             let width = 0;
             let height = 0;
             try {
-                const buffer = readFileSync("content" + src);
+                var buffer;
+                if (src.indexOf("/res/") === 0) {
+                    buffer = readFileSync("public" + src);
+                } else {
+                    buffer = readFileSync("content" + src);
+                }
                 const dimensions = imageSize(buffer);
                 width = dimensions.width;
                 height = dimensions.height;
             }
             catch {
-                console.warn("could not get dimensions of content" + src);
+                console.warn("could not get dimensions of " + src);
             }
-            return `<figure><a target="_blank" data-pswp-src="${src}" data-pswp-width="${width}" data-pswp-height="${height}"><img alt="${content}" src="${src}" /></a><figcaption>${content}</figcaption></figure>`;
+            if (width > height) {
+                return `<figure><a style="aspect-ratio: ${width}/${height}" target="_blank" data-pswp-src="${src}" data-pswp-width="${width}" data-pswp-height="${height}"><img alt="${content}" data-src="${src}" /></a><figcaption>${content}</figcaption></figure>`;
+            } else {
+                return `<figure><a style="aspect-ratio: ${width}/${height}" target="_blank" data-pswp-src="${src}" data-pswp-width="${width}" data-pswp-height="${height}"><img alt="${content}" data-src="${src}" /></a><figcaption>${content}</figcaption></figure>`;
+            }
         }
     }
 

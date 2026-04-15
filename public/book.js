@@ -1,7 +1,7 @@
 import PhotoSwipeLightbox from "/res/photoswipe/photoswipe-lightbox.esm.min.js";
 import PhotoSwipe from "/res/photoswipe/photoswipe.esm.min.js";
 
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", async () => {
     const pages = book.querySelectorAll(".page");
     for (let page of pages) {
         const toc = page.querySelector(".toc");
@@ -9,6 +9,7 @@ window.addEventListener("DOMContentLoaded", () => {
             const hv = parseInt(page.dataset.hv);
             let number = parseInt(page.dataset.page);
             for (let i=number + 2; i<pages.length; i++) {
+                if (pages[i].classList.contains("vis-unlisted")) continue;
                 const phv = parseInt(pages[i].dataset.hv);
                 if (phv <= hv) {
                     break;
@@ -56,10 +57,10 @@ window.addEventListener("DOMContentLoaded", () => {
             navigate(page.dataset.page);
         }
     }
-})
 
-window.addEventListener("load", async () => {
     await initPages();
+
+    loadImages();
 
     const page = book.querySelector(`.page[data-url="${location.pathname}"]`);
     if (page) {
@@ -71,6 +72,12 @@ window.addEventListener("load", async () => {
         pageNumberInput.value = 404;
     }
 })
+
+function loadImages() {
+    for (let img of document.querySelectorAll("[data-src]")) {
+        img.src = img.dataset.src;
+    }
+}
 
 async function initPages() {
     // break up pages
