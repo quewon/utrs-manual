@@ -32,6 +32,107 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    pageNumberInput.addEventListener("change", () => {
+        if (pageNumberInput.value == 404) {
+            navigate(404);
+        } else {
+            var page = book.querySelector(`.page[data-page="${pageNumberInput.value}"]`);
+            if (!page) {
+                var pages = book.querySelectorAll(".page");
+                page = pages[pages.length - 1];
+            }
+            navigate(page.dataset.page);
+        }
+    })
+    pagePrevious.onclick = () => {
+        const page = book.querySelector(`.page[data-page="${parseInt(pageNumberInput.value) - 1}"]`);
+        if (page) {
+            navigate(page.dataset.page);
+        }
+    }
+    pageNext.onclick = () => {
+        const page = book.querySelector(`.page[data-page="${parseInt(pageNumberInput.value) + 1}"]`);
+        if (page) {
+            navigate(page.dataset.page);
+        }
+    }
+})
+
+window.addEventListener("load", async () => {
+    await initPages();
+
+    const page = book.querySelector(`.page[data-url="${location.pathname}"]`);
+    if (page) {
+        navigate(page.dataset.page);
+    } else {
+        navigate(404);
+    }
+    if (location.pathname === "/404") {
+        pageNumberInput.value = 404;
+    }
+})
+
+async function initPages() {
+    // break up pages
+
+    var pages = book.querySelectorAll(".page");
+    for (let i=pages.length-1; i>=0; i--) {
+        var originalPage = pages[i];
+        var page = pages[i];
+        var pageContent = page.querySelector(".page-content");
+
+        while (pageContent.scrollHeight > pageContent.clientHeight) {
+            if (pageContent.lastElementChild.clientHeight >= pageContent.clientHeight * 3/4)
+                break;
+
+            const newPage = document.createElement("div");
+            newPage.className = originalPage.className + " vis-unlisted hidden";
+            newPage.dataset.url = originalPage.dataset.url;
+            newPage.dataset.title = originalPage.dataset.title;
+            newPage.dataset.page = parseInt(page.dataset.page) + 1;
+            newPage.dataset.hv = originalPage.dataset.hv;
+
+            const newContent = document.createElement("div");
+            newContent.className = "page-content";
+            
+            while (pageContent.scrollHeight > pageContent.clientHeight) {
+                if (
+                    pageContent.lastElementChild.classList.contains("breadcrumbs") ||
+                    pageContent.lastElementChild.clientHeight >= pageContent.clientHeight * 3/4
+                )
+                    break;
+
+                if (pageContent.lastElementChild.innerHTML === "") {
+                    pageContent.lastElementChild.remove();
+                    continue;
+                }
+
+                newContent.prepend(pageContent.lastElementChild);
+                newContent.offsetHeight;
+            }
+            if (newContent.innerHTML === "") continue;
+            newContent.prepend(originalPage.querySelector(".breadcrumbs").cloneNode(true));
+
+            newPage.appendChild(newContent);
+            page.after(newPage);
+            page = newPage;
+            pageContent = newContent;
+
+            pages = book.querySelectorAll(".page");
+            var pageIndex = [...pages].indexOf(newPage);
+            for (let j=pages.length-1; j>pageIndex; j--) {
+                const pageNumber = parseInt(pages[j].dataset.page);
+                const newNumber = pageNumber + 1;
+                for (let li of document.querySelectorAll(`li[data-page="${pageNumber}"]`)) {
+                    li.dataset.page = newNumber;
+                }
+                pages[j].dataset.page = newNumber;
+            }
+            
+            page.offsetHeight;
+        }
+    }
+
     for (let page of book.querySelectorAll(".page-content:has(a[data-pswp-src])")) {
         page.id = "gallery" + page.parentElement.dataset.page;
         const lightbox = new PhotoSwipeLightbox({
@@ -39,40 +140,35 @@ window.addEventListener("DOMContentLoaded", () => {
             children: "a[data-pswp-src]",
             pswpModule: PhotoSwipe
         })
+        lightbox.on('uiRegister', function() {
+            lightbox.pswp.ui.registerElement({
+                name: 'custom-caption',
+                order: 9,
+                isButton: false,
+                appendTo: 'root',
+                html: 'Caption text',
+                onInit: (el, pswp) => {
+                    lightbox.pswp.on('change', () => {
+                        const currSlideElement = lightbox.pswp.currSlide.data.element;
+                        let captionHTML = '';
+                        if (currSlideElement) {
+                            const hiddenCaption = currSlideElement.querySelector('.hidden-caption-content');
+                            if (hiddenCaption) {
+                                captionHTML = hiddenCaption.innerHTML;
+                            } else {
+                                captionHTML = currSlideElement.querySelector('img').getAttribute('alt');
+                            }
+                        }
+                        el.innerHTML = captionHTML || '';
+                    });
+                }
+            });
+        });
         lightbox.init();
     }
 
-    pageNumberInput.addEventListener("change", () => {
-        if (pageNumberInput.value == 404) {
-            navigate("/404");
-        } else {
-            var page = book.querySelector(`.page[data-page="${pageNumberInput.value}"]`);
-            if (!page) {
-                var pages = book.querySelectorAll(".page");
-                page = pages[pages.length - 1];
-            }
-            navigate(page.dataset.url);
-        }
-    })
-    pagePrevious.onclick = () => {
-        const page = book.querySelector(`.page[data-page="${parseInt(pageNumberInput.value) - 1}"]`);
-        if (page) {
-            navigate(page.dataset.url);
-        }
-    }
-    pageNext.onclick = () => {
-        const page = book.querySelector(`.page[data-page="${parseInt(pageNumberInput.value) + 1}"]`);
-        if (page) {
-            navigate(page.dataset.url);
-        }
-    }
     pageTotal.textContent = book.querySelectorAll(".page").length - 2;
-
-    navigate(location.pathname);
-    if (location.pathname === "/404") {
-        pageNumberInput.value = 404;
-    }
-})
+}
 
 document.addEventListener("click", e => {
     const a = e.target.closest("a[href]");
@@ -84,11 +180,12 @@ document.addEventListener("click", e => {
     if (a.target === "_blank") return;
 
     e.preventDefault();
-    navigate(new URL(a.href).pathname);
+
+    navigateByPathname(new URL(a.href).pathname);
 })
 
 window.addEventListener("popstate", () => {
-    navigate(location.pathname, true);
+    navigateByPathname(location.pathname, true);
 });
 
 window.addEventListener("resize", updatePageMarker);
@@ -111,22 +208,67 @@ document.addEventListener("keydown", e => {
     }
 })
 
-function navigate(url, pop) {
+async function pageTransition(from, to) {
+    to.classList.remove("hidden");
+    to.classList.remove("exit-to-right");
+    to.classList.remove("exit-to-left");
+    to.classList.remove("enter-from-right");
+    to.classList.remove("enter-from-left");
+    to.onanimationend = null;
+
+    if (from) {
+        from.classList.add("hidden");
+        from.classList.remove("enter-from-left");
+        from.classList.remove("enter-from-right");
+        from.classList.remove("exit-to-left");
+        from.classList.remove("exit-to-right");
+        from.onanimationend = null;
+
+        const fromPageNumber = parseInt(from.dataset.page);
+        const toPageNumber = parseInt(to.dataset.page);
+
+        if (toPageNumber > fromPageNumber) {
+            from.classList.add("exit-to-left");
+            to.classList.add("enter-from-right");
+        } else {
+            from.classList.add("exit-to-right");
+            to.classList.add("enter-from-left");
+        }
+        from.onanimationend = () => {
+            from.classList.remove("exit-to-left");
+            from.classList.remove("exit-to-right");
+        }
+        to.onanimationend = () => {
+            to.classList.remove("enter-from-right");
+            to.classList.remove("enter-from-left");
+        }
+    }
+}
+
+async function navigateByPathname(url, pop) {
     const page = book.querySelector(`.page[data-url="${url}"]`);
+    navigate(page.dataset.page, pop);
+}
+
+async function navigate(pageNumber, pop) {
+    pageNumber = parseInt(pageNumber);
+
+    const previousPage = book.querySelector(".page:not(.hidden)");
+    const page = book.querySelector(`.page[data-page="${pageNumber}"]`);
 
     document.title = page.dataset.title;
 
-    if (!pop) {
-        history.pushState(document.title, "", location.origin + url);
+    if (!pop && previousPage?.dataset.url !== page.dataset.url) {
+        history.pushState(document.title, "", location.origin + page.dataset.url);
     }
 
-    book.querySelector(".page:not(.hidden)")?.classList.add("hidden");
-    page.classList.remove("hidden");
+    pageTransition(
+        previousPage,
+        page
+    );
+
     scrollToTop();
-
-    const pageNumber = parseInt(page.dataset.page);
-
-    if (url !== "/404") {
+    if (pageNumber != 404) {
         pageNumberInput.value = pageNumber;
     }
     pagePrevious.setAttribute("disabled", true);
@@ -139,7 +281,7 @@ function navigate(url, pop) {
     }
 
     document.querySelector("nav a.selected")?.classList.remove("selected");
-    const pageButton = document.querySelector(`nav a[data-page="${page.dataset.page}"]`);
+    const pageButton = document.querySelector(`nav a[href="${page.dataset.url}"]`);
     const pageCount = book.querySelectorAll(".page:not(.glossary)").length - 2;
     const progress = Math.min(pageNumber / pageCount * 100, 100);
     progressFill.style.width = progress + "%";

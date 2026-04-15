@@ -19,7 +19,7 @@ function pageToNavHTML(page, sectionCounter = [0]) {
     let html = "";
     if (!page.unlisted) {
         html = `<div>
-                <a data-page="${page.number}" href="${page.url}" class="hv${page.headingValue}">
+                <a href="${page.url}" class="hv${page.headingValue}">
                     <div class="number">
                         ${page.headingValue === 1
                             ? twoDigit(sectionCounter[1]) 

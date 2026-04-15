@@ -21,7 +21,7 @@
     <div>20ZZ</div>
 </div>
 <div>
-    <img class="title-graphic" src="/res/images/02 doc_template/handbook-z_poly-long.svg" alt="">
+    <img class="title-graphic" src="/res/doc_template/handbook-z_poly-long.svg" alt="">
     <div class="title-quote">"YOUR BEST WORK IS ONE DESIGN AWAY."</div>
-    <img class="title-logo" src="/res/images/01 logos/z-corp_z_white.svg" alt="">
+    <img class="title-logo" src="/res/logos/z-corp_z_white.svg" alt="">
 </div>

@@ -47,9 +47,9 @@ export default function (config) {
             var renderedContent = md.render(content);
             if (info === "preserve-spacing") {
                 renderedContent = renderedContent.replaceAll("<br>", "");
-                return `<pre class="${info}">${renderedContent}</pre>`;
+                return `<p><pre class="${info}">${renderedContent}</pre></p>`;
             } else {
-                return `<div class="${info}">${renderedContent}</div>`;
+                return `<p><div class="${info}">${renderedContent}</div></p>`;
             }
         }
         return defaultFenceRenderer(tokens, idx, options, env, self);
@@ -75,7 +75,7 @@ export default function (config) {
             catch {
                 console.warn("could not get dimensions of content" + src);
             }
-            return `<a target="_blank" data-pswp-src="${src}" data-pswp-width="${width}" data-pswp-height="${height}"><img alt="${content}" src="${src}" /></a>`;
+            return `<figure><a target="_blank" data-pswp-src="${src}" data-pswp-width="${width}" data-pswp-height="${height}"><img alt="${content}" src="${src}" /></a><figcaption>${content}</figcaption></figure>`;
         }
     }
 
