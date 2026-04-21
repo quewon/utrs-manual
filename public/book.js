@@ -57,8 +57,16 @@ window.addEventListener("DOMContentLoaded", async () => {
             navigate(page.dataset.page);
         }
     }
+    
+    sideToggleButton.onclick = () => {
+        sidebar.classList.toggle("toggled");
+    }
 
     await initPages();
+
+    for (let page of book.querySelectorAll(".page-content")) {
+        page.style.overflow = "hidden";
+    }
 
     loadImages();
 
@@ -318,6 +326,8 @@ async function navigate(pageNumber, pop) {
         pageButton.classList.add("selected");
     }
     updatePageMarker();
+
+    sidebar.classList.remove("toggled");
 }
 
 function lerp(a, b, t) {
