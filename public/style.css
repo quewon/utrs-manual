@@ -202,6 +202,7 @@ button:disabled {
 }
 
 main {
+    position: relative;
     display: flex;
     width: 100%;
     overflow: hidden;
@@ -366,7 +367,7 @@ nav li > div > a.selected, nav li > div > a.selected:hover {
 
 #sideToggleButton {
     position: absolute;
-    top: 7rem;
+    top: 1rem;
     right: 1rem;
     width: 3.5rem;
     height: 3.5rem;
@@ -414,6 +415,7 @@ footer {
     background: var(--bg);
     border-top: 1px solid var(--border-bg);
     padding: 0.5rem 1.5rem;
+    white-space: nowrap;
 }
 footer .page-indicator {
     display: flex;
@@ -681,6 +683,79 @@ footer input::-webkit-outer-spin-button {
     100% {
         transform: translate(-50%, 0);
         rotate: 0;
+    }
+}
+@media (max-width: 520px) {
+    #book {
+        position: relative;
+        justify-content: center;
+    }
+    .page {
+        max-width: calc(100% - 3rem);
+    }
+    .hide-when-small {
+        display: none;
+    }
+    .exit-to-left, .exit-to-right,
+    .enter-from-left, .enter-from-right {
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    @keyframes exit-to-left {
+        0% {
+            visibility: visible;
+            opacity: 0.5;
+            transform: translate(calc(-50% - 2em), -50%);
+            rotate: 0;
+        }
+        100% {
+            opacity: 0;
+            transform: translate(-50%, -50%);
+            rotate: -1deg;
+        }
+    }
+    @keyframes exit-to-right {
+        0% {
+            visibility: visible;
+            opacity: 0.5;
+            transform: translate(calc(-50% + 2em), -50%);
+            rotate: 1deg;
+        }
+        100% {
+            opacity: 0;
+            transform: translate(-50%, -50%);
+            rotate: 0;
+        }
+    }
+    @keyframes enter-from-left {
+        0% {
+            visibility: visible;
+            transform: translate(calc(-50% - 2em), -50%);
+            rotate: -1deg;
+        }
+        100% {
+            transform: translate(-50%, -50%);
+            rotate: 0;
+        }
+    }
+    @keyframes enter-from-right {
+        0% {
+            visibility: visible;
+            transform: translate(calc(-50% + 2em), -50%);
+            rotate: 1deg;
+        }
+        100% {
+            transform: translate(-50%, -50%);
+            rotate: 0;
+        }
+    }
+}
+@media (max-width: 400px) {
+    header {
+        justify-content: space-between;
+    }
+    .hide-when-smaller {
+        display: none;
     }
 }
 
