@@ -145,7 +145,8 @@ header.gap2 {
     border: 1px solid var(--quaternary);
     padding: 0 0.8em;
     height: 2.5rem;
-    width: clamp(12em, 15vw, 17em);
+    min-width: 12em;
+    white-space: nowrap;
 }
 .search .search-icon {
     height: 1em;
@@ -159,6 +160,20 @@ header.gap2 {
 }
 .search input::placeholder {
     color: var(--tertiary);
+}
+.search button {
+    border: none;
+    padding: 0;
+    color: var(--tertiary-light);
+}
+
+mark.search-highlight {
+    background: var(--accent-lighter);
+    color: var(--bg);
+}
+mark.search-highlight-active {
+    background: var(--bg);
+    color: var(--page-bg);
 }
 
 .clf {
@@ -202,8 +217,10 @@ button:disabled {
 }
 
 main {
+    position: relative;
     display: flex;
     width: 100%;
+    height: 100%;
     overflow: hidden;
 }
 
@@ -213,6 +230,9 @@ main {
 .leave-button:hover {
     background-color: rgba(254,68,69,0.08);
 }
+.leave-button::after {
+    content: "Leave"
+}
 
 aside {
     position: relative;
@@ -221,6 +241,7 @@ aside {
     width: min(24%, 320px);
     flex-shrink: 0;
     overflow: hidden;
+    height: 100%;
 }
 aside > div {
     display: flex;
@@ -366,7 +387,7 @@ nav li > div > a.selected, nav li > div > a.selected:hover {
 
 #sideToggleButton {
     position: absolute;
-    top: 7rem;
+    top: 1rem;
     right: 1rem;
     width: 3.5rem;
     height: 3.5rem;
@@ -414,6 +435,7 @@ footer {
     background: var(--bg);
     border-top: 1px solid var(--border-bg);
     padding: 0.5rem 1.5rem;
+    white-space: nowrap;
 }
 footer .page-indicator {
     display: flex;
@@ -583,7 +605,7 @@ footer input::-webkit-outer-spin-button {
     font-style: italic;
     color: var(--accent);
     margin-top: 1em;
-    font-size: 0.9rem;
+    font-size: 0.9em;
 }
 .page-content figure img {
     width: 100%;
@@ -681,6 +703,114 @@ footer input::-webkit-outer-spin-button {
     100% {
         transform: translate(-50%, 0);
         rotate: 0;
+    }
+}
+@media (max-width: 750px) {
+    .hide-when-medium {
+        display: none;
+    }
+}
+@media (max-width: 520px) {
+    #book {
+        position: relative;
+        justify-content: center;
+        overflow: hidden;
+    }
+    .page {
+        max-width: calc(100% - 3rem);
+    }
+    .page.hidden {
+        margin: 0;
+        top: 50%;
+        left: 1.5rem;
+        transform: translate(0, -50%);
+    }
+    .search input {
+        width: 5em;
+    }
+    .hide-when-small {
+        display: none;
+    }
+    .exit-to-left, .exit-to-right,
+    .enter-from-left, .enter-from-right {
+        position: absolute;
+        margin: 0;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    @keyframes exit-to-left {
+        0% {
+            visibility: visible;
+            opacity: 0.5;
+            rotate: 0;
+        }
+        100% {
+            opacity: 0;
+            rotate: -1deg;
+        }
+    }
+    @keyframes exit-to-right {
+        0% {
+            visibility: visible;
+            opacity: 0.5;
+            rotate: 1deg;
+        }
+        100% {
+            opacity: 0;
+            rotate: 0;
+        }
+    }
+    @keyframes enter-from-left {
+        0% {
+            visibility: visible;
+            transform: translate(calc(-50% - 2em), -50%);
+            rotate: -1deg;
+        }
+        100% {
+            transform: translate(-50%, -50%);
+            rotate: 0;
+        }
+    }
+    @keyframes enter-from-right {
+        0% {
+            visibility: visible;
+            transform: translate(calc(-50% + 2em), -50%);
+            rotate: 1deg;
+        }
+        100% {
+            transform: translate(-50%, -50%);
+            rotate: 0;
+        }
+    }
+}
+@media (max-width: 500px) {
+    header {
+        justify-content: space-between;
+        padding: 0.5rem 1rem;
+    }
+    header.gap1 {
+        gap: 1em;
+    }
+    header.gap2 {
+        padding: 0.35rem 1rem;
+    }
+    .search {
+        flex-grow: 1;
+    }
+    .search input {
+        flex-grow: 1;
+    }
+    .hide-when-smaller {
+        display: none;
+    }
+}
+@media (max-width: 400px) {
+    .leave-button {
+        padding: 0.5em 1em;
+    }
+    .leave-button::after {
+        content: "X";
     }
 }
 

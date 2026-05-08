@@ -4,23 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
-    <link rel="stylesheet" href="/style.css?nocache=1776749210605">
+    <link rel="stylesheet" href="/style.css?nocache=1778264714363">
     <link rel="stylesheet" href="/res/photoswipe/photoswipe.css">
 </head>
 <body>
 
     <header class="gap1">
         <img class="header-logo" src="/res/logos/z-corp_symbolmark_white.svg" alt="Z-Corp®">
-        <div class="vertical-div"></div>
-        <div class="secondary upper overflow-ellipsis">
-            <strong class="primary">Z–corp® Labs</strong> <span class="light">— Development Handbook for Builders™</span>
+        <div class="vertical-div hide-when-small"></div>
+        <div class="secondary upper overflow-ellipsis hide-when-small">
+            <strong class="primary">Z–corp® Labs</strong> <span class="light hide-when-medium">— Development Handbook for Builders™</span>
         </div>
-        <div class="grow"></div>
+        <div class="grow hide-when-smaller"></div>
         <div class="search">
             <img src="/res/misc/search.svg" alt="" class="search-icon">
-            <input type="text" placeholder="Search document...">
+            <input type="text" placeholder="Search document..." id="searchInput">
+            <div class="tertiary">
+                <span id="searchIndex">0</span> / <span id="searchResultCount">0</span>
+            </div>
+            <div class="tertiary">|</div> <button id="searchPrev">↑</button> <button id="searchNext">↓</button>
         </div>
-        <button class="upper danger leave-button" onclick="location.href = 'https://dedragames.com'">Leave</button>
+        <button class="upper danger leave-button" onclick="location.href = 'https://dedragames.com'"></button>
     </header>
     
     <header class="gap2 flex tertiary upper">
@@ -1839,5 +1843,5 @@ Some objects, such as Start Zone or Secret, have limited or no parameterable var
     </main>
     
 </body>
-<script src="/book.js?nocache=1776749210605" type="module"></script>
+<script src="/book.js?nocache=1778264714363" type="module"></script>
 </html>

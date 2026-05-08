@@ -57,12 +57,33 @@ window.addEventListener("DOMContentLoaded", async () => {
             navigate(page.dataset.page);
         }
     }
+
+    document.ontouchstart = (e) => {
+        if (e.touches && e.touches[0]) {
+            const startX = e.touches[0].pageX;
+
+            document.ontouchmove = (e) => {
+                if (e.touches && e.touches[0]) {
+                    const deltaX = e.touches[0].pageX - startX;
+                    if (deltaX < 10) {
+                        pageNext.click();
+                        document.ontouchmove = null;
+                    } else if (deltaX > 10) {
+                        pagePrevious.click();
+                        document.ontouchmove = null;
+                    }
+                }
+            }
+        }
+    }
     
     sideToggleButton.onclick = () => {
         sidebar.classList.toggle("toggled");
+        updatePageMarker();
     }
 
     await initPages();
+    initSearch();
 
     for (let page of book.querySelectorAll(".page-content")) {
         page.style.overflow = "hidden";
@@ -202,6 +223,104 @@ async function initPages() {
     pageTotal.textContent = book.querySelectorAll(".page").length - 2;
 }
 
+function initSearch() {
+    var searchResults = [];
+    var index = 0;
+
+    function clearHighlights() {
+        for (let mark of book.querySelectorAll("mark.search-highlight")) {
+            const parent = mark.parentNode;
+            parent.replaceChild(document.createTextNode(mark.textContent), mark);
+            parent.normalize();
+        }
+        searchResults = [];
+        index = 0;
+    }
+
+    function highlightPage(page, query) {
+        const walker = document.createTreeWalker(
+            page.firstElementChild,
+            NodeFilter.SHOW_TEXT,
+            { acceptNode: (node) => {
+                const tag = node.parentElement?.tagName;
+                return (tag === "SCRIPT" || tag === "STYLE")
+                    ? NodeFilter.FILTER_REJECT
+                    : NodeFilter.FILTER_ACCEPT;
+            }}
+        );
+
+        const textNodes = [];
+        let node;
+        while (node = walker.nextNode()) textNodes.push(node);
+
+        for (let textNode of textNodes) {
+            const text = textNode.textContent;
+            const lower = text.toLowerCase();
+            let pos = 0, lastPos = 0;
+            const fragments = [];
+
+            while ((pos = lower.indexOf(query, lastPos)) !== -1) {
+                if (pos > lastPos) fragments.push(document.createTextNode(text.slice(lastPos, pos)));
+                const mark = document.createElement("mark");
+                mark.className = "search-highlight";
+                mark.textContent = text.slice(pos, pos + query.length);
+                fragments.push(mark);
+                searchResults.push({ mark, page });
+                lastPos = pos + query.length;
+            }
+
+            if (fragments.length > 0) {
+                if (lastPos < text.length) fragments.push(document.createTextNode(text.slice(lastPos)));
+                const parent = textNode.parentNode;
+                for (let frag of fragments) parent.insertBefore(frag, textNode);
+                parent.removeChild(textNode);
+            }
+        }
+    }
+
+    function jumpToResult(resultIndex) {
+        if (searchResults.length === 0) return;
+        resultIndex = ((resultIndex % searchResults.length) + searchResults.length) % searchResults.length;
+        index = resultIndex;
+
+        book.querySelector("mark.search-highlight-active")?.classList.remove("search-highlight-active");
+        const result = searchResults[index];
+        result.mark.classList.add("search-highlight-active");
+
+        navigate(result.page.dataset.page);
+        requestAnimationFrame(() => result.mark.scrollIntoView({ block: "nearest" }));
+
+        searchIndex.textContent = index + 1;
+        searchResultCount.textContent = searchResults.length;
+    }
+
+    searchInput.oninput = function() {
+        const query = this.value.trim().toLowerCase();
+        clearHighlights();
+
+        if (query !== "") {
+            for (let page of book.querySelectorAll(".page")) {
+                if (parseInt(page.dataset.page) <= 0 || page.classList.contains("vis-hidden")) continue;
+                highlightPage(page, query);
+            }
+            jumpToResult(0);
+        } else {
+            searchIndex.textContent = 0;
+            searchResultCount.textContent = 0;
+        }
+    }
+
+    searchInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            jumpToResult(e.shiftKey ? index - 1 : index + 1);
+        }
+    });
+
+    searchPrev.onclick = () => jumpToResult(index - 1);
+    searchNext.onclick = () => jumpToResult(index + 1);
+}
+
 document.addEventListener("click", e => {
     const a = e.target.closest("a[href]");
     const newTab = e.ctrlKey || e.metaKey || e.button === 1;
@@ -223,6 +342,7 @@ window.addEventListener("popstate", () => {
 window.addEventListener("resize", updatePageMarker);
 
 document.addEventListener("keydown", e => {
+    if (document.activeElement === searchInput) return;
     switch (e.key) {
         case "ArrowLeft":
             pagePrevious.click();
@@ -325,9 +445,8 @@ async function navigate(pageNumber, pop) {
     if (pageButton) {
         pageButton.classList.add("selected");
     }
-    updatePageMarker();
-
     sidebar.classList.remove("toggled");
+    updatePageMarker();
 }
 
 function lerp(a, b, t) {
