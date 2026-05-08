@@ -57,12 +57,33 @@ window.addEventListener("DOMContentLoaded", async () => {
             navigate(page.dataset.page);
         }
     }
+
+    document.ontouchstart = (e) => {
+        if (e.touches && e.touches[0]) {
+            const startX = e.touches[0].pageX;
+
+            document.ontouchmove = (e) => {
+                if (e.touches && e.touches[0]) {
+                    const deltaX = e.touches[0].pageX - startX;
+                    if (deltaX < 10) {
+                        pageNext.click();
+                        document.ontouchmove = null;
+                    } else if (deltaX > 10) {
+                        pagePrevious.click();
+                        document.ontouchmove = null;
+                    }
+                }
+            }
+        }
+    }
     
     sideToggleButton.onclick = () => {
         sidebar.classList.toggle("toggled");
+        updatePageMarker();
     }
 
     await initPages();
+    initSearch();
 
     for (let page of book.querySelectorAll(".page-content")) {
         page.style.overflow = "hidden";
@@ -202,6 +223,62 @@ async function initPages() {
     pageTotal.textContent = book.querySelectorAll(".page").length - 2;
 }
 
+function initSearch() {
+    var searchResults = [];
+    var index = 0;
+
+    function jumpToResult(resultIndex) {
+        const result = searchResults[resultIndex];
+        console.log(result);
+        navigate(result.page.dataset.page);
+        index = resultIndex;
+        searchIndex.textContent = resultIndex;
+    }
+
+    searchInput.oninput = function() {
+        var query = this.value.trim().toLowerCase();
+
+        var navigated = false;
+        var count = 0;
+        searchResults = [];
+        if (query != "") {
+            for (let page of book.querySelectorAll(".page")) {
+                if (parseInt(page.dataset.page) <= 0 || page.classList.contains("vis-hidden"))
+                    continue;
+                if (page.firstElementChild.textContent.toLowerCase().includes(query)) {
+                    let element = page.firstElementChild;
+                    // while (element.children.length > 0) {
+                    //     for (let i=0; i<element.children.length; i++) {
+                    //         let child = element.children[i];
+                    //         if (child.textContent.toLowerCase().includes(query)) {
+
+                    //         }
+                    //     }
+                    // }
+                    searchResults.push({
+                        page: page,
+                        highlightedElement: null
+                    });
+                    if (!navigated) {
+                        jumpToResult(0);
+                        navigated = true;
+                    }
+                    count++;
+                }
+            }
+        }
+        searchResultCount.textContent = count;
+    }
+
+    searchPrev.onclick = () => {
+
+    }
+
+    searchNext.onclick = () => {
+
+    }
+}
+
 document.addEventListener("click", e => {
     const a = e.target.closest("a[href]");
     const newTab = e.ctrlKey || e.metaKey || e.button === 1;
@@ -325,9 +402,8 @@ async function navigate(pageNumber, pop) {
     if (pageButton) {
         pageButton.classList.add("selected");
     }
-    updatePageMarker();
-
     sidebar.classList.remove("toggled");
+    updatePageMarker();
 }
 
 function lerp(a, b, t) {

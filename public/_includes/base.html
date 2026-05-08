@@ -18,7 +18,11 @@
         <div class="grow hide-when-smaller"></div>
         <div class="search">
             <img src="/res/misc/search.svg" alt="" class="search-icon">
-            <input type="text" placeholder="Search document...">
+            <input type="text" placeholder="Search document..." id="searchInput">
+            <div class="tertiary">
+                <span id="searchIndex">0</span> / <span id="searchResultCount">0</span>
+            </div>
+            <div class="tertiary">|</div> <button id="searchPrev">↑</button> <button id="searchNext">↓</button>
         </div>
         <button class="upper danger leave-button" onclick="location.href = 'https://dedragames.com'">Leave</button>
     </header>

@@ -145,7 +145,7 @@ header.gap2 {
     border: 1px solid var(--quaternary);
     padding: 0 0.8em;
     height: 2.5rem;
-    width: clamp(12em, 15vw, 17em);
+    min-width: 12em;
 }
 .search .search-icon {
     height: 1em;
@@ -159,6 +159,11 @@ header.gap2 {
 }
 .search input::placeholder {
     color: var(--tertiary);
+}
+.search button {
+    border: none;
+    padding: 0;
+    color: var(--tertiary-light);
 }
 
 .clf {
@@ -205,6 +210,7 @@ main {
     position: relative;
     display: flex;
     width: 100%;
+    height: 100%;
     overflow: hidden;
 }
 
@@ -222,6 +228,7 @@ aside {
     width: min(24%, 320px);
     flex-shrink: 0;
     overflow: hidden;
+    height: 100%;
 }
 aside > div {
     display: flex;
@@ -585,7 +592,7 @@ footer input::-webkit-outer-spin-button {
     font-style: italic;
     color: var(--accent);
     margin-top: 1em;
-    font-size: 0.9rem;
+    font-size: 0.9em;
 }
 .page-content figure img {
     width: 100%;
@@ -689,28 +696,36 @@ footer input::-webkit-outer-spin-button {
     #book {
         position: relative;
         justify-content: center;
+        overflow: hidden;
     }
     .page {
         max-width: calc(100% - 3rem);
+    }
+    .page.hidden {
+        margin: 0;
+        top: 50%;
+        left: 1.5rem;
+        transform: translate(0, -50%);
     }
     .hide-when-small {
         display: none;
     }
     .exit-to-left, .exit-to-right,
     .enter-from-left, .enter-from-right {
+        position: absolute;
+        margin: 0;
         top: 50%;
+        left: 50%;
         transform: translate(-50%, -50%);
     }
     @keyframes exit-to-left {
         0% {
             visibility: visible;
             opacity: 0.5;
-            transform: translate(calc(-50% - 2em), -50%);
             rotate: 0;
         }
         100% {
             opacity: 0;
-            transform: translate(-50%, -50%);
             rotate: -1deg;
         }
     }
@@ -718,12 +733,10 @@ footer input::-webkit-outer-spin-button {
         0% {
             visibility: visible;
             opacity: 0.5;
-            transform: translate(calc(-50% + 2em), -50%);
             rotate: 1deg;
         }
         100% {
             opacity: 0;
-            transform: translate(-50%, -50%);
             rotate: 0;
         }
     }
