@@ -227,56 +227,91 @@ function initSearch() {
     var searchResults = [];
     var index = 0;
 
+    function clearHighlights() {
+        for (let mark of book.querySelectorAll("mark.search-highlight")) {
+            const parent = mark.parentNode;
+            parent.replaceChild(document.createTextNode(mark.textContent), mark);
+            parent.normalize();
+        }
+        searchResults = [];
+        index = 0;
+    }
+
+    function highlightPage(page, query) {
+        const walker = document.createTreeWalker(
+            page.firstElementChild,
+            NodeFilter.SHOW_TEXT,
+            { acceptNode: (node) => {
+                const tag = node.parentElement?.tagName;
+                return (tag === "SCRIPT" || tag === "STYLE")
+                    ? NodeFilter.FILTER_REJECT
+                    : NodeFilter.FILTER_ACCEPT;
+            }}
+        );
+
+        const textNodes = [];
+        let node;
+        while (node = walker.nextNode()) textNodes.push(node);
+
+        for (let textNode of textNodes) {
+            const text = textNode.textContent;
+            const lower = text.toLowerCase();
+            let pos = 0, lastPos = 0;
+            const fragments = [];
+
+            while ((pos = lower.indexOf(query, lastPos)) !== -1) {
+                if (pos > lastPos) fragments.push(document.createTextNode(text.slice(lastPos, pos)));
+                const mark = document.createElement("mark");
+                mark.className = "search-highlight";
+                mark.textContent = text.slice(pos, pos + query.length);
+                fragments.push(mark);
+                searchResults.push({ mark, page });
+                lastPos = pos + query.length;
+            }
+
+            if (fragments.length > 0) {
+                if (lastPos < text.length) fragments.push(document.createTextNode(text.slice(lastPos)));
+                const parent = textNode.parentNode;
+                for (let frag of fragments) parent.insertBefore(frag, textNode);
+                parent.removeChild(textNode);
+            }
+        }
+    }
+
     function jumpToResult(resultIndex) {
-        const result = searchResults[resultIndex];
-        console.log(result);
-        navigate(result.page.dataset.page);
+        if (searchResults.length === 0) return;
+        resultIndex = ((resultIndex % searchResults.length) + searchResults.length) % searchResults.length;
         index = resultIndex;
-        searchIndex.textContent = resultIndex;
+
+        book.querySelector("mark.search-highlight-active")?.classList.remove("search-highlight-active");
+        const result = searchResults[index];
+        result.mark.classList.add("search-highlight-active");
+
+        navigate(result.page.dataset.page);
+        requestAnimationFrame(() => result.mark.scrollIntoView({ block: "nearest" }));
+
+        searchIndex.textContent = index + 1;
+        searchResultCount.textContent = searchResults.length;
     }
 
     searchInput.oninput = function() {
-        var query = this.value.trim().toLowerCase();
+        const query = this.value.trim().toLowerCase();
+        clearHighlights();
 
-        var navigated = false;
-        var count = 0;
-        searchResults = [];
-        if (query != "") {
+        if (query !== "") {
             for (let page of book.querySelectorAll(".page")) {
-                if (parseInt(page.dataset.page) <= 0 || page.classList.contains("vis-hidden"))
-                    continue;
-                if (page.firstElementChild.textContent.toLowerCase().includes(query)) {
-                    let element = page.firstElementChild;
-                    // while (element.children.length > 0) {
-                    //     for (let i=0; i<element.children.length; i++) {
-                    //         let child = element.children[i];
-                    //         if (child.textContent.toLowerCase().includes(query)) {
-
-                    //         }
-                    //     }
-                    // }
-                    searchResults.push({
-                        page: page,
-                        highlightedElement: null
-                    });
-                    if (!navigated) {
-                        jumpToResult(0);
-                        navigated = true;
-                    }
-                    count++;
-                }
+                if (parseInt(page.dataset.page) <= 0 || page.classList.contains("vis-hidden")) continue;
+                highlightPage(page, query);
             }
+            jumpToResult(0);
+        } else {
+            searchIndex.textContent = 0;
+            searchResultCount.textContent = 0;
         }
-        searchResultCount.textContent = count;
     }
 
-    searchPrev.onclick = () => {
-
-    }
-
-    searchNext.onclick = () => {
-
-    }
+    searchPrev.onclick = () => jumpToResult(index - 1);
+    searchNext.onclick = () => jumpToResult(index + 1);
 }
 
 document.addEventListener("click", e => {

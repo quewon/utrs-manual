@@ -166,6 +166,15 @@ header.gap2 {
     color: var(--tertiary-light);
 }
 
+mark.search-highlight {
+    background: var(--accent-lighter);
+    color: var(--bg);
+}
+mark.search-highlight-active {
+    background: var(--bg);
+    color: var(--page-bg);
+}
+
 .clf {
     font-weight: bold;
     padding: 0.4em 0.8em;
