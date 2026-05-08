@@ -146,6 +146,7 @@ header.gap2 {
     padding: 0 0.8em;
     height: 2.5rem;
     min-width: 12em;
+    white-space: nowrap;
 }
 .search .search-icon {
     height: 1em;
@@ -228,6 +229,9 @@ main {
 }
 .leave-button:hover {
     background-color: rgba(254,68,69,0.08);
+}
+.leave-button::after {
+    content: "Leave"
 }
 
 aside {
@@ -701,6 +705,11 @@ footer input::-webkit-outer-spin-button {
         rotate: 0;
     }
 }
+@media (max-width: 750px) {
+    .hide-when-medium {
+        display: none;
+    }
+}
 @media (max-width: 520px) {
     #book {
         position: relative;
@@ -715,6 +724,9 @@ footer input::-webkit-outer-spin-button {
         top: 50%;
         left: 1.5rem;
         transform: translate(0, -50%);
+    }
+    .search input {
+        width: 5em;
     }
     .hide-when-small {
         display: none;
@@ -772,12 +784,33 @@ footer input::-webkit-outer-spin-button {
         }
     }
 }
-@media (max-width: 400px) {
+@media (max-width: 500px) {
     header {
         justify-content: space-between;
+        padding: 0.5rem 1rem;
+    }
+    header.gap1 {
+        gap: 1em;
+    }
+    header.gap2 {
+        padding: 0.35rem 1rem;
+    }
+    .search {
+        flex-grow: 1;
+    }
+    .search input {
+        flex-grow: 1;
     }
     .hide-when-smaller {
         display: none;
+    }
+}
+@media (max-width: 400px) {
+    .leave-button {
+        padding: 0.5em 1em;
+    }
+    .leave-button::after {
+        content: "X";
     }
 }
 

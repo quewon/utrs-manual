@@ -310,6 +310,13 @@ function initSearch() {
         }
     }
 
+    searchInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            jumpToResult(e.shiftKey ? index - 1 : index + 1);
+        }
+    });
+
     searchPrev.onclick = () => jumpToResult(index - 1);
     searchNext.onclick = () => jumpToResult(index + 1);
 }
@@ -335,6 +342,7 @@ window.addEventListener("popstate", () => {
 window.addEventListener("resize", updatePageMarker);
 
 document.addEventListener("keydown", e => {
+    if (document.activeElement === searchInput) return;
     switch (e.key) {
         case "ArrowLeft":
             pagePrevious.click();
