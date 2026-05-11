@@ -61,10 +61,16 @@ window.addEventListener("DOMContentLoaded", async () => {
     document.ontouchstart = (e) => {
         if (e.touches && e.touches[0]) {
             const startX = e.touches[0].pageX;
+            const startY = e.touches[0].pageY;
 
             document.ontouchmove = (e) => {
                 if (e.touches && e.touches[0]) {
                     const deltaX = e.touches[0].pageX - startX;
+                    const deltaY = e.touches[0].pageY - startY;
+                    if (Math.abs(deltaY) > 2) {
+                        document.ontouchmove = null;
+                        return;
+                    }
                     if (deltaX < 10) {
                         pageNext.click();
                         document.ontouchmove = null;
