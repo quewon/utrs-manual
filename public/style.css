@@ -43,6 +43,7 @@ body {
     flex-direction: column;
     width: 100vw;
     height: 100vh;
+    height: 100svh;
 }
 
 .flex {
@@ -705,7 +706,7 @@ footer input::-webkit-outer-spin-button {
         rotate: 0;
     }
 }
-@media (max-width: 750px) {
+@media (max-width: 770px) {
     .hide-when-medium {
         display: none;
     }
