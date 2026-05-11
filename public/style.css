@@ -211,6 +211,7 @@ button {
     align-items: center;
     cursor: pointer;
     transition: opacity 0.1s;
+    touch-action: manipulation;
 }
 button:disabled {
     opacity: 0.25;
