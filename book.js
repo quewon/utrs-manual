@@ -58,30 +58,54 @@ window.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-    document.ontouchstart = (e) => {
-        if (e.touches && e.touches[0]) {
-            const startX = e.touches[0].pageX;
-            const startY = e.touches[0].pageY;
-
-            document.ontouchmove = (e) => {
-                if (e.touches && e.touches[0]) {
-                    const deltaX = e.touches[0].pageX - startX;
-                    const deltaY = e.touches[0].pageY - startY;
-                    if (Math.abs(deltaY) > 2) {
-                        document.ontouchmove = null;
-                        return;
-                    }
-                    if (deltaX < 10) {
-                        pageNext.click();
-                        document.ontouchmove = null;
-                    } else if (deltaX > 10) {
-                        pagePrevious.click();
-                        document.ontouchmove = null;
-                    }
-                }
-            }
+    const swipe = {
+        start: { x: 0, y: 0 },
+        last: { x: 0 },
+        startTime: 0,
+        lastTime: 0,
+        active: false,
+        recentDeltaX: 0
+    };
+    document.addEventListener("touchstart", (e) => {
+        if (e.touches[0]) {
+            swipe.start = { x: e.touches[0].pageX, y: e.touches[0].pageY };
+            swipe.last = { x: e.touches[0].pageX };
+            swipe.startTime = swipe.lastTime = Date.now();
+            swipe.active = true;
         }
-    }
+    });
+    document.addEventListener("touchmove", (e) => {
+        if (e.touches[0]) {
+            swipe.recentDeltaX = e.touches[0].pageX - swipe.last.x;
+            swipe.last.x = e.touches[0].pageX;
+            swipe.lastTime = Date.now();
+        }
+    });
+    document.addEventListener("touchend", (e) => {
+        if (!swipe.active) return;
+        swipe.active = false;
+        const end = { x: e.changedTouches[0].pageX, y: e.changedTouches[0].pageY };
+        const delta = { x: end.x - swipe.start.x, y: end.y - swipe.start.y };
+
+        if (Math.abs(delta.x) <= Math.abs(delta.y)) return;
+        if (
+            swipe.recentDeltaX > 1 && 
+            delta.x !== 0 && swipe.recentDeltaX !== 0 && 
+            Math.sign(delta.x) !== Math.sign(swipe.recentDeltaX)
+        ) return;
+
+        const elapsed = Date.now() - swipe.startTime;
+        const velocity = Math.abs(delta.x) / elapsed;
+        const distanceSwipe = Math.abs(delta.x) > 30;
+        const flickSwipe = Math.abs(delta.x) > 10 && velocity > 0.3;
+        if (!distanceSwipe && !flickSwipe) return;
+
+        if (delta.x < 0) {
+            pageNext.click();
+        } else {
+            pagePrevious.click();
+        }
+    });
     
     sideToggleButton.onclick = () => {
         sidebar.classList.toggle("toggled");
