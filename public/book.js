@@ -89,7 +89,6 @@ window.addEventListener("DOMContentLoaded", async () => {
 
         if (Math.abs(delta.x) <= Math.abs(delta.y)) return;
         if (
-            swipe.recentDeltaX > 1 && 
             delta.x !== 0 && swipe.recentDeltaX !== 0 && 
             Math.sign(delta.x) !== Math.sign(swipe.recentDeltaX)
         ) return;
