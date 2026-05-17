@@ -129,6 +129,9 @@ window.addEventListener("DOMContentLoaded", async () => {
     if (location.pathname === "/404") {
         pageNumberInput.value = 404;
     }
+
+    window.addEventListener("resize", updatePageMarker);
+    window.addEventListener("resize", updatePageAspects);
 })
 
 function loadImages() {
@@ -138,7 +141,12 @@ function loadImages() {
 }
 
 async function initPages() {
+    updatePageAspects();
+
     // break up pages
+
+    const height = getComputedStyle(book).getPropertyValue("--page-height");
+    console.log(height);
 
     var pages = book.querySelectorAll(".page");
     for (let i=pages.length-1; i>=2; i--) {
@@ -146,8 +154,8 @@ async function initPages() {
         var page = pages[i];
         var pageContent = page.querySelector(".page-content");
 
-        while (pageContent.scrollHeight > pageContent.clientHeight) {
-            if (pageContent.lastElementChild.clientHeight >= pageContent.clientHeight * 3/4)
+        while (pageContent.scrollHeight > height) {
+            if (pageContent.lastElementChild.clientHeight >= height * 3/4)
                 break;
 
             const newPage = document.createElement("div");
@@ -160,14 +168,14 @@ async function initPages() {
             const newContent = document.createElement("div");
             newContent.className = "page-content";
             
-            while (pageContent.scrollHeight > pageContent.clientHeight) {
+            while (pageContent.scrollHeight > height) {
                 if (
-                    pageContent.scrollHeight > pageContent.clientHeight &&
+                    pageContent.scrollHeight > height &&
                     pageContent.lastElementChild.tagName === "UL"
                 ) {
                     const element = pageContent.lastElementChild;
                     var secondList = pageContent.lastElementChild.cloneNode();
-                    while (pageContent.scrollHeight > pageContent.clientHeight) {
+                    while (pageContent.scrollHeight > height) {
                         secondList.prepend(element.lastElementChild);
                         pageContent.scrollHeight;
                     }
@@ -179,7 +187,7 @@ async function initPages() {
 
                 if (
                     element.classList.contains("breadcrumbs") ||
-                    element.clientHeight >= pageContent.clientHeight * 3/4
+                    element.clientHeight >= height * 3/4
                 )
                     break;
 
@@ -332,10 +340,13 @@ function initSearch() {
                 if (parseInt(page.dataset.page) <= 0 || page.classList.contains("vis-hidden")) continue;
                 highlightPage(page, query);
             }
+        }
+        
+        if (searchResults.length > 0) {
             jumpToResult(0);
         } else {
-            searchIndex.textContent = 0;
-            searchResultCount.textContent = 0;
+            searchIndex.textContent = "0";
+            searchResultCount.textContent = "0";
         }
     }
 
@@ -367,8 +378,6 @@ document.addEventListener("click", e => {
 window.addEventListener("popstate", () => {
     navigateByPathname(location.pathname, true);
 });
-
-window.addEventListener("resize", updatePageMarker);
 
 document.addEventListener("keydown", e => {
     if (document.activeElement === searchInput) return;
@@ -520,4 +529,9 @@ function updatePageMarker() {
         navPageMarker.style.top = "0";
         navPageMarker.classList.add("hidden");
     }
+}
+
+function updatePageAspects() {
+    const height = document.querySelector(".page").clientWidth * 4/3;
+    book.style.setProperty("--page-height", height + "px");
 }
