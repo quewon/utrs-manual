@@ -4,6 +4,7 @@
     color-scheme: dark;
 
     --bg: #111111;
+    --header: #2e2f41;
     --border-bg: #222122;
     --viewer-bg: #2a2a2a;
     --primary: #F4F4F4;
@@ -582,17 +583,19 @@ footer input::-webkit-outer-spin-button {
 }
 .page-content h2 {
     font-size: var(--h2-size);
-    background-color: var(--accent);
+    padding: .05em 0.5em;
+    padding-top: .25em;
+    background-color: var(--header);
     color: var(--page-bg);
 }
 .page-content h3 {
     font-size: var(--h3-size);
-    color: var(--accent);
+    color: var(--header);
 }
 .page-content h4 {
     font-weight: normal;
     font-size: var(--h4-size);
-    color: var(--accent);
+    color: var(--header);
 }
 .page-content h5 {
     font-size: var(--h5-size);
