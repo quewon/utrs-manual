@@ -352,11 +352,11 @@ Five toolbar buttons that are useful for manipulating objects:
 
 | Icon | Action | Shortcut | Description |
 | --- | --- | --- | --- |
-| ![](/media/icons/Cut.svg#icon) | Cut | **Ctrl/⌘+X** | Removes the selection and adds it to the clipboard. |
-| ![](/media/icons/Copy.svg#icon) | Copy | **Ctrl/⌘+C** | Copies a selection to the clipboard. |
-| ![](/media/icons/Paste.svg#icon) | Paste | **Ctrl/⌘+V** | Places clipboard contents. |
-| ![](/media/icons/Duplicate.svg#icon) | Duplicate | **Ctrl/⌘+D** | Duplicates the selection in place. |
-| ![](/media/icons/Delete.svg#icon) | Delete | **Backspace** / **Delete** | Removes the selection. |
+| ![](/media/icons/Cut.svg#icon) | Cut | Ctrl/⌘+X | Removes the selection and adds it to the clipboard. |
+| ![](/media/icons/Copy.svg#icon) | Copy | Ctrl/⌘+C | Copies a selection to the clipboard. |
+| ![](/media/icons/Paste.svg#icon) | Paste | Ctrl/⌘+V | Places clipboard contents. |
+| ![](/media/icons/Duplicate.svg#icon) | Duplicate | Ctrl/⌘+D | Duplicates the selection in place. |
+| ![](/media/icons/Delete.svg#icon) | Delete | Backspace / Delete | Removes the selection. |
 
 ## Checking for Issues
 
