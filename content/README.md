@@ -10,6 +10,15 @@ Pages with an H1 header act as section titles, which means they're displayed dif
 
 If the first header starts with a tilde (~), it won't be visible on the page.
 
+Pages break by themselves, so you rarely need ---:
+
+* every H1 header (a section, like "# Setting Up") gets its own title page, with its table of contents added automatically;
+* the content after it starts on a new page, and so does every H2 header ("## Placing an Object");
+* each glossary entry gets its own page;
+* anything longer than a page is split across pages when the book loads, never between a header and what follows it.
+
+Every other header is a section: it gets its own entry in the sidebar and the table of contents, and its own link, but flows on with the content around it. To start a new page at a particular header yourself, put three dashes (---) on their own line before it. The header keeps its place in the sidebar and its link.
+
 # Components
 
 ```
