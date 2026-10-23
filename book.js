@@ -2,23 +2,32 @@ import PhotoSwipeLightbox from "/res/photoswipe/photoswipe-lightbox.esm.min.js";
 import PhotoSwipe from "/res/photoswipe/photoswipe.esm.min.js";
 
 window.addEventListener("DOMContentLoaded", async () => {
-    const pages = book.querySelectorAll(".page");
-    for (let page of pages) {
+    // pages and the sections inside them, in reading order
+    const entries = [...book.querySelectorAll(".page, [data-section-url]")];
+    for (let page of book.querySelectorAll(".page")) {
         const toc = page.querySelector(".toc");
         if (toc) {
             const hv = parseInt(page.dataset.hv);
-            let number = parseInt(page.dataset.page);
-            for (let i=number + 2; i<pages.length; i++) {
-                if (pages[i].classList.contains("vis-unlisted")) continue;
-                const phv = parseInt(pages[i].dataset.hv);
+            for (let i=entries.indexOf(page) + 1; i<entries.length; i++) {
+                const entry = entries[i];
+                const isSection = "sectionUrl" in entry.dataset;
+                if (!isSection && entry.classList.contains("vis-unlisted")) continue;
+                const phv = parseInt(entry.dataset.hv);
                 if (phv <= hv) {
                     break;
                 }
                 const li = document.createElement("li");
-                li.dataset.page = parseInt(pages[i].dataset.page);
                 const a = document.createElement("a");
-                a.href = pages[i].dataset.url;
-                a.textContent = pages[i].dataset.title;
+                if (isSection) {
+                    li.dataset.page = parseInt(entry.closest(".page").dataset.page);
+                    li.dataset.section = entry.dataset.sectionUrl;
+                    a.href = entry.dataset.sectionUrl;
+                    a.textContent = entry.textContent;
+                } else {
+                    li.dataset.page = parseInt(entry.dataset.page);
+                    a.href = entry.dataset.url;
+                    a.textContent = entry.dataset.title;
+                }
                 li.style.paddingLeft = (phv - hv - 1) * 0.5 + "em";
                 li.appendChild(a);
                 toc.appendChild(li);
@@ -114,16 +123,19 @@ window.addEventListener("DOMContentLoaded", async () => {
     await initPages();
     initSearch();
 
+    // splitting pages can move a section onto a later page
+    for (let li of book.querySelectorAll(".toc li[data-section]")) {
+        const section = book.querySelector(`[data-section-url="${li.dataset.section}"]`);
+        if (section) li.dataset.page = section.closest(".page").dataset.page;
+    }
+
     for (let page of book.querySelectorAll(".page-content")) {
         page.style.overflow = "hidden";
     }
 
     loadImages();
 
-    const page = book.querySelector(`.page[data-url="${location.pathname}"]`);
-    if (page) {
-        navigate(page.dataset.page);
-    } else {
+    if (!navigateByPathname(location.pathname, true)) {
         navigate(404);
     }
     if (location.pathname === "/404") {
@@ -141,12 +153,94 @@ function loadImages() {
 }
 
 async function initPages() {
+    // pages are measured to split them, so wait for the fonts that change their size
+    await document.fonts.ready;
     updatePageAspects();
 
     // break up pages
 
-    const height = getComputedStyle(book).getPropertyValue("--page-height");
+    // pages are laid out at a fixed size (see updatePageAspects), so they split the same way on every screen
+    const height = pageLayoutWidth() * 4/3;
     console.log(height);
+
+    // scrollHeight is a whole number, so round --page-height up (866.67 measures as 867)
+    function overflows(pageContent) {
+        const page = pageContent.parentElement;
+        if (page.classList.contains("section-title") && !page.classList.contains("glossary")) {
+            // a section title page's background turns white below ~79% of its height, which hides white text there
+            const last = pageContent.lastElementChild;
+            const bottom = last.offsetTop + last.offsetHeight;
+            return bottom > height * 0.78;
+        }
+        return pageContent.scrollHeight > Math.ceil(height);
+    }
+
+    // lists and tables can be split between pages, so they're never too tall to move
+    function isSplittable(element) {
+        return element.tagName === "UL" || element.tagName === "OL" || element.tagName === "TABLE";
+    }
+
+    // moves a list's items (or a table's rows) onto a copy until the page fits, and returns the copy.
+    // if the page can't be made to fit that way, nothing is moved and null is returned.
+    function splitOff(pageContent, element) {
+        const copy = element.cloneNode();
+        var source = element;
+        var target = copy;
+        var note = null;
+        if (element.tagName === "TABLE") {
+            const head = element.querySelector("thead");
+            if (head) {
+                copy.appendChild(head.cloneNode(true));
+                // a table split more than once: its run-in lines and note aren't repeated
+                copy.querySelectorAll("tr.table-continued").forEach(row => row.remove());
+            }
+            source = element.querySelector("tbody");
+            target = document.createElement("tbody");
+            copy.appendChild(target);
+            // column lines running on below the part that stays, with a note, added first so their
+            // height is counted
+            note = document.createElement("tfoot");
+            note.appendChild(continuationRow(element, "table-continues", "Continued on next page"));
+            element.appendChild(note);
+        }
+        while (overflows(pageContent) && source && source.children.length > 1) {
+            target.prepend(source.lastElementChild);
+        }
+        if (overflows(pageContent) || target.children.length === 0) {
+            while (target.firstElementChild) source.appendChild(target.firstElementChild);
+            note?.remove();
+            return null;
+        }
+        if (element.tagName === "TABLE") {
+            // and column lines running in above the part that moves on
+            let head = copy.querySelector("thead");
+            if (!head) {
+                head = document.createElement("thead");
+                copy.prepend(head);
+            }
+            head.prepend(continuationRow(element, "table-continued", "Continued from previous page"));
+        }
+        return copy;
+    }
+
+    // counted from a real row, not one of the rows added at a split
+    function columnCount(table) {
+        return table.querySelector("tr:not(.table-continued, .table-continues)")?.children.length || 1;
+    }
+
+    // an empty row with a cell per column, drawn as column lines fading out (see style.css),
+    // with a short note at its right
+    function continuationRow(table, className, text) {
+        const row = document.createElement("tr");
+        row.className = className;
+        const columns = columnCount(table);
+        for (let i = 0; i < columns; i++) row.appendChild(document.createElement("td"));
+        const note = document.createElement("span");
+        note.className = "table-note";
+        note.textContent = text;
+        row.lastElementChild.appendChild(note);
+        return row;
+    }
 
     var pages = book.querySelectorAll(".page");
     for (let i=pages.length-1; i>=2; i--) {
@@ -154,8 +248,9 @@ async function initPages() {
         var page = pages[i];
         var pageContent = page.querySelector(".page-content");
 
-        while (pageContent.scrollHeight > height) {
-            if (pageContent.lastElementChild.clientHeight >= height * 3/4)
+        while (overflows(pageContent)) {
+            const last = pageContent.lastElementChild;
+            if (!isSplittable(last) && last.clientHeight >= height * 3/4)
                 break;
 
             const newPage = document.createElement("div");
@@ -168,22 +263,20 @@ async function initPages() {
             const newContent = document.createElement("div");
             newContent.className = "page-content";
             
-            while (pageContent.scrollHeight > height) {
-                if (
-                    pageContent.scrollHeight > height &&
-                    pageContent.lastElementChild.tagName === "UL"
-                ) {
-                    const element = pageContent.lastElementChild;
-                    var secondList = pageContent.lastElementChild.cloneNode();
-                    while (pageContent.scrollHeight > height) {
-                        secondList.prepend(element.lastElementChild);
-                        pageContent.scrollHeight;
-                    }
-                    newContent.prepend(secondList);
-                    break;
-                }
-
+            while (overflows(pageContent)) {
                 const element = pageContent.lastElementChild;
+
+                if (isSplittable(element)) {
+                    const copy = splitOff(pageContent, element);
+                    if (copy) {
+                        newContent.prepend(copy);
+                        break;
+                    }
+                    // it can't be split to fit on this page: move it whole, and split it on the next one
+                    newContent.prepend(element);
+                    newContent.offsetHeight;
+                    continue;
+                }
 
                 if (
                     element.classList.contains("breadcrumbs") ||
@@ -199,7 +292,17 @@ async function initPages() {
                 newContent.prepend(element);
                 newContent.offsetHeight;
             }
-            if (newContent.innerHTML === "") continue;
+            // keep a heading with what comes after it (ignoring empty elements, like the empty
+            // paragraphs the browser leaves around an image)
+            while (pageContent.lastElementChild && pageContent.lastElementChild.innerHTML.trim() === "") {
+                pageContent.lastElementChild.remove();
+            }
+            while (/^H[1-6]$/.test(pageContent.lastElementChild?.tagName) && pageContent.children.length > 2) {
+                newContent.prepend(pageContent.lastElementChild);
+            }
+
+            // nothing could be moved: stop, or this page would be checked forever
+            if (newContent.innerHTML === "") break;
             if (originalPage.querySelector(".breadcrumbs"))
                 newContent.prepend(originalPage.querySelector(".breadcrumbs").cloneNode(true));
 
@@ -435,23 +538,54 @@ async function pageTransition(from, to) {
     }
 }
 
-async function navigateByPathname(url, pop) {
+// opens the page with this url, or the page containing the section with this url.
+// returns false if there's no such page or section.
+function navigateByPathname(url, pop) {
     const page = book.querySelector(`.page[data-url="${url}"]`);
-    navigate(page.dataset.page, pop);
+    if (page) {
+        navigate(page.dataset.page, pop);
+        return true;
+    }
+    const section = book.querySelector(`[data-section-url="${url}"]`);
+    if (section) {
+        navigate(section.closest(".page").dataset.page, pop, section);
+        return true;
+    }
+    return false;
 }
 
-async function navigate(pageNumber, pop) {
+// section: a heading inside the page, when navigating to a section rather than the page itself
+async function navigate(pageNumber, pop, section) {
     pageNumber = parseInt(pageNumber);
 
     const previousPage = book.querySelector(".page:not(.hidden)");
     const page = book.querySelector(`.page[data-page="${pageNumber}"]`);
+    // the address shows what's being read: the section navigated to, or else the page or section
+    // this page starts with or continues (the same entry the sidebar marks)
+    const url = section ? section.dataset.sectionUrl : currentEntryUrl(page);
 
-    if (previousPage === page) return;
+    if (section) {
+        section.classList.remove("section-target");
+        section.offsetWidth;
+        section.classList.add("section-target");
+    }
 
-    document.title = page.dataset.title;
+    if (previousPage === page) {
+        if (section) {
+            if (!pop && location.pathname !== url) {
+                history.pushState(section.textContent, "", location.origin + url);
+            }
+            selectNavLink(url, pageNumber);
+        }
+        return;
+    }
 
-    if (!pop && previousPage?.dataset.url !== page.dataset.url) {
-        history.pushState(document.title, "", location.origin + page.dataset.url);
+    document.title = section ? section.textContent : page.dataset.title;
+
+    // compare with the address bar rather than the previous page: a continued page shares its
+    // url with the page before it, but the address bar may be showing a section on it
+    if (!pop && location.pathname !== url) {
+        history.pushState(document.title, "", location.origin + url);
     }
 
     pageTransition(
@@ -471,15 +605,33 @@ async function navigate(pageNumber, pop) {
     if (book.querySelector(`.page[data-page="${pageNumber + 1}"]`)) {
         pageNext.removeAttribute("disabled");
     }
-    
-    const pageButton = document.querySelector(`nav a[href="${page.dataset.url}"]`);
-    if (pageButton || pageNumber <= 0) {
-        document.querySelector("nav a.selected")?.classList.remove("selected");
-    }
+
     const pageCount = book.querySelectorAll(".page:not(.glossary)").length - 2;
     const progress = Math.min(pageNumber / pageCount * 100, 100);
     progressFill.style.width = progress + "%";
     progressPercentage.textContent = Math.floor(progress) + "%";
+    selectNavLink(url, pageNumber);
+}
+
+// the url of the page or section being read on this page: the section heading it starts with,
+// or else the last page or section that began before it (the one this page continues)
+function currentEntryUrl(page) {
+    const first = [...page.querySelector(".page-content").children].find(c => !c.classList.contains("breadcrumbs"));
+    if (!first) return page.dataset.url;
+    if (first.dataset.sectionUrl) return first.dataset.sectionUrl;
+    let url = page.dataset.url;
+    for (const entry of book.querySelectorAll(".page:not(.vis-contd), [data-section-url]")) {
+        if (first.compareDocumentPosition(entry) & Node.DOCUMENT_POSITION_FOLLOWING) break;
+        url = entry.dataset.sectionUrl ?? entry.dataset.url;
+    }
+    return url;
+}
+
+function selectNavLink(url, pageNumber) {
+    const pageButton = document.querySelector(`nav a[href="${url}"]`);
+    if (pageButton || pageNumber <= 0) {
+        document.querySelector("nav a.selected")?.classList.remove("selected");
+    }
     if (pageButton) {
         pageButton.classList.add("selected");
     }
@@ -514,17 +666,17 @@ book.addEventListener("wheel", () => {
 function updatePageMarker() {
     var pageButton = document.querySelector("nav a.selected");
     if (pageButton) {
-        if (!pageButton.offsetTop) {
-            while (!pageButton.offsetTop) {
-                pageButton = pageButton.closest("ol").parentElement.querySelector("a");
-            }
-            navPageMarker.classList.add("hidden");
-            navPageMarker.style.top = pageButton.offsetTop + "px";
-        } else {
-            navPageMarker.style.height = pageButton.offsetHeight + "px";
-            navPageMarker.style.top = pageButton.offsetTop + "px";
-            navPageMarker.classList.remove("hidden");
+        // inside a collapsed section: mark the collapsed section instead
+        // (unless the whole sidebar is hidden, when nothing in it is visible)
+        while (pageButton.getClientRects().length === 0 && pageButton.closest("nav").getClientRects().length > 0) {
+            const parentList = pageButton.closest("ol");
+            const parentButton = parentList?.parentElement?.querySelector("a");
+            if (!parentButton || parentButton === pageButton) break;
+            pageButton = parentButton;
         }
+        navPageMarker.style.height = pageButton.offsetHeight + "px";
+        navPageMarker.style.top = pageButton.offsetTop + "px";
+        navPageMarker.classList.remove("hidden");
     } else {
         navPageMarker.style.top = "0";
         navPageMarker.classList.add("hidden");
@@ -532,6 +684,13 @@ function updatePageMarker() {
 }
 
 function updatePageAspects() {
-    const height = document.querySelector(".page").clientWidth * 4/3;
+    const page = document.querySelector(".page");
+    const height = page.clientWidth * 4/3;
     book.style.setProperty("--page-height", height + "px");
+    book.style.setProperty("--page-scale", page.clientWidth / pageLayoutWidth());
+}
+
+// the fixed width page contents are laid out at (see .page-content in style.css)
+function pageLayoutWidth() {
+    return parseFloat(getComputedStyle(book.querySelector(".page-content")).getPropertyValue("--page-layout-width"));
 }

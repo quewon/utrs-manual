@@ -1,5 +1,9 @@
 import fs from 'fs';
 
+function escapeHTML(text) {
+    return text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+}
+
 function twoDigit(number) {
     if (number < 10) {
         number = "0" + number;
@@ -15,7 +19,8 @@ function parseSectionCounter(sectionCounter) {
     return s;
 }
 
-function pageToNavHTML(page, sectionCounter = [0]) {
+// sections are numbered from 0 (Overview is section 00)
+function pageToNavHTML(page, sectionCounter = [0, -1]) {
     let html = "";
     let hasVisibleChildren = false;
     for (let subpage of page.pages) {
@@ -27,12 +32,16 @@ function pageToNavHTML(page, sectionCounter = [0]) {
     if (!page.unlisted) {
         html = `<div>
                 <a href="${page.url}" class="hv${page.headingValue}">
-                    <div class="number">
-                        ${page.headingValue === 1
-                            ? twoDigit(sectionCounter[1]) 
-                            : parseSectionCounter(sectionCounter)
-                        }
-                    </div>
+                    ${page.headingValue !== 1 && page.parents.length === 1
+                        // pages before the first section (like the introduction) aren't numbered
+                        ? `<div class="number placeholder">00</div>`
+                        : `<div class="number">
+                            ${page.headingValue === 1
+                                ? twoDigit(sectionCounter[1])
+                                : parseSectionCounter(sectionCounter)
+                            }
+                        </div>`
+                    }
                     ${page.title}
                 </a>
                 ${page.headingValue > 0 && hasVisibleChildren
@@ -62,19 +71,15 @@ function pageToNavHTML(page, sectionCounter = [0]) {
 
 function setURLs(page) {
     if (page.parents.length > 0) {
-        if (page.continued) {
-            page.url = page.parents[page.parents.length - 1].url;
-        } else {
-            let url = encodeURI(
-                page.title.toLowerCase()
-                .replaceAll(" ", "-")
-                .replaceAll(/[!?./'":;]/g, "")
-            );
-            if (page.parents.length > 0) {
-                url = page.parents[page.parents.length - 1].url + "/" + url;
-            }
-            page.url = url;
+        let url = encodeURI(
+            page.title.toLowerCase()
+            .replaceAll(" ", "-")
+            .replaceAll(/[!?./'":;]/g, "")
+        );
+        if (page.parents.length > 0) {
+            url = page.parents[page.parents.length - 1].url + "/" + url;
         }
+        page.url = url;
     }
 
     for (let subpage of page.pages) {
@@ -91,7 +96,7 @@ function setURLs(page) {
     }
 }
 
-function pageData(page, sectionCounter = [0]) {
+function pageData(page, sectionCounter = [0, -1]) {
     let data = [page];
 
     if (page.pages.length > 0) {
@@ -101,7 +106,7 @@ function pageData(page, sectionCounter = [0]) {
             }
             sectionCounter = sectionCounter.slice(0, subpage.headingValue + 1);
             sectionCounter[subpage.headingValue]++;
-            if (sectionCounter[1])
+            if (sectionCounter[1] >= 0)
                 subpage.sectionNumber = sectionCounter[1];
             data = [...data, ...pageData(subpage, sectionCounter)];
         }
@@ -127,29 +132,74 @@ export default function(config) {
         hidden: false
     }
     var currentPage = structure;
+    // the last page or section added, which the next one is placed under
+    var lastNode = structure;
     var lookingForHeader = true;
+    var inCode = false;
+    // sections are headings inside a page: listed in the sidebar like pages, but not pages of their own
+    const sections = [];
+
+    function addSection(level, title) {
+        let parent = lastNode;
+        while (level <= parent.headingValue) {
+            parent = parent.parents[parent.parents.length - 1];
+        }
+        const section = {
+            title,
+            content: "",
+            pages: [],
+            parents: [...parent.parents, parent],
+            headingValue: level,
+            unlisted: false,
+            hidden: false,
+            section: true,
+            sectionId: sections.length,
+            glossary: currentPage.glossary
+        };
+        parent.pages.push(section);
+        sections.push(section);
+        lastNode = section;
+        // the url is filled in once every url is known (see below)
+        return `<h${level} data-section="${section.sectionId}">${escapeHTML(title)}</h${level}>`;
+    }
 
     for (let line of lines) {
         if (!lookingForHeader && line.trim() !== "---") {
-            currentPage.content += "\n" + line;
+            let startsPage = false;
+            if (line.trim().startsWith("```")) {
+                inCode = !inCode;
+            } else if (!inCode) {
+                const heading = line.match(/^(#{1,6}) (.+?)\s*$/);
+                // a heading that just repeats the page's own title (like on the Introduction page,
+                // whose real title is hidden with ~) is neither a new page nor a section
+                const repeatsTitle = heading && heading[1].length === currentPage.headingValue && heading[2].trim() === currentPage.title;
+                // pages start by themselves at every # and ## heading, after a section's title page,
+                // and at every glossary entry; anywhere else, a page only starts at a --- (and long
+                // pages are split when the book loads, see book.js)
+                startsPage = heading && !repeatsTitle && (heading[1].length <= 2 || currentPage.headingValue === 1 || currentPage.glossary);
+                // every other heading is a section
+                if (heading && !startsPage && !repeatsTitle) {
+                    line = addSection(heading[1].length, heading[2]);
+                }
+            }
+            if (startsPage) {
+                lookingForHeader = true;
+            } else {
+                currentPage.content += "\n" + line;
+            }
         }
 
         if (line.trim() === "") continue;
 
         if (lookingForHeader) {
-            let previousPage = currentPage;
+            inCode = false;
+            let previousPage = lastNode;
 
-            var continued = false;
             var unlisted = false;
             var hidden = false;
             var headingValue = line.split(" ")[0].length;
             const header = line.trim().split(" ").slice(1).join(" ");
-            if (line.indexOf("CONTD") == 0) {
-                headingValue = previousPage.headingValue + 1;
-                line = "";
-                unlisted = true;
-                continued = true;
-            } else if (line.indexOf("UNLISTED") == 0) {
+            if (line.indexOf("UNLISTED") == 0) {
                 headingValue -= "UNLISTED".length;
                 line = line.slice("UNLISTED".length);
                 unlisted = true;
@@ -175,7 +225,6 @@ export default function(config) {
                 number: pagenumber++,
                 unlisted,
                 hidden,
-                continued,
                 glossary: header === "Glossary"
             }
             for (let parent of page.parents) {
@@ -186,6 +235,7 @@ export default function(config) {
             }
             previousPage.pages.push(page);
             currentPage = page;
+            lastNode = page;
             lookingForHeader = false;
         } else {
             if (line.trim() === "---") {
@@ -194,7 +244,16 @@ export default function(config) {
         }
     }
 
-    var pages = pageData(structure);
+    // sections are listed in the sidebar, but they aren't rendered as pages
+    var pages = pageData(structure).filter(page => !page.section);
+
+    // section title pages and glossary letters list what's in them
+    for (let page of pages) {
+        const listsContents = page.headingValue === 1 || (page.glossary && page.headingValue === 2);
+        if (listsContents && !page.content.includes("[Table of contents]")) {
+            page.content = page.content.trimEnd() + "\n\n[Table of contents]\n";
+        }
+    }
     pages.unshift({
         url: "/404",
         title: "404",
@@ -208,6 +267,14 @@ export default function(config) {
 
     setURLs(structure);
     pages[1].url = "/";
+
+    for (let page of pages) {
+        if (!page.content) continue;
+        page.content = page.content.replace(/data-section="(\d+)"/g, (match, id) => {
+            const section = sections[id];
+            return `data-section-url="${section.url}" data-hv="${section.parents.length}"`;
+        });
+    }
 
     var visiblePages = pages.filter(page => {
         return page.title !== "HIDDEN"

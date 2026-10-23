@@ -22,6 +22,9 @@
 
     --page-bg: white;
     --page-primary: var(--bg);
+    /* table lines and code borders: lighter than the text */
+    --page-line: #c4c4c4;
+    --page-code-bg: #f3f3f1;
 }
 
 html, body {
@@ -365,6 +368,16 @@ nav .hv1 > .number {
     color: var(--accent);
     font-size: 1rem;
 }
+/* unnumbered pages before the first section (like the introduction) have an invisible "00",
+   so their names line up with the section names */
+nav > ol > li > div > a:not(.hv1) {
+    gap: inherit;
+}
+nav .number.placeholder {
+    visibility: hidden;
+    font-size: 1rem;
+    font-weight: 600;
+}
 nav li:has(.selected) > div > a {
     color: var(--secondary-light);
 }
@@ -529,6 +542,8 @@ footer input::-webkit-outer-spin-button {
     color: var(--page-primary);
     color-scheme: light;
     container-type: inline-size;
+    /* an explicit line height, since "normal" changes with font size and would lay pages out differently on small screens */
+    line-height: 1.25;
 
     --default-line-height: 1.5em;
     --h1-size: 2em;
@@ -552,19 +567,39 @@ footer input::-webkit-outer-spin-button {
     pointer-events: none;
 }
 
+/* page contents are laid out at one fixed size and scaled to fit the page, so line breaks
+   and page breaks are exactly the same on every screen */
 .page-content {
-    --rem: 2.2cqi;
+    --page-layout-width: 650px;
+    --rem: calc(0.022 * var(--page-layout-width));
     --default-padding: calc(5.5 * var(--rem)) calc(4 * var(--rem));
 
     position: relative;
     font-size: var(--rem);
     padding: var(--default-padding);
-    height: 100%;
+    width: var(--page-layout-width);
+    height: calc(var(--page-layout-width) * 4 / 3);
+    transform: scale(var(--page-scale, 1));
+    transform-origin: 0 0;
     overflow: scroll;
 }
-.page-content p {
+/* paragraphs, list items and table cells share one line height (tables of contents keep their own) */
+.page-content p,
+.page-content :not(.toc) > li,
+.page-content th,
+.page-content td {
     line-height: var(--default-line-height);
 }
+.page-content p,
+.page-content ul:not(.toc),
+.page-content ol {
+    margin: 0.75em 0;
+}
+/* headings keep the default space above them; below, h3-h6 get half the default */
+.page-content h3 { margin-bottom: 0.5em; }
+.page-content h4 { margin-bottom: 0.665em; }
+.page-content h5 { margin-bottom: 0.835em; }
+.page-content h6 { margin-bottom: 1.165em; }
 .page-content a {
     color: var(--accent);
     text-decoration: underline;
@@ -587,6 +622,8 @@ footer input::-webkit-outer-spin-button {
     padding-top: .25em;
     background-color: var(--header);
     color: var(--page-bg);
+    padding: 0 calc(0.7 * var(--rem));
+    padding-top: calc(0.56 * var(--rem));
 }
 .page-content h3 {
     font-size: var(--h3-size);
@@ -610,7 +647,6 @@ footer input::-webkit-outer-spin-button {
 }
 .page-content figcaption {
     font-style: italic;
-    color: var(--accent);
     margin-top: 1em;
     font-size: 0.9em;
 }
@@ -629,6 +665,81 @@ footer input::-webkit-outer-spin-button {
 
 .page-content pre:has(code) {
     overflow: scroll;
+}
+/* where a table is split across pages, its column lines run on past the split and fade out */
+.page-content tr.table-continues td,
+.page-content tr.table-continued td {
+    position: relative;
+    height: 2em;
+    padding: 0;
+    box-shadow: none;
+    background: linear-gradient(to bottom, var(--page-line), transparent) right / 0.1em 100% no-repeat;
+}
+.page-content tr.table-continued td {
+    background-image: linear-gradient(to top, var(--page-line), transparent);
+}
+.page-content tr.table-continues td:last-child,
+.page-content tr.table-continued td:last-child {
+    background: none;
+}
+/* with a short note at the right, next to the table */
+.page-content .table-note {
+    position: absolute;
+    right: 0;
+    white-space: nowrap;
+    font-style: italic;
+    font-size: 0.85em;
+    line-height: 1;
+}
+.page-content tr.table-continues .table-note {
+    top: 0.35em;
+}
+.page-content tr.table-continued .table-note {
+    bottom: 0.35em;
+}
+
+/* images that follow one another sit side by side */
+.page-content .figure-row {
+    display: flex;
+    gap: 1.5em;
+    align-items: flex-start;
+    margin: 2em 0;
+}
+/* each image's share of the row follows its aspect ratio, so they all come out the same height */
+.page-content .figure-row figure {
+    flex: var(--ratio, 1) 1 0;
+    min-width: 0;
+    margin: 0;
+}
+.page-content figure .video {
+    margin: auto;
+    max-height: 20em;
+    line-height: 0;
+}
+.page-content figure video {
+    width: 100%;
+    height: 100%;
+}
+.page-content code,
+.page-content pre:has(code) {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.85em;
+    background: var(--page-code-bg);
+    box-shadow: inset 0 0 0 0.08em var(--page-line);
+    border-radius: 0.3em;
+}
+.page-content code {
+    padding: 0.1em 0.35em;
+}
+.page-content pre:has(code) {
+    padding: 0.8em 1em;
+    line-height: 1.45;
+}
+.page-content pre code {
+    font-size: 1em;
+    background: none;
+    box-shadow: none;
+    padding: 0;
 }
 
 .breadcrumbs {
@@ -850,9 +961,11 @@ footer input::-webkit-outer-spin-button {
     font-size: 5em;
     margin: 0;
     font-weight: 800;
+    line-height: 1;
 }
 .section-title:has(.toc) .page-content p {
     font-style: italic;
+    margin-bottom: 1.5em;
 }
 .section-title .breadcrumbs {
     right: 5em;
@@ -902,15 +1015,16 @@ footer input::-webkit-outer-spin-button {
 .page-content th {
     font-weight: 700;
     background: var(--accent-lighter);
-    color: var(--accent);
+    color: var(--header-color);
 }
+/* cell lines are inset shadows rather than borders: browsers round borders to whole pixels,
+   which makes tables proportionally taller on small screens */
 .page-content th, td {
-    border-bottom: 0.1em solid black;
-    border-right: 0.1em solid black;
+    box-shadow: inset -0.1em -0.1em 0 var(--page-line);
     padding: .3em .5em;
 }
 .page-content th:last-child, td:last-child {
-    border-right: none;
+    box-shadow: inset 0 -0.1em 0 var(--page-line);
 }
 
 .page-content .preserve-spacing p {
@@ -927,6 +1041,7 @@ footer input::-webkit-outer-spin-button {
     box-shadow: 0 0 3px 1px rgba(0, 0, 0, .2);
 }
 .note-yellow, .note-blue {
+    margin: 1.25em 0;
     padding: 1.5em;
     padding-top: 3.5em;
     padding-bottom: 2.5em;
@@ -1107,6 +1222,19 @@ footer input::-webkit-outer-spin-button {
 [data-url="/glossary"] .toc {
     color: black;
 }
+/* start the list below the blue background */
+[data-url="/glossary"]:not(.vis-contd) .toc {
+    margin-top: 5.5em;
+}
 [data-url="/glossary"].vis-contd::before {
     background-image: none;
+}
+/* a section that was just navigated to */
+.page-content .section-target {
+    animation: section-target 1.5s ease-out;
+}
+@keyframes section-target {
+    from {
+        background-color: var(--accent-lighter);
+    }
 }
