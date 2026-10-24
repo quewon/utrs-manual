@@ -192,9 +192,9 @@ mark.search-highlight-active {
 }
 
 img[src*="#icon"] {
-    width: 1.5em;
-    height: 1.5em;
-    vertical-align: middle;
+    width: 1.25em;
+    height: 1.25em;
+    vertical-align: text-bottom;
 }
 
 a {
@@ -318,7 +318,9 @@ nav a {
     display: flex;
     gap: 0.75rem;
 }
-nav li:has(> div > .dropdown-button.toggled) > ol {
+/* collapsed sections still show the way to the page being read (without being toggled open, so
+   they're collapsed again once it's left) */
+nav li:has(> div > .dropdown-button.toggled):not(:has(ol a.selected)) > ol {
     display: none;
 }
 nav > ol:first-child > li:first-child > a {
@@ -499,23 +501,6 @@ footer input::-webkit-outer-spin-button {
     transform: translate(-50%, 0);
 }
 
-.pswp__custom-caption {
-    font-size: 1.2rem;
-    background: rgba(0, 0, 0, 0.75);
-    color: white;
-    width: fit-content;
-    text-align: center;
-    padding: 2px 8px;
-    border-radius: 4px;
-    position: absolute;
-    left: 50%;
-    bottom: 16px;
-    transform: translateX(-50%);
-}
-.hidden-caption-content {
-    display: none;
-}
-
 #book {
     flex-grow: 1;
     position: relative;
@@ -538,6 +523,9 @@ footer input::-webkit-outer-spin-button {
     flex-shrink: 0;
     flex-grow: 0;
     overflow: hidden;
+    /* nothing inside a page changes the layout outside it, so splitting one page doesn't make the
+       browser lay out the whole book again */
+    contain: strict;
     background: var(--page-bg);
     color: var(--page-primary);
     color-scheme: light;
@@ -581,7 +569,8 @@ footer input::-webkit-outer-spin-button {
     height: calc(var(--page-layout-width) * 4 / 3);
     transform: scale(var(--page-scale, 1));
     transform-origin: 0 0;
-    overflow: scroll;
+    overflow: hidden;
+    contain: strict;
 }
 /* paragraphs, list items and table cells share one line height (tables of contents keep their own) */
 .page-content p,
@@ -618,8 +607,6 @@ footer input::-webkit-outer-spin-button {
 }
 .page-content h2 {
     font-size: var(--h2-size);
-    padding: .05em 0.5em;
-    padding-top: .25em;
     background-color: var(--header);
     color: var(--page-bg);
     padding: 0 calc(0.7 * var(--rem));
@@ -659,28 +646,40 @@ footer input::-webkit-outer-spin-button {
     margin: auto;
     display: block;
     line-height: 0;
-    /* max-width: 100%; */
     max-height: 20em;
 }
 
 .page-content pre:has(code) {
     overflow: scroll;
 }
-/* where a table is split across pages, its column lines run on past the split and fade out */
+/* where a table is split across pages, its column lines run on past the split and fade out.
+   the rows drawing them take up no space (they overhang the table instead), so splitting a table
+   doesn't change how much of it fits on a page */
 .page-content tr.table-continues td,
 .page-content tr.table-continued td {
     position: relative;
-    height: 2em;
+    height: 0;
     padding: 0;
     box-shadow: none;
-    background: linear-gradient(to bottom, var(--page-line), transparent) right / 0.1em 100% no-repeat;
 }
-.page-content tr.table-continued td {
-    background-image: linear-gradient(to top, var(--page-line), transparent);
+.page-content tr.table-continues td::before,
+.page-content tr.table-continued td::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0.1em;
+    height: 2em;
+    background: linear-gradient(to bottom, var(--page-line), transparent);
 }
-.page-content tr.table-continues td:last-child,
-.page-content tr.table-continued td:last-child {
-    background: none;
+.page-content tr.table-continued td::before {
+    top: auto;
+    bottom: 0;
+    background: linear-gradient(to top, var(--page-line), transparent);
+}
+.page-content tr.table-continues td:last-child::before,
+.page-content tr.table-continued td:last-child::before {
+    content: none;
 }
 /* with a short note at the right, next to the table */
 .page-content .table-note {
@@ -712,6 +711,8 @@ footer input::-webkit-outer-spin-button {
     margin: 0;
 }
 .page-content figure .video {
+    cursor: zoom-in;
+    display: block;
     margin: auto;
     max-height: 20em;
     line-height: 0;
@@ -1015,7 +1016,6 @@ footer input::-webkit-outer-spin-button {
 .page-content th {
     font-weight: 700;
     background: var(--accent-lighter);
-    color: var(--header-color);
 }
 /* cell lines are inset shadows rather than borders: browsers round borders to whole pixels,
    which makes tables proportionally taller on small screens */

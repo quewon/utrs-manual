@@ -74,10 +74,11 @@ export default function (config) {
         let content = token.content;
         if (/\.(webm|mp4)$/.test(src)) {
             // videos play like gifs: looping, muted, and laid out at their size before they load
-            // (sizes come from content/media/video-sizes.json, written by tools/convert-media.sh)
+            // (sizes come from content/media/video-sizes.json, written by tools/convert-media.sh).
+            // they open in the lightbox like images (see initGalleries in book.js)
             const [width, height] = videoSizes[src] || [16, 9];
             if (!videoSizes[src]) console.warn("no size recorded for " + src);
-            return `<figure style="--ratio: ${width / height}"><div class="video" style="aspect-ratio: ${width}/${height}"><video data-src="${src}" autoplay loop muted playsinline></video></div><figcaption>${content}</figcaption></figure>`;
+            return `<figure style="--ratio: ${width / height}"><a class="video" style="aspect-ratio: ${width}/${height}" target="_blank" data-pswp-src="${src}" data-pswp-width="${width}" data-pswp-height="${height}" data-pswp-type="video"><video data-src="${src}" autoplay loop muted playsinline></video></a><figcaption>${content}</figcaption></figure>`;
         } else if (src.includes("#icon")) {
             return defaultImageRenderer(tokens, idx, options, env, self);
         } else {
@@ -98,11 +99,7 @@ export default function (config) {
             catch {
                 console.warn("could not get dimensions of " + src);
             }
-            if (width > height) {
-                return `<figure style="--ratio: ${width / height || 1}"><a style="aspect-ratio: ${width}/${height}" target="_blank" data-pswp-src="${src}" data-pswp-width="${width}" data-pswp-height="${height}"><img alt="${content}" data-src="${src}" /></a><figcaption>${content}</figcaption></figure>`;
-            } else {
-                return `<figure style="--ratio: ${width / height || 1}"><a style="aspect-ratio: ${width}/${height}" target="_blank" data-pswp-src="${src}" data-pswp-width="${width}" data-pswp-height="${height}"><img alt="${content}" data-src="${src}" /></a><figcaption>${content}</figcaption></figure>`;
-            }
+            return `<figure style="--ratio: ${width / height || 1}"><a style="aspect-ratio: ${width}/${height}" target="_blank" data-pswp-src="${src}" data-pswp-width="${width}" data-pswp-height="${height}"><img alt="${content}" data-src="${src}" /></a><figcaption>${content}</figcaption></figure>`;
         }
     }
 

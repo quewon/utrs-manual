@@ -8,7 +8,12 @@ layout: base.html
         {%- if bookpage.parents.length > 1 -%}
             <div class="breadcrumbs">
                 {%- assign parent = bookpage.parents[1] -%}
-                {{ bookpage.sectionNumber }} / <a href="{{ parent.url }}">{{ parent.title }}</a> 
+                {{ bookpage.sectionNumber }} / <a href="{{ parent.url }}">{{ parent.title }}</a>
+                {%- comment %} and the ## page it's in, or this page if it's one {% endcomment -%}
+                {%- if bookpage.parents.length > 2 -%}
+                    {%- assign subparent = bookpage.parents[2] %} / <a href="{{ subparent.url }}">{{ subparent.title }}</a>
+                {%- else %} / <a class="self" href="{{ bookpage.url }}">{{ bookpage.title }}</a>
+                {%- endif %}
             </div>
         {%- elsif bookpage.parents.length == 1 -%}
             <div class="breadcrumbs">

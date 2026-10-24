@@ -698,8 +698,6 @@ To create your own materials, open the **Materials Manager**. You can access thi
 
 ![The Materials Manager.](/media/screenshots/materials-manager.webp)
 
----
-
 For each material you create, you can set:
 
 | Setting | Description |
@@ -721,6 +719,8 @@ Material names can be used to reference them from a level script (see [Appendix:
 ## Colors
 
 When you edit a color parameter in the Inspector, you can choose a color from your project's **color palette**. The color palette is optional (you can always pick colors individually) but can be a useful tool for maintaining a unified color scheme throughout your project.
+
+---
 
 ### Color Palette Manager
 
