@@ -1224,7 +1224,7 @@ footer input::-webkit-outer-spin-button {
 }
 /* start the list below the blue background */
 [data-url="/glossary"]:not(.vis-contd) .toc {
-    margin-top: 5.5em;
+    margin-top: 10em;
 }
 [data-url="/glossary"].vis-contd::before {
     background-image: none;
