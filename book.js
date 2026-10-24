@@ -2,38 +2,9 @@ import PhotoSwipeLightbox from "/res/photoswipe/photoswipe-lightbox.esm.min.js";
 import PhotoSwipe from "/res/photoswipe/photoswipe.esm.min.js";
 
 window.addEventListener("DOMContentLoaded", async () => {
-    // pages and the sections inside them, in reading order
-    const entries = [...book.querySelectorAll(".page, [data-section-url]")];
-    for (let page of book.querySelectorAll(".page")) {
-        const toc = page.querySelector(".toc");
-        if (toc) {
-            const hv = parseInt(page.dataset.hv);
-            for (let i=entries.indexOf(page) + 1; i<entries.length; i++) {
-                const entry = entries[i];
-                const isSection = "sectionUrl" in entry.dataset;
-                if (!isSection && entry.classList.contains("vis-unlisted")) continue;
-                const phv = parseInt(entry.dataset.hv);
-                if (phv <= hv) {
-                    break;
-                }
-                const li = document.createElement("li");
-                const a = document.createElement("a");
-                if (isSection) {
-                    li.dataset.page = parseInt(entry.closest(".page").dataset.page);
-                    li.dataset.section = entry.dataset.sectionUrl;
-                    a.href = entry.dataset.sectionUrl;
-                    a.textContent = entry.textContent;
-                } else {
-                    li.dataset.page = parseInt(entry.dataset.page);
-                    a.href = entry.dataset.url;
-                    a.textContent = entry.dataset.title;
-                }
-                li.style.paddingLeft = (phv - hv - 1) * 0.5 + "em";
-                li.appendChild(a);
-                toc.appendChild(li);
-            }
-        }
-    }
+    await initPages();
+    initGalleries();
+    pageTotal.textContent = book.querySelectorAll(".page").length - 2;
 
     for (let button of document.querySelectorAll(".dropdown-button")) {
         button.onclick = () => {
@@ -71,7 +42,6 @@ window.addEventListener("DOMContentLoaded", async () => {
         start: { x: 0, y: 0 },
         last: { x: 0 },
         startTime: 0,
-        lastTime: 0,
         active: false,
         recentDeltaX: 0
     };
@@ -79,7 +49,7 @@ window.addEventListener("DOMContentLoaded", async () => {
         if (e.touches[0]) {
             swipe.start = { x: e.touches[0].pageX, y: e.touches[0].pageY };
             swipe.last = { x: e.touches[0].pageX };
-            swipe.startTime = swipe.lastTime = Date.now();
+            swipe.startTime = Date.now();
             swipe.active = true;
         }
     });
@@ -87,7 +57,6 @@ window.addEventListener("DOMContentLoaded", async () => {
         if (e.touches[0]) {
             swipe.recentDeltaX = e.touches[0].pageX - swipe.last.x;
             swipe.last.x = e.touches[0].pageX;
-            swipe.lastTime = Date.now();
         }
     });
     document.addEventListener("touchend", (e) => {
@@ -120,18 +89,7 @@ window.addEventListener("DOMContentLoaded", async () => {
         updatePageMarker();
     }
 
-    await initPages();
     initSearch();
-
-    // splitting pages can move a section onto a later page
-    for (let li of book.querySelectorAll(".toc li[data-section]")) {
-        const section = book.querySelector(`[data-section-url="${li.dataset.section}"]`);
-        if (section) li.dataset.page = section.closest(".page").dataset.page;
-    }
-
-    for (let page of book.querySelectorAll(".page-content")) {
-        page.style.overflow = "hidden";
-    }
 
     loadImages();
 
@@ -153,83 +111,129 @@ function loadImages() {
 }
 
 async function initPages() {
-    // pages are measured to split them, so wait for the fonts that change their size
+    const entries = [...book.querySelectorAll(".page, [data-section-url]")];
+    for (let page of book.querySelectorAll(".page")) {
+        const toc = page.querySelector(".toc");
+        if (toc) {
+            const hv = parseInt(page.dataset.hv);
+            for (let i=entries.indexOf(page) + 1; i<entries.length; i++) {
+                const entry = entries[i];
+                const isSection = "sectionUrl" in entry.dataset;
+                if (!isSection && entry.classList.contains("vis-unlisted")) continue;
+                const phv = parseInt(entry.dataset.hv);
+                if (phv <= hv) {
+                    break;
+                }
+                const li = document.createElement("li");
+                const a = document.createElement("a");
+                if (isSection) {
+                    li.dataset.page = parseInt(entry.closest(".page").dataset.page);
+                    li.dataset.section = entry.dataset.sectionUrl;
+                    a.href = entry.dataset.sectionUrl;
+                    a.textContent = entry.textContent;
+                } else {
+                    li.dataset.page = parseInt(entry.dataset.page);
+                    a.href = entry.dataset.url;
+                    a.textContent = entry.dataset.title;
+                }
+                li.style.paddingLeft = (phv - hv - 1) * 0.5 + "em";
+                li.appendChild(a);
+                toc.appendChild(li);
+            }
+        }
+    }
+
     await document.fonts.ready;
     updatePageAspects();
 
-    // break up pages
-
-    // pages are laid out at a fixed size (see updatePageAspects), so they split the same way on every screen
     const height = pageLayoutWidth() * 4/3;
-    console.log(height);
 
-    // scrollHeight is a whole number, so round --page-height up (866.67 measures as 867)
-    function overflows(pageContent) {
-        const page = pageContent.parentElement;
-        if (page.classList.contains("section-title") && !page.classList.contains("glossary")) {
-            // a section title page's background turns white below ~79% of its height, which hides white text there
-            const last = pageContent.lastElementChild;
-            const bottom = last.offsetTop + last.offsetHeight;
-            return bottom > height * 0.78;
-        }
-        return pageContent.scrollHeight > Math.ceil(height);
+    function bottomOf(element, pageContent) {
+        const content = pageContent.getBoundingClientRect();
+        const scale = content.width / pageContent.offsetWidth;
+        return (element.getBoundingClientRect().bottom - content.top) / scale;
     }
 
-    // lists and tables can be split between pages, so they're never too tall to move
+    function pageLimit(pageContent) {
+        const page = pageContent.parentElement;
+        if (page.classList.contains("section-title") && !page.classList.contains("glossary")) {
+            return height * 0.78;
+        }
+        return Math.ceil(height) - parseFloat(getComputedStyle(pageContent).paddingBottom);
+    }
+
     function isSplittable(element) {
         return element.tagName === "UL" || element.tagName === "OL" || element.tagName === "TABLE";
     }
 
-    // moves a list's items (or a table's rows) onto a copy until the page fits, and returns the copy.
-    // if the page can't be made to fit that way, nothing is moved and null is returned.
-    function splitOff(pageContent, element) {
-        const copy = element.cloneNode();
-        var source = element;
-        var target = copy;
-        var note = null;
+    function rowsOf(element) {
         if (element.tagName === "TABLE") {
+            return element.tBodies[0] ? [...element.tBodies[0].children] : [];
+        }
+        return [...element.children];
+    }
+
+    function splitRow(element, end, pageContent, limit) {
+        const rows = rowsOf(element);
+        if (rows.length < 2) return -1;
+        const below = end - bottomOf(rows[rows.length - 1], pageContent);
+        for (let i = rows.length - 2; i >= 0; i--) {
+            if (bottomOf(rows[i], pageContent) + below <= limit) return i;
+        }
+        return -1;
+    }
+
+    function columnWidths(table) {
+        const width = table.getBoundingClientRect().width;
+        const row = table.querySelector("tr:not(.table-continued, .table-continues)");
+        return [...row.children].map(cell => cell.getBoundingClientRect().width / width);
+    }
+
+    function fixColumns(table, widths) {
+        table.querySelector("colgroup")?.remove();
+        const columns = document.createElement("colgroup");
+        for (let width of widths) {
+            const column = document.createElement("col");
+            column.style.width = width * 100 + "%";
+            columns.appendChild(column);
+        }
+        table.prepend(columns);
+        table.style.tableLayout = "fixed";
+    }
+
+    function splitOff(element, row, widths) {
+        const copy = element.cloneNode();
+        const rows = rowsOf(element).slice(row + 1);
+        if (element.tagName === "TABLE") {
+            fixColumns(element, widths);
+            fixColumns(copy, widths);
             const head = element.querySelector("thead");
             if (head) {
                 copy.appendChild(head.cloneNode(true));
-                // a table split more than once: its run-in lines and note aren't repeated
                 copy.querySelectorAll("tr.table-continued").forEach(row => row.remove());
             }
-            source = element.querySelector("tbody");
-            target = document.createElement("tbody");
-            copy.appendChild(target);
-            // column lines running on below the part that stays, with a note, added first so their
-            // height is counted
-            note = document.createElement("tfoot");
+            const body = document.createElement("tbody");
+            body.append(...rows);
+            copy.appendChild(body);
+            const note = document.createElement("tfoot");
             note.appendChild(continuationRow(element, "table-continues", "Continued on next page"));
             element.appendChild(note);
-        }
-        while (overflows(pageContent) && source && source.children.length > 1) {
-            target.prepend(source.lastElementChild);
-        }
-        if (overflows(pageContent) || target.children.length === 0) {
-            while (target.firstElementChild) source.appendChild(target.firstElementChild);
-            note?.remove();
-            return null;
-        }
-        if (element.tagName === "TABLE") {
-            // and column lines running in above the part that moves on
-            let head = copy.querySelector("thead");
-            if (!head) {
-                head = document.createElement("thead");
-                copy.prepend(head);
+            let copyHead = copy.querySelector("thead");
+            if (!copyHead) {
+                copyHead = document.createElement("thead");
+                copy.querySelector("colgroup").after(copyHead);
             }
-            head.prepend(continuationRow(element, "table-continued", "Continued from previous page"));
+            copyHead.prepend(continuationRow(element, "table-continued", "Continued from previous page"));
+        } else {
+            copy.append(...rows);
         }
         return copy;
     }
 
-    // counted from a real row, not one of the rows added at a split
     function columnCount(table) {
         return table.querySelector("tr:not(.table-continued, .table-continues)")?.children.length || 1;
     }
 
-    // an empty row with a cell per column, drawn as column lines fading out (see style.css),
-    // with a short note at its right
     function continuationRow(table, className, text) {
         const row = document.createElement("tr");
         row.className = className;
@@ -242,125 +246,136 @@ async function initPages() {
         return row;
     }
 
-    var pages = book.querySelectorAll(".page");
-    for (let i=pages.length-1; i>=2; i--) {
-        var originalPage = pages[i];
-        var page = pages[i];
-        var pageContent = page.querySelector(".page-content");
+    function splitPage(page, originalPage) {
+        const pageContent = page.querySelector(".page-content");
+        const limit = pageLimit(pageContent);
+        const children = [...pageContent.children];
+        const ends = children.map(child => bottomOf(child, pageContent));
+        const fits = count => count === 0 || ends[count - 1] <= limit;
 
-        while (overflows(pageContent)) {
-            const last = pageContent.lastElementChild;
-            if (!isSplittable(last) && last.clientHeight >= height * 3/4)
+        if (fits(children.length)) return null;
+        const last = children[children.length - 1];
+        if (!isSplittable(last) && last.clientHeight >= height * 3/4) return null;
+
+        let kept = children.length;
+        let split = null;
+        const dropped = [];
+        while (!fits(kept)) {
+            const element = children[kept - 1];
+
+            if (isSplittable(element)) {
+                const row = splitRow(element, ends[kept - 1], pageContent, limit);
+                if (row >= 0) {
+                    split = { element, row };
+                    if (element.tagName === "TABLE") split.widths = columnWidths(element);
+                    break;
+                }
+                kept--;
+                continue;
+            }
+
+            if (
+                element.classList.contains("breadcrumbs") ||
+                element.clientHeight >= height * 3/4
+            )
                 break;
 
-            const newPage = document.createElement("div");
-            newPage.className = originalPage.className + " vis-unlisted hidden vis-contd";
-            newPage.dataset.url = originalPage.dataset.url;
-            newPage.dataset.title = originalPage.dataset.title;
-            newPage.dataset.page = parseInt(page.dataset.page) + 1;
-            newPage.dataset.hv = originalPage.dataset.hv;
-
-            const newContent = document.createElement("div");
-            newContent.className = "page-content";
-            
-            while (overflows(pageContent)) {
-                const element = pageContent.lastElementChild;
-
-                if (isSplittable(element)) {
-                    const copy = splitOff(pageContent, element);
-                    if (copy) {
-                        newContent.prepend(copy);
-                        break;
-                    }
-                    // it can't be split to fit on this page: move it whole, and split it on the next one
-                    newContent.prepend(element);
-                    newContent.offsetHeight;
-                    continue;
-                }
-
-                if (
-                    element.classList.contains("breadcrumbs") ||
-                    element.clientHeight >= height * 3/4
-                )
-                    break;
-
-                if (element.innerHTML === "") {
-                    element.remove();
-                    continue;
-                }
-
-                newContent.prepend(element);
-                newContent.offsetHeight;
+            if (element.innerHTML === "") dropped.push(element);
+            kept--;
+        }
+        if (!split) {
+            while (kept > 0 && children[kept - 1].innerHTML.trim() === "") {
+                dropped.push(children[--kept]);
             }
-            // keep a heading with what comes after it (ignoring empty elements, like the empty
-            // paragraphs the browser leaves around an image)
-            while (pageContent.lastElementChild && pageContent.lastElementChild.innerHTML.trim() === "") {
-                pageContent.lastElementChild.remove();
+            while (kept > 2 && /^H[1-6]$/.test(children[kept - 1].tagName)) {
+                kept--;
             }
-            while (/^H[1-6]$/.test(pageContent.lastElementChild?.tagName) && pageContent.children.length > 2) {
-                newContent.prepend(pageContent.lastElementChild);
-            }
+        }
 
-            // nothing could be moved: stop, or this page would be checked forever
-            if (newContent.innerHTML === "") break;
-            if (originalPage.querySelector(".breadcrumbs"))
-                newContent.prepend(originalPage.querySelector(".breadcrumbs").cloneNode(true));
+        for (let element of dropped) element.remove();
+        const moved = children.slice(kept).filter(element => !dropped.includes(element));
+        if (split) moved.unshift(splitOff(split.element, split.row, split.widths));
+        if (moved.length === 0) return null;
 
-            newPage.appendChild(newContent);
-            page.after(newPage);
-            page = newPage;
-            pageContent = newContent;
+        const newPage = document.createElement("div");
+        newPage.className = originalPage.className + " vis-unlisted hidden vis-contd";
+        newPage.dataset.url = originalPage.dataset.url;
+        newPage.dataset.title = originalPage.dataset.title;
+        newPage.dataset.hv = originalPage.dataset.hv;
 
-            pages = book.querySelectorAll(".page");
-            var pageIndex = [...pages].indexOf(newPage);
-            for (let j=pages.length-1; j>pageIndex; j--) {
-                const pageNumber = parseInt(pages[j].dataset.page);
-                const newNumber = pageNumber + 1;
-                for (let li of document.querySelectorAll(`li[data-page="${pageNumber}"]`)) {
-                    li.dataset.page = newNumber;
-                }
-                pages[j].dataset.page = newNumber;
-            }
-            
-            page.offsetHeight;
+        const newContent = document.createElement("div");
+        newContent.className = "page-content";
+        if (originalPage.querySelector(".breadcrumbs"))
+            newContent.appendChild(originalPage.querySelector(".breadcrumbs").cloneNode(true));
+        newContent.append(...moved);
+
+        newPage.appendChild(newContent);
+        page.after(newPage);
+        return newPage;
+    }
+
+    const pages = [...book.querySelectorAll(".page")];
+    for (let i=2; i<pages.length; i++) {
+        let page = pages[i];
+        while (page) {
+            page = splitPage(page, pages[i]);
         }
     }
 
+    // number the pages in order (the 404 page keeps its number), and point what linked to a page at its new number
+    const numbers = {};
+    let number = 0;
+    for (let page of book.querySelectorAll(".page")) {
+        if (page.dataset.page === "404") continue;
+        if (!page.classList.contains("vis-contd")) numbers[page.dataset.page] = number;
+        page.dataset.page = number++;
+    }
+    for (let li of document.querySelectorAll("li[data-page]")) {
+        li.dataset.page = numbers[li.dataset.page];
+    }
+
+    for (let li of book.querySelectorAll(".toc li[data-section]")) {
+        const section = book.querySelector(`[data-section-url="${li.dataset.section}"]`);
+        if (section) li.dataset.page = section.closest(".page").dataset.page;
+    }
+}
+
+function initGalleries() {
     for (let page of book.querySelectorAll(".page-content:has(a[data-pswp-src])")) {
         page.id = "gallery" + page.parentElement.dataset.page;
         const lightbox = new PhotoSwipeLightbox({
             gallery: "#" + page.id,
             children: "a[data-pswp-src]",
+            thumbSelector: "img, video",
             pswpModule: PhotoSwipe
         })
-        lightbox.on('uiRegister', function() {
-            lightbox.pswp.ui.registerElement({
-                name: 'custom-caption',
-                order: 9,
-                isButton: false,
-                appendTo: 'root',
-                html: 'Caption text',
-                onInit: (el, pswp) => {
-                    lightbox.pswp.on('change', () => {
-                        const currSlideElement = lightbox.pswp.currSlide.data.element;
-                        let captionHTML = '';
-                        if (currSlideElement) {
-                            const hiddenCaption = currSlideElement.querySelector('.hidden-caption-content');
-                            if (hiddenCaption) {
-                                captionHTML = hiddenCaption.innerHTML;
-                            } else {
-                                captionHTML = currSlideElement.querySelector('img').getAttribute('alt');
-                            }
-                        }
-                        el.innerHTML = captionHTML || '';
-                    });
-                }
-            });
+        lightbox.on("contentLoad", e => {
+            const { content } = e;
+            if (content.type !== "video") return;
+            e.preventDefault();
+            content.element = document.createElement("video");
+            content.element.className = "pswp__img";
+            content.element.onloadeddata = () => content.onLoaded();
+            content.element.src = content.data.src;
+            content.element.autoplay = content.element.loop = content.element.muted = content.element.playsInline = true;
+            content.element.currentTime = content.data.element.querySelector("video").currentTime;
+        });
+        lightbox.addFilter("useContentPlaceholder", (usePlaceholder, content) => usePlaceholder || content.type === "video");
+        lightbox.addFilter("placeholderSrc", (src, content) => {
+            if (content.type !== "video") return src;
+            return videoFrame(content.data.element.querySelector("video")) || src;
         });
         lightbox.init();
     }
+}
 
-    pageTotal.textContent = book.querySelectorAll(".page").length - 2;
+function videoFrame(video) {
+    if (video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) return null;
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    canvas.getContext("2d").drawImage(video, 0, 0);
+    return canvas.toDataURL("image/jpeg");
 }
 
 function initSearch() {
@@ -501,7 +516,7 @@ document.addEventListener("keydown", e => {
     }
 })
 
-async function pageTransition(from, to) {
+function pageTransition(from, to) {
     to.classList.remove("hidden");
     to.classList.remove("exit-to-right");
     to.classList.remove("exit-to-left");
@@ -538,8 +553,6 @@ async function pageTransition(from, to) {
     }
 }
 
-// opens the page with this url, or the page containing the section with this url.
-// returns false if there's no such page or section.
 function navigateByPathname(url, pop) {
     const page = book.querySelector(`.page[data-url="${url}"]`);
     if (page) {
@@ -554,14 +567,11 @@ function navigateByPathname(url, pop) {
     return false;
 }
 
-// section: a heading inside the page, when navigating to a section rather than the page itself
-async function navigate(pageNumber, pop, section) {
+function navigate(pageNumber, pop, section) {
     pageNumber = parseInt(pageNumber);
 
     const previousPage = book.querySelector(".page:not(.hidden)");
     const page = book.querySelector(`.page[data-page="${pageNumber}"]`);
-    // the address shows what's being read: the section navigated to, or else the page or section
-    // this page starts with or continues (the same entry the sidebar marks)
     const url = section ? section.dataset.sectionUrl : currentEntryUrl(page);
 
     if (section) {
@@ -582,8 +592,6 @@ async function navigate(pageNumber, pop, section) {
 
     document.title = section ? section.textContent : page.dataset.title;
 
-    // compare with the address bar rather than the previous page: a continued page shares its
-    // url with the page before it, but the address bar may be showing a section on it
     if (!pop && location.pathname !== url) {
         history.pushState(document.title, "", location.origin + url);
     }
@@ -613,12 +621,13 @@ async function navigate(pageNumber, pop, section) {
     selectNavLink(url, pageNumber);
 }
 
-// the url of the page or section being read on this page: the section heading it starts with,
-// or else the last page or section that began before it (the one this page continues)
 function currentEntryUrl(page) {
     const first = [...page.querySelector(".page-content").children].find(c => !c.classList.contains("breadcrumbs"));
     if (!first) return page.dataset.url;
     if (first.dataset.sectionUrl) return first.dataset.sectionUrl;
+    // a page that continues a section, but starts another one partway down, is marked with the new one
+    const section = page.classList.contains("vis-contd") && page.querySelector("[data-section-url]");
+    if (section) return section.dataset.sectionUrl;
     let url = page.dataset.url;
     for (const entry of book.querySelectorAll(".page:not(.vis-contd), [data-section-url]")) {
         if (first.compareDocumentPosition(entry) & Node.DOCUMENT_POSITION_FOLLOWING) break;
@@ -664,16 +673,8 @@ book.addEventListener("wheel", () => {
 })
 
 function updatePageMarker() {
-    var pageButton = document.querySelector("nav a.selected");
+    const pageButton = document.querySelector("nav a.selected");
     if (pageButton) {
-        // inside a collapsed section: mark the collapsed section instead
-        // (unless the whole sidebar is hidden, when nothing in it is visible)
-        while (pageButton.getClientRects().length === 0 && pageButton.closest("nav").getClientRects().length > 0) {
-            const parentList = pageButton.closest("ol");
-            const parentButton = parentList?.parentElement?.querySelector("a");
-            if (!parentButton || parentButton === pageButton) break;
-            pageButton = parentButton;
-        }
         navPageMarker.style.height = pageButton.offsetHeight + "px";
         navPageMarker.style.top = pageButton.offsetTop + "px";
         navPageMarker.classList.remove("hidden");
@@ -690,7 +691,6 @@ function updatePageAspects() {
     book.style.setProperty("--page-scale", page.clientWidth / pageLayoutWidth());
 }
 
-// the fixed width page contents are laid out at (see .page-content in style.css)
 function pageLayoutWidth() {
     return parseFloat(getComputedStyle(book.querySelector(".page-content")).getPropertyValue("--page-layout-width"));
 }

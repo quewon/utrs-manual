@@ -153,8 +153,7 @@ export default function(config) {
             unlisted: false,
             hidden: false,
             section: true,
-            sectionId: sections.length,
-            glossary: currentPage.glossary
+            sectionId: sections.length
         };
         parent.pages.push(section);
         sections.push(section);
@@ -173,10 +172,10 @@ export default function(config) {
                 // a heading that just repeats the page's own title (like on the Introduction page,
                 // whose real title is hidden with ~) is neither a new page nor a section
                 const repeatsTitle = heading && heading[1].length === currentPage.headingValue && heading[2].trim() === currentPage.title;
-                // pages start by themselves at every # and ## heading, after a section's title page,
-                // and at every glossary entry; anywhere else, a page only starts at a --- (and long
-                // pages are split when the book loads, see book.js)
-                startsPage = heading && !repeatsTitle && (heading[1].length <= 2 || currentPage.headingValue === 1 || currentPage.glossary);
+                // pages start by themselves at every # and ## heading and after a section's title page;
+                // anywhere else, a page only starts at a --- (and long pages are split when the book
+                // loads, see book.js)
+                startsPage = heading && !repeatsTitle && (heading[1].length <= 2 || currentPage.headingValue === 1);
                 // every other heading is a section
                 if (heading && !startsPage && !repeatsTitle) {
                     line = addSection(heading[1].length, heading[2]);
@@ -247,10 +246,9 @@ export default function(config) {
     // sections are listed in the sidebar, but they aren't rendered as pages
     var pages = pageData(structure).filter(page => !page.section);
 
-    // section title pages and glossary letters list what's in them
+    // section title pages list what's in them
     for (let page of pages) {
-        const listsContents = page.headingValue === 1 || (page.glossary && page.headingValue === 2);
-        if (listsContents && !page.content.includes("[Table of contents]")) {
+        if (page.headingValue === 1 && !page.content.includes("[Table of contents]")) {
             page.content = page.content.trimEnd() + "\n\n[Table of contents]\n";
         }
     }
@@ -274,22 +272,6 @@ export default function(config) {
             const section = sections[id];
             return `data-section-url="${section.url}" data-hv="${section.parents.length}"`;
         });
-    }
-
-    var visiblePages = pages.filter(page => {
-        return page.title !== "HIDDEN"
-    })
-
-    for (let i=1; i<visiblePages.length; i++) {
-        let page = pages[pages.indexOf(visiblePages[i])];
-        if (page.title === "HIDDEN")
-            continue;
-        if (i < visiblePages.length - 1) {
-            page.next = visiblePages[i + 1];
-        }
-        if (i > 1) {
-            page.previous = visiblePages[i - 1];
-        }
     }
 
     return {
