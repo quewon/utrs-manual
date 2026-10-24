@@ -124,6 +124,7 @@ async function initPages() {
                 if (phv <= hv) {
                     break;
                 }
+                if (page.classList.contains("glossary") && phv > hv + 1) continue;
                 const li = document.createElement("li");
                 const a = document.createElement("a");
                 if (isSection) {
