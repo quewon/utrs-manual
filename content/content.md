@@ -140,7 +140,7 @@ A new project starts with one simple level containing a Start Zone and an End Zo
 | 4 | Inspector | Allows you to view and edit the parameters of the selected object(s). |
 | 5 | Level Settings panel | Settings that apply to the current level, such as its name, size, and lighting. Also contains level-specific editor settings. |
 | 6 | Inventor Bar | Contains object presets that are loaded and ready to be placed. |
-| 7 | Axis sphere | Shows which way the camera is facing, and lets you turn it ([Controlling the Camera](/setting-up/controlling-the-camera), below). |
+| 7 | Axis sphere | Shows which way the camera is facing, and lets you turn it (see [Controlling the Camera](/setting-up/controlling-the-camera)). |
 | 8 | Grid Z | Sets the height of the grid floor. |
 
 ## Controlling the Camera
