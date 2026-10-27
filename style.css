@@ -155,6 +155,21 @@ header.gap2 {
 }
 .search .search-icon {
     height: 1em;
+    flex-shrink: 0;
+}
+.search .search-icon img {
+    height: 1em;
+}
+/* while there's something in the search box, the magnifying glass turns into a button that clears it */
+.search .search-clear,
+.search:has(input:not(:placeholder-shown)) .search-glass {
+    display: none;
+}
+.search:has(input:not(:placeholder-shown)) .search-clear {
+    display: block;
+}
+.search:not(:has(input:not(:placeholder-shown))) .search-icon {
+    cursor: text;
 }
 .search input {
     border: none;
@@ -741,6 +756,46 @@ footer input::-webkit-outer-spin-button {
     background: none;
     box-shadow: none;
     padding: 0;
+}
+/* code blocks marked wrap (```wrap) break long lines instead of scrolling */
+.page-content pre.wrap {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+/* level scripts (```c3script or ```js) are highlighted, with line numbers */
+.page-content pre.script code {
+    counter-reset: line;
+}
+.page-content pre.script .line::before {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    width: 2ch;
+    margin-right: 1.25em;
+    text-align: right;
+    color: #a3a39e;
+    user-select: none;
+}
+.page-content .hljs-keyword,
+.page-content .hljs-literal {
+    color: #1f5fbf;
+}
+.page-content .hljs-string {
+    color: #2f7d32;
+}
+.page-content .hljs-number {
+    color: #b5561c;
+}
+.page-content .hljs-comment {
+    color: #8a8a85;
+    font-style: italic;
+}
+.page-content .hljs-title.function_ {
+    color: #7a3fb0;
+}
+.page-content .hljs-title.class_,
+.page-content .hljs-built_in {
+    color: #0e7490;
 }
 
 .breadcrumbs {
