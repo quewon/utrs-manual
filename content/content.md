@@ -267,7 +267,7 @@ The **Object Preset menu** contains every preset available to you. This includes
 You can browse the Object Preset menu by clicking through its categories, scrolling through the entire list, or typing to search for a specific object by name. Click on one to load it into the Inventor Bar slot.
 
 ```note-blue
-**First time following the manual?** Start with a preset in the Shapes or Objects category. Structures are covered in [Section 4: Creating Structures](/creating-structures), and Special and Model objects are better left for decorating phase.
+**First time following the manual?** Start with a preset in the Shapes or Objects category. Structures are covered in [Section 4: Creating Structures](/creating-structures), and Special and Model objects are better left for the decorating phase.
 ```
 
 ```note-blue
