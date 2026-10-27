@@ -155,6 +155,25 @@ async function initPages() {
         return (element.getBoundingClientRect().bottom - content.top) / scale;
     }
 
+    function topOf(element, pageContent) {
+        const content = pageContent.getBoundingClientRect();
+        const scale = content.width / pageContent.offsetWidth;
+        return (element.getBoundingClientRect().top - content.top) / scale;
+    }
+
+    // where a section carries on to the next page, its heading goes with it if only a little of
+    // the section would be left under the heading on this page (like the sentence introducing a
+    // code example or a table), unless that would leave this page mostly empty. returns how many
+    // children to keep, or -1 to keep the page as it is
+    function keepHeadingWithSection(children, kept, keptBottom, pageContent, limit) {
+        let heading = kept - 1;
+        while (heading > 1 && !/^H[1-6]$/.test(children[heading].tagName)) heading--;
+        if (heading <= 1) return -1;
+        if (keptBottom - bottomOf(children[heading], pageContent) >= height * 0.15) return -1;
+        if (topOf(children[heading], pageContent) < limit * 0.5) return -1;
+        return heading;
+    }
+
     function pageLimit(pageContent) {
         const page = pageContent.parentElement;
         if (page.classList.contains("section-title") && !page.classList.contains("glossary")) {
@@ -264,7 +283,8 @@ async function initPages() {
         while (!fits(kept)) {
             const element = children[kept - 1];
 
-            if (isSplittable(element)) {
+            // short lists and tables move to the next page whole rather than being split
+            if (isSplittable(element) && element.offsetHeight >= height * 0.3) {
                 const row = splitRow(element, ends[kept - 1], pageContent, limit);
                 if (row >= 0) {
                     split = { element, row };
@@ -284,12 +304,24 @@ async function initPages() {
             if (element.innerHTML === "") dropped.push(element);
             kept--;
         }
-        if (!split) {
+        function trimEnd() {
             while (kept > 0 && children[kept - 1].innerHTML.trim() === "") {
                 dropped.push(children[--kept]);
             }
             while (kept > 2 && /^H[1-6]$/.test(children[kept - 1].tagName)) {
                 kept--;
+            }
+        }
+        if (!split) trimEnd();
+
+        const firstMoved = children.slice(kept).find(element => !dropped.includes(element));
+        if (split || (firstMoved && !/^H[1-6]$/.test(firstMoved.tagName))) {
+            const keptBottom = split ? bottomOf(rowsOf(split.element)[split.row], pageContent) : ends[kept - 1];
+            const heading = keepHeadingWithSection(children, kept, keptBottom, pageContent, limit);
+            if (heading >= 0) {
+                kept = heading;
+                split = null;
+                trimEnd();
             }
         }
 
@@ -405,32 +437,53 @@ function initSearch() {
             }}
         );
 
-        const textNodes = [];
+        // a match can run across the text nodes of one block (like bold text inside a paragraph,
+        // or the highlighted tokens of a code block), but not from one block into the next
+        const blocks = [];
         let node;
-        while (node = walker.nextNode()) textNodes.push(node);
+        while (node = walker.nextNode()) {
+            const block = node.parentElement.closest("p, li, th, td, pre, h1, h2, h3, h4, h5, h6, figcaption, div");
+            if (blocks.at(-1)?.element !== block) blocks.push({ element: block, nodes: [] });
+            blocks.at(-1).nodes.push(node);
+        }
 
-        for (let textNode of textNodes) {
-            const text = textNode.textContent;
-            const lower = text.toLowerCase();
-            let pos = 0, lastPos = 0;
-            const fragments = [];
+        for (let { nodes } of blocks) {
+            const lower = nodes.map(node => node.textContent).join("").toLowerCase();
+            const matches = [];
+            let pos = 0;
+            while ((pos = lower.indexOf(query, pos)) !== -1) {
+                matches.push({ start: pos, end: pos + query.length, marks: [] });
+                pos += query.length;
+            }
+            if (matches.length === 0) continue;
 
-            while ((pos = lower.indexOf(query, lastPos)) !== -1) {
-                if (pos > lastPos) fragments.push(document.createTextNode(text.slice(lastPos, pos)));
-                const mark = document.createElement("mark");
-                mark.className = "search-highlight";
-                mark.textContent = text.slice(pos, pos + query.length);
-                fragments.push(mark);
-                searchResults.push({ mark, page });
-                lastPos = pos + query.length;
+            // mark the part of each match that falls in each text node
+            let nodeStart = 0;
+            for (let textNode of nodes) {
+                const text = textNode.textContent;
+                const nodeEnd = nodeStart + text.length;
+                const fragments = [];
+                let lastPos = 0;
+                for (let match of matches) {
+                    const from = Math.max(match.start, nodeStart) - nodeStart;
+                    const to = Math.min(match.end, nodeEnd) - nodeStart;
+                    if (from >= to) continue;
+                    if (from > lastPos) fragments.push(document.createTextNode(text.slice(lastPos, from)));
+                    const mark = document.createElement("mark");
+                    mark.className = "search-highlight";
+                    mark.textContent = text.slice(from, to);
+                    fragments.push(mark);
+                    match.marks.push(mark);
+                    lastPos = to;
+                }
+                if (fragments.length > 0) {
+                    if (lastPos < text.length) fragments.push(document.createTextNode(text.slice(lastPos)));
+                    textNode.replaceWith(...fragments);
+                }
+                nodeStart = nodeEnd;
             }
 
-            if (fragments.length > 0) {
-                if (lastPos < text.length) fragments.push(document.createTextNode(text.slice(lastPos)));
-                const parent = textNode.parentNode;
-                for (let frag of fragments) parent.insertBefore(frag, textNode);
-                parent.removeChild(textNode);
-            }
+            for (let match of matches) searchResults.push({ marks: match.marks, page });
         }
     }
 
@@ -439,12 +492,14 @@ function initSearch() {
         resultIndex = ((resultIndex % searchResults.length) + searchResults.length) % searchResults.length;
         index = resultIndex;
 
-        book.querySelector("mark.search-highlight-active")?.classList.remove("search-highlight-active");
+        for (let mark of book.querySelectorAll("mark.search-highlight-active")) {
+            mark.classList.remove("search-highlight-active");
+        }
         const result = searchResults[index];
-        result.mark.classList.add("search-highlight-active");
+        for (let mark of result.marks) mark.classList.add("search-highlight-active");
 
         navigate(result.page.dataset.page);
-        requestAnimationFrame(() => result.mark.scrollIntoView({ block: "nearest" }));
+        requestAnimationFrame(() => result.marks[0].scrollIntoView({ block: "nearest" }));
 
         searchIndex.textContent = index + 1;
         searchResultCount.textContent = searchResults.length;
@@ -478,6 +533,15 @@ function initSearch() {
 
     searchPrev.onclick = () => jumpToResult(index - 1);
     searchNext.onclick = () => jumpToResult(index + 1);
+
+    // the magnifying glass clears the search when there's something in it
+    searchClear.onclick = () => {
+        if (searchInput.value !== "") {
+            searchInput.value = "";
+            searchInput.oninput();
+        }
+        searchInput.focus();
+    };
 }
 
 document.addEventListener("click", e => {

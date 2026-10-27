@@ -3,6 +3,25 @@ import markdownItTaskCheckbox from "markdown-it-task-checkbox";
 import { RenderPlugin } from "@11ty/eleventy";
 import { readFileSync } from "fs";
 import { imageSize } from "image-size";
+import hljs from "highlight.js/lib/core";
+import javascript from "highlight.js/lib/languages/javascript";
+
+hljs.registerLanguage("javascript", javascript);
+
+// wraps each line of highlighted code in a .line span (numbered with a CSS counter). a token that
+// runs over several lines, like a block comment, is closed at the end of each line and reopened
+// at the start of the next
+function numberLines(html) {
+    const open = [];
+    return html.split("\n").map(line => {
+        const reopened = open.join("");
+        for (const tag of line.match(/<span[^>]*>|<\/span>/g) || []) {
+            if (tag === "</span>") open.pop();
+            else open.push(tag);
+        }
+        return `<span class="line">${reopened}${line}${"</span>".repeat(open.length)}</span>`;
+    }).join("\n");
+}
 
 function readVideoSizes() {
     try {
@@ -52,8 +71,19 @@ export default function (config) {
     md.renderer.rules.fence = function(tokens, idx, options, env, self) {
         const token = tokens[idx];
         const info = token.info.trim();
-        // notes and preserve-spacing blocks are Markdown in a styled box; anything else
-        // (like ```js) is a normal code block
+        const [language, ...flags] = info.split(/\s+/);
+        // level scripts (```c3script, or ```js) are highlighted and numbered by line, and never wrap
+        if (language === "c3script" || language === "js") {
+            const html = hljs.highlight(token.content.replace(/\n$/, ""), { language: "javascript" }).value;
+            return `<pre class="script"><code class="language-c3script">${numberLines(html)}</code></pre>\n`;
+        }
+        // other code blocks wrap their lines when marked with wrap (```wrap, or ```<language> wrap)
+        if (language === "wrap" || flags.includes("wrap")) {
+            const languageClass = language === "wrap" ? "" : ` class="language-${md.utils.escapeHtml(language)}"`;
+            return `<pre class="wrap"><code${languageClass}>${md.utils.escapeHtml(token.content)}</code></pre>\n`;
+        }
+        // notes and preserve-spacing blocks are Markdown in a styled box; anything else is a
+        // normal code block
         if (info.startsWith("note-") || info === "preserve-spacing") {
             const content = token.content;
             var renderedContent = md.render(content);

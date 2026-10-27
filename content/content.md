@@ -198,7 +198,12 @@ Three different ways to orbit:
 
 ### Fly Mode
 
-Fly mode lets you steer the camera as if you were inside the level, looking around freely. To enter fly mode, move with **WASD** while orbiting.
+Fly mode lets you steer the camera as if you were inside the level: move the mouse to look around, and use **WASD** to move. **FLY** shows on screen while it's on.
+
+There are two ways to use fly mode:
+
+* **While orbiting:** start moving with **WASD** while dragging with the middle mouse button. Fly mode ends as soon as you let go of the mouse button.
+* **With Shift+F:** press **Shift+F** to turn fly mode on. It stays on until you click, press **Shift+F** again, or press **Esc**.
 
 ```note-blue
 You can change how fast the camera moves and turns in fly mode in the level settings, under **Editor**.
@@ -217,8 +222,6 @@ Try setting the name of the level by editing the **level name** property. You'll
 ```note-blue
 For a full list of level settings, see [Appendix: Level Settings Reference](/appendix/level-settings-reference).
 ```
-
----
 
 ### Grid
 
@@ -262,7 +265,7 @@ Both options will open the **Object Preset menu**.
 
 ![The Object Preset menu.](/media/screenshots/object-preset-menu.webp)
 
-The **Object Preset menu** contains every preset available to you. This includes individual objects, structures made of several objects (see [Section 4: Creating Structures](/creating-structures)), and any custom structures you've made.
+The **Object Preset menu** contains every preset available to you. This includes individual objects, structures made of several objects, and any custom structures you've made (see [Section 4: Creating Structures](/creating-structures)).
 
 You can browse the Object Preset menu by clicking through its categories, scrolling through the entire list, or typing to search for a specific object by name. Click on one to load it into the Inventor Bar slot.
 
@@ -298,8 +301,7 @@ To select several objects at once, hold **Shift** and click each one, or click a
 
 Every object has **parameters**: values that control how it looks and behaves, such as its size, color, or material. When you select an object, its parameters appear in the **Inspector** on the right side of the screen. Change a value there and the object updates immediately.
 
-Which parameters an object has depends on what kind of object it is. A Start Zone has a **Zone ID**; an End Zone has a **Next Level**. When you select several objects at once, the Inspector shows only the parameters they have in common. Changing one changes it for all of them.
-
+Which parameters an object has depends on its type. A Start Zone has a **Zone ID**; an End Zone has a **Next Level**. When you select several objects at once, the Inspector shows only the parameters they have in common. Changing one changes it for all of them.
 ---
 
 ### Variable Parameters
@@ -318,7 +320,7 @@ To move, rotate, or resize an object, select it and choose one of the four **tra
 
 ![A selected object with the Move Tool active.](/media/screenshots/move-tool.webp)
 
-The Move Tool shows an arrow and square for each axis and plane. Drag an arrow to slide the object along that axis, and drag a square to move the object freely along that plane.
+The Move Tool shows an arrow and square for each axis and plane. Drag an arrow to slide the object along that axis, and drag a square to move the object freely along that plane. You can also use the white square at the center to move it along all three axes at once.
 
 ### Rotate Tool
 
@@ -326,7 +328,7 @@ The Move Tool shows an arrow and square for each axis and plane. Drag an arrow t
 
 The Rotate Tool shows a ring for each axis the object can turn around. Drag a ring to rotate the object around that axis.
 
-Most objects can only rotate around the Z axis. In that case, you'll see a single blue ring around the object.
+Shapes and most Special objects can only rotate around the Z axis, so they show a single blue ring. Models, text, and tags can rotate around all three axes (see [Object Types](/building-a-level/object-types)).
 
 ### Scale Tool
 
@@ -380,8 +382,6 @@ For a list of every error and warning, see [Appendix: Errors and Warnings Refere
 ## Try It Out
 
 A fresh project starts with a basic level containing one Start Zone, one End Zone, and a platform connecting them. Try building on this level by placing or manipulating objects using the tools we've covered so far.
-
----
 
 ### Playtesting
 
@@ -720,8 +720,6 @@ Material names can be used to reference them from a level script (see [Appendix:
 
 When you edit a color parameter in the Inspector, you can choose a color from your project's **color palette**. The color palette is optional (you can always pick colors individually) but can be a useful tool for maintaining a unified color scheme throughout your project.
 
----
-
 ### Color Palette Manager
 
 To change the color palette, open the ![](/media/icons/ProjectManager.svg#icon) **Project menu** and click **Colors** under **Resources**. Here, you can add, delete, edit, and rename colors.
@@ -740,7 +738,7 @@ Color names can be used to reference them from a level script (see [Appendix: Sc
 
 Text objects (the **Text** and **Title** presets) can be styled with BBCode-style tags:
 
-```
+```wrap
 [background=#000]Welcome to [b]Sector 7[/b]. Mind the [color=#ff3333]red[/color] floors.[/background]
 ```
 
@@ -752,7 +750,7 @@ Text objects (the **Text** and **Title** presets) can be styled with BBCode-styl
 | `[i]…[/i]` | Italic. |
 | `[u]…[/u]` | Underline. |
 | `[s]…[/s]` | Strikethrough. |
-| `[color=#ff0000]…[/color]` | Text color: a hex code like `#ff0000`, or a color name like `red`. |
+| `[color=#ff0000]…[/color]` | Text color: a hex code like `#ff0000`, or any [HTML color name](https://developer.mozilla.org/en-US/docs/Web/CSS/named-color) like `red` or `skyblue`. |
 | `[background=#000000]…[/background]` | Text background color: a hex code or a color name. |
 | `[opacity=50]…[/opacity]` | Text opacity from 0 to 100. |
 | `[size=24]…[/size]` | Font size. |
@@ -770,7 +768,7 @@ Tags can be combined: `[b][color=#ffd642]Danger[/color][/b]`. To show a `[` with
 
 Text can also show the Runner's controls and game icons, using **tokens** in curly brackets. When the text is shown, each token is replaced with what it stands for:
 
-```
+```wrap
 Press {keybind:jump} to jump. Collect every {icon:coin}!
 ```
 
@@ -778,12 +776,12 @@ Press {keybind:jump} to jump. Collect every {icon:coin}!
 
 | Token | Shows |
 | --- | --- |
-| `{icon:name}` | A game icon. See the list below. |
+| `{icon:name}` | A game icon. See [Icons Reference](/advanced/text-styling/controls-and-icons/icons-reference). |
 | `{keybind:action}` | The key or button the Runner uses for an action, such as `{keybind:jump}`. Changes automatically if they rebind it or switch devices. If an action has more than one binding, add a number to pick one: `{keybind:jump:1}`. |
 | `{key:code}` | A specific key, such as `{key:Space}` or `{key:KeyE}`, whatever the Runner's bindings are. Codes follow the [KeyboardEvent code](https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_code_values) names. |
 | `{key:gamepad:code}` | A specific controller button, by its standard number from `0` to `16` (such as `{key:gamepad:0}`), or a stick (`stickL`, `stickR`). It's shown for the Runner's controller brand. |
 | `{key:touch:code}` | A touch gesture, such as `{key:touch:touchTap}`. |
-| `{if:device}…{else}…{/if}` | Text that changes with the Runner's device. See below. |
+| `{if:device}…{else}…{/if}` | Text that changes with the Runner's device. See [Device-Specific Text](/advanced/text-styling/controls-and-icons/device-specific-text). |
 
 #### Icons Reference
 
@@ -807,7 +805,7 @@ Press {keybind:jump} to jump. Collect every {icon:coin}!
 
 `{if:…}` shows different text depending on how the Runner is playing:
 
-```
+```wrap
 {if:touch}Tap{else}Press {keybind:jump}{/if} to jump
 ```
 
@@ -923,7 +921,15 @@ function double(n) {
 double(4);    // 8
 ```
 
-There's also a shorter way to write a function, which you'll often see passed to events:
+There's also a shorter way to write a function, called an **arrow function**. This is the form you'll usually pass to events:
+
+```js
+let double = (n) => {
+  return n * 2;
+};
+```
+
+When an arrow function only returns one value, you can leave out the `{` `}` and the `return`:
 
 ```js
 let double = (n) => n * 2;
@@ -974,7 +980,7 @@ if (lives == 0) {
 `=` sets a variable. `==` checks whether two values are equal.
 ```
 
-#### For Loops
+#### Loops
 
 A `for...of` loop runs the same code for each item in an array.
 
@@ -983,6 +989,30 @@ let colors = ["red", "green", "blue"];
 for (let color of colors) {
   print(color); // prints "red", then "green", then "blue"
 }
+```
+
+A counting `for` loop repeats code a set number of times. It sets up a counter, checks a condition before each pass, and updates the counter after each one. `i++` adds 1 to `i`.
+
+```js
+for (let i = 0; i < 3; i++) {
+  print(i); // prints 0, then 1, then 2
+}
+```
+
+A `while` loop repeats code for as long as a condition is true:
+
+```js
+let height = 0;
+while (height < 100) {
+  height = height + 30;
+}
+print(height); // prints "120"
+```
+
+`break` leaves a loop early, and `continue` skips straight to its next pass.
+
+```note-blue
+Make sure a loop's condition becomes false at some point. A loop that never ends is stopped with a runtime error.
 ```
 
 #### Finding Game Objects
@@ -1126,8 +1156,8 @@ Marking a runtime error as resolved makes that level's ghosts obsolete (see [Sec
 | Orbit | Middle-click drag, Shift+scroll, or drag the axis sphere |
 | Look straight down an axis | Click an axis button on the axis sphere |
 | Focus on the selection | F |
-| Fly mode | Move while orbiting, or press Shift+F to toggle |
-| Leave fly mode | Esc |
+| Fly mode | Move while orbiting, or press Shift+F |
+| Leave fly mode | Let go of the mouse button (when entered while orbiting), or click, press Shift+F, or press Esc (when entered with Shift+F) |
 
 Camera speed and rotation speed can be changed in the level settings, under Editor.
 
@@ -1141,7 +1171,7 @@ Settings that can be overridden follow the skybox until you check **Override**. 
 | --- | --- | --- |
 | Level Name | Text | The level's name. |
 | Level Size | Width, height (1–100000) | The level's size. Objects far outside it get a warning. |
-| Playlist | Choice | The background music: Auto, Default, Desert, Void, OVO, Main Menu, Capture the Flag, or Tutorial. |
+| Playlist | Choice | The background music: Auto, Default, Desert, Void, OvO, Main Menu, Capture the Flag, or Tutorial. |
 | Hub Level | Checkbox | Makes the level an untimed hub: no timer, no star times, and no ghost recording (see [Section 6: Expanding a Project > Hub Levels](/expanding-a-project/hub-levels)). |
 | Online | Checkbox | Whether the level can be played online. On by default. |
 
@@ -1306,18 +1336,18 @@ Presets made of several objects (see [Section 4: Creating Structures](/creating-
 | Corner Railing | Two railings meeting at a corner. | — |
 | Corner Wall | Two walls meeting at a corner. | Material |
 | Corner WireMesh | Two wire mesh fences meeting at a corner. | — |
-| Rounded Corner (Surf) | TODO | Material |
-| Sharp Corner (Surf) | TODO | Material |
+| Rounded Corner (Surf) | Three ramps that turn a 90° corner in a smooth curve. | Material |
+| Sharp Corner (Surf) | Two ramps joined by a Corner In, turning a sharp 90° corner. | Material |
 | Stairs (Big) | A large staircase. | Material |
 | Stairs (Medium) | A medium staircase. | Material |
 | Stairs (Small) | A small staircase. | Material |
 | Triple Railing | Three railings in a row. | — |
 | Triple WireMesh | Three wire mesh fences in a row. | — |
 | Wall + Railing | A simple railing between two broken walls. | Material |
-| Wall Jump Section | TODO | Material |
+| Wall Jump Section | A gap between two platforms, with two walls on either side. | Material |
 | Crane | A construction crane. | — |
 | Speed Floor + Bounce Pad | A Speed Floor leading into a Bounce Pad. | Material |
-| Vault Jump Section | TODO | Material |
+| Vault Jump Section | A tall block to climb onto from a low platform, then a jump across a gap to a platform at the same height. | Material |
 
 ## Materials Reference
 
@@ -1399,6 +1429,7 @@ Everything a level script can access. This reference assumes you know JavaScript
 
 * Each level has one level script. Its top level runs once when the level loads; use it to set up variables and register event handlers.
 * After that, the script is driven by events: `"load"` → `"start"` → `"tick"` every frame → `"end"` or `"fail"` → `"unload"` (see [Events](/appendix/scripting-reference/events)).
+* The Runner doesn't exist yet when the script runs: using `Player` (or `level.player`) there stops the script with an error. Wait for the `"load"` event to use it.
 * Every restart or death reloads the level and runs the script again from the top. To keep values between attempts, use `LevelSave` or `PackSave`.
 * Timers and tweens run in game time, so they freeze while the game is paused.
 * Scripts are sandboxed: they can only use what's listed here. Infinite loops are stopped automatically.
@@ -1750,7 +1781,7 @@ await Tween.run(1, (t) => sign.color = { r: t, g: t, b: t }).done;
 
 ### Player
 
-The Runner. `level.player` is the same object.
+The Runner. `level.player` is the same object. It can only be used from the `"load"` event onward, once the Runner has spawned (see [How a Level Script Runs](/appendix/scripting-reference/how-a-level-script-runs)).
 
 | Member | Description |
 | --- | --- |
@@ -2069,7 +2100,7 @@ In scripting, a moment in the level that a script can respond to, such as a Runn
 
 ### Fly mode
 
-A camera mode for steering freely through the level, entered by moving while orbiting (see [Section 1: Setting Up > Controlling the Camera](/setting-up/controlling-the-camera)).
+A camera mode for steering freely through the level, entered by moving while orbiting or by pressing Shift+F (see [Section 1: Setting Up > Controlling the Camera > Fly Mode](/setting-up/controlling-the-camera/fly-mode)).
 
 ## G
 
@@ -2198,6 +2229,10 @@ See [Preset](/glossary/p/preset).
 ### Object Preset menu
 
 The menu listing every preset, for loading into the Inventor Bar (see [Section 2: Building a Level > Placing an Object](/building-a-level/placing-an-object)).
+
+### Object type
+
+What kind of object something is, such as a shape, a model, or text. It decides which parameters the object has and how it can be transformed.
 
 ### Objects template
 
