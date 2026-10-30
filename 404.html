@@ -1,66 +1,87 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title></title>
-    <link rel="stylesheet" href="/style.css?nocache=1793073044719">
-    <link rel="stylesheet" href="/res/photoswipe/photoswipe.css">
-</head>
-<body>
-
+    <link rel="stylesheet" href="/style.css?nocache=1793387646216" />
+    <link rel="stylesheet" href="/res/photoswipe/photoswipe.css" />
+  </head>
+  <body>
     <header class="gap1">
-        <img class="header-logo" src="/res/logos/z-corp_symbolmark_white.svg" alt="Z-Corp®">
-        <div class="vertical-div hide-when-small"></div>
-        <div class="secondary upper overflow-ellipsis hide-when-small">
-            <strong class="primary">Z–corp® Labs</strong> <span class="light hide-when-medium">— Development Handbook for Builders™</span>
+      <img
+        class="header-logo"
+        src="/res/logos/z-corp_symbolmark_white.svg"
+        alt="Z-Corp®"
+      />
+      <div class="vertical-div hide-when-small"></div>
+      <div class="secondary upper overflow-ellipsis hide-when-small">
+        <strong class="primary">Z–corp® Labs</strong>
+        <span class="light hide-when-medium"
+          >/ Development Handbook for Builders™</span
+        >
+      </div>
+      <div class="grow hide-when-smaller"></div>
+      <div class="search">
+        <button id="searchClear" class="search-icon" title="Clear search">
+          <img src="/res/misc/search.svg" alt="" class="search-glass" />
+          <img
+            src="/res/misc/clear.svg"
+            alt="Clear search"
+            class="search-clear"
+          />
+        </button>
+        <input type="text" placeholder="Search document..." id="searchInput" />
+        <div class="tertiary">
+          <span id="searchIndex">0</span> /
+          <span id="searchResultCount">0</span>
         </div>
-        <div class="grow hide-when-smaller"></div>
-        <div class="search">
-            <button id="searchClear" class="search-icon" title="Clear search">
-                <img src="/res/misc/search.svg" alt="" class="search-glass">
-                <img src="/res/misc/clear.svg" alt="Clear search" class="search-clear">
-            </button>
-            <input type="text" placeholder="Search document..." id="searchInput">
-            <div class="tertiary">
-                <span id="searchIndex">0</span> / <span id="searchResultCount">0</span>
-            </div>
-            <div class="tertiary">|</div> <button id="searchPrev">↑</button> <button id="searchNext">↓</button>
-        </div>
-        <button class="upper danger leave-button" onclick="location.href = 'https://dedragames.com'"></button>
+        <div class="tertiary">|</div>
+        <button id="searchPrev">↑</button> <button id="searchNext">↓</button>
+      </div>
+      <button
+        class="upper danger leave-button"
+        onclick="location.href = 'https://dedragames.com'"
+      ></button>
     </header>
-    
+
     <header class="gap2 flex tertiary upper">
-        <div>Doc ref: <span class="secondary-dark">ZC/OPS-X.H-TDVB.ZZ03</span></div>
-        <div>Edition: <span class="secondary-dark">V (20ZZ)</span></div>
-        <div class="clf b">Classification · &nbsp;[B] Partial view</div>
+      <div>
+        Doc ref: <span class="secondary-dark">ZC/OPS-X.H-TDVB.ZZ03</span>
+      </div>
+      <div>Edition: <span class="secondary-dark">V (20ZZ)</span></div>
+      <div class="clf b">Classification · &nbsp;[B] Partial view</div>
     </header>
 
     <main>
-        <aside id="sidebar">
-            <div>
-                <div class="upper quaternary">Table of Contents</div>
-                <a href="/" class="title">
-                    <h2 class="upper secondary">
-                        Z–CORP® LABS <span class="quaternary">/</span>
-                    </h2>
-                    <h1 class="upper primary">
-                        Development Handbook<br>for Builders™
-                    </h1>
-                </a>
-                <div class="progress">
-                    <div class="progress-bar">
-                        <div class="progress-bar-fill" id="progressFill" style="width: 50%"></div>
-                    </div>
-                    <div class="progress-label">
-                        <span>Reading progress</span>
-                        <span id="progressPercentage">50%</span>
-                    </div>
-                </div>
+      <aside id="sidebar">
+        <div>
+          <div class="upper quaternary">Table of Contents</div>
+          <a href="/" class="title">
+            <h2 class="upper secondary">
+              Z–CORP® LABS <span class="quaternary">/</span>
+            </h2>
+            <h1 class="upper primary">
+              Development Handbook<br />for Builders™
+            </h1>
+          </a>
+          <div class="progress">
+            <div class="progress-bar">
+              <div
+                class="progress-bar-fill"
+                id="progressFill"
+                style="width: 50%"
+              ></div>
             </div>
-            <nav>
-                <div id="navPageMarker" class="hidden"></div>
-                <ol><li><div>
+            <div class="progress-label">
+              <span>Reading progress</span>
+              <span id="progressPercentage">50%</span>
+            </div>
+          </div>
+        </div>
+        <nav>
+          <div id="navPageMarker" class="hidden"></div>
+          <ol><li><div>
                 <a href="/introduction" class="hv2">
                     <div class="number placeholder">00</div>
                     Introduction
@@ -295,11 +316,19 @@
                         </div>
                     Editing Parameters
                 </a>
+                
+            </div></li><li><div>
+                <a href="/building-a-level/which-parameters-an-object-has-depends-on-its-type-a-start-zone-has-a-**zone-id**-an-end-zone-has-a-**next-level**-when-you-select-several-objects-at-once,-the-inspector-shows-only-the-parameters-they-have-in-common-changing-one-changes-it-for-all-of-them" class="hv2">
+                    <div class="number">
+                            2.6
+                        </div>
+                    Which parameters an object has depends on its type. A Start Zone has a **Zone ID**; an End Zone has a **Next Level**. When you select several objects at once, the Inspector shows only the parameters they have in common. Changing one changes it for all of them.
+                </a>
                 <button class="dropdown-button toggled" title="Toggle collapse"></button>
             </div><ol><li><div>
-                <a href="/building-a-level/editing-parameters/variable-parameters" class="hv3">
+                <a href="/building-a-level/which-parameters-an-object-has-depends-on-its-type-a-start-zone-has-a-**zone-id**-an-end-zone-has-a-**next-level**-when-you-select-several-objects-at-once,-the-inspector-shows-only-the-parameters-they-have-in-common-changing-one-changes-it-for-all-of-them/variable-parameters" class="hv3">
                     <div class="number">
-                            2.5.1
+                            2.6.1
                         </div>
                     Variable Parameters
                 </a>
@@ -307,7 +336,7 @@
             </div></li></ol></li><li><div>
                 <a href="/building-a-level/transforming-objects" class="hv2">
                     <div class="number">
-                            2.6
+                            2.7
                         </div>
                     Transforming Objects
                 </a>
@@ -315,7 +344,7 @@
             </div><ol><li><div>
                 <a href="/building-a-level/transforming-objects/move-tool" class="hv3">
                     <div class="number">
-                            2.6.1
+                            2.7.1
                         </div>
                     Move Tool
                 </a>
@@ -323,7 +352,7 @@
             </div></li><li><div>
                 <a href="/building-a-level/transforming-objects/rotate-tool" class="hv3">
                     <div class="number">
-                            2.6.2
+                            2.7.2
                         </div>
                     Rotate Tool
                 </a>
@@ -331,7 +360,7 @@
             </div></li><li><div>
                 <a href="/building-a-level/transforming-objects/scale-tool" class="hv3">
                     <div class="number">
-                            2.6.3
+                            2.7.3
                         </div>
                     Scale Tool
                 </a>
@@ -339,7 +368,7 @@
             </div></li><li><div>
                 <a href="/building-a-level/transforming-objects/box-scale-tool" class="hv3">
                     <div class="number">
-                            2.6.4
+                            2.7.4
                         </div>
                     Box Scale Tool
                 </a>
@@ -347,7 +376,7 @@
             </div></li></ol></li><li><div>
                 <a href="/building-a-level/cut,-copy,-duplicate,-paste" class="hv2">
                     <div class="number">
-                            2.7
+                            2.8
                         </div>
                     Cut, Copy, Duplicate, Paste
                 </a>
@@ -355,7 +384,7 @@
             </div></li><li><div>
                 <a href="/building-a-level/checking-for-issues" class="hv2">
                     <div class="number">
-                            2.8
+                            2.9
                         </div>
                     Checking for Issues
                 </a>
@@ -363,7 +392,7 @@
             </div></li><li><div>
                 <a href="/building-a-level/try-it-out" class="hv2">
                     <div class="number">
-                            2.9
+                            2.10
                         </div>
                     Try It Out
                 </a>
@@ -371,7 +400,7 @@
             </div><ol><li><div>
                 <a href="/building-a-level/try-it-out/playtesting" class="hv3">
                     <div class="number">
-                            2.9.1
+                            2.10.1
                         </div>
                     Playtesting
                 </a>
@@ -379,7 +408,7 @@
             </div></li><li><div>
                 <a href="/building-a-level/try-it-out/returning-to-the-level-editor" class="hv3">
                     <div class="number">
-                            2.9.2
+                            2.10.2
                         </div>
                     Returning to the Level Editor
                 </a>
@@ -2225,14 +2254,13 @@
                 </a>
                 
             </div></li></ol></li></ol></li></ol>
-            </nav>
-        </aside>
+        </nav>
+      </aside>
 
-        <button id="sideToggleButton">&#8801;</button>
+      <button id="sideToggleButton">&#8801;</button>
 
-        <div class="viewer">
-            <div id="book">
-                <div class="hidden page vis-hidden vis-unlisted" data-url="/404" data-page="404" data-title="404" data-hv="0">
+      <div class="viewer">
+        <div id="book"><div class="hidden page vis-hidden vis-unlisted" data-url="/404" data-page="404" data-title="404" data-hv="0">
     <div class="page-content"><figure style="--ratio: 1"><a style="aspect-ratio: 4267/4267" target="_blank" data-pswp-src="/res/images/404.svg" data-pswp-width="4267" data-pswp-height="4267"><img alt="" data-src="/res/images/404.svg" /></a><figcaption></figcaption></figure><h4>The page you are looking for is no longer available.</h4>
 <p>Some reasons why you stumbled upon here might be:</p>
 <ul>
@@ -2247,7 +2275,7 @@
     <div class="title-classified title-tag flex">
         <div>Classified</div>
     </div>
-    <div class="title-classified title-desc">Internal document — Do not redistribute</div>
+    <div class="title-classified title-desc">Internal document /// Do not redistribute</div>
     <div class="title-warning">
         ⚠ UPDATE UNDERWAY<br>
         Some details are missing and will be updated shortly.
@@ -2270,6 +2298,7 @@
     <div class="title-quote">"YOUR BEST WORK IS ONE DESIGN AWAY."</div>
     <img class="title-logo" src="/res/logos/z-corp_z_white.svg" alt="">
 </div>
+
     </div>
 </div><div class="hidden page vis-unlisted" data-url="/development-handbook-for-builders%E2%84%A2" data-page="1" data-title="DEVELOPMENT HANDBOOK FOR BUILDERS™" data-hv="1">
     <div class="page-content"><div class="breadcrumbs">
@@ -2546,12 +2575,12 @@ LOCATION:	ABV/FR</p>
     <div class="page-content"><div class="breadcrumbs">2 / <a href="/building-a-level">Building a Level</a> / <a class="self" href="/building-a-level/editing-parameters">Editing Parameters</a>
             </div><h2>Editing Parameters</h2>
 <p>Every object has <strong>parameters</strong>: values that control how it looks and behaves, such as its size, color, or material. When you select an object, its parameters appear in the <strong>Inspector</strong> on the right side of the screen. Change a value there and the object updates immediately.</p>
-<p>Which parameters an object has depends on its type. A Start Zone has a <strong>Zone ID</strong>; an End Zone has a <strong>Next Level</strong>. When you select several objects at once, the Inspector shows only the parameters they have in common. Changing one changes it for all of them.</p>
 
     </div>
-</div><div class="hidden page" data-url="/building-a-level/editing-parameters/variable-parameters" data-page="20" data-title="Variable Parameters" data-hv="3">
-    <div class="page-content"><div class="breadcrumbs">2 / <a href="/building-a-level">Building a Level</a> / <a href="/building-a-level/editing-parameters">Editing Parameters</a>
-            </div><h3>Variable Parameters</h3>
+</div><div class="hidden page" data-url="/building-a-level/which-parameters-an-object-has-depends-on-its-type-a-start-zone-has-a-**zone-id**-an-end-zone-has-a-**next-level**-when-you-select-several-objects-at-once,-the-inspector-shows-only-the-parameters-they-have-in-common-changing-one-changes-it-for-all-of-them" data-page="20" data-title="Which parameters an object has depends on its type. A Start Zone has a **Zone ID**; an End Zone has a **Next Level**. When you select several objects at once, the Inspector shows only the parameters they have in common. Changing one changes it for all of them." data-hv="2">
+    <div class="page-content"><div class="breadcrumbs">2 / <a href="/building-a-level">Building a Level</a> / <a class="self" href="/building-a-level/which-parameters-an-object-has-depends-on-its-type-a-start-zone-has-a-**zone-id**-an-end-zone-has-a-**next-level**-when-you-select-several-objects-at-once,-the-inspector-shows-only-the-parameters-they-have-in-common-changing-one-changes-it-for-all-of-them">Which parameters an object has depends on its type. A Start Zone has a **Zone ID**; an End Zone has a **Next Level**. When you select several objects at once, the Inspector shows only the parameters they have in common. Changing one changes it for all of them.</a>
+            </div><h2>Which parameters an object has depends on its type. A Start Zone has a <strong>Zone ID</strong>; an End Zone has a <strong>Next Level</strong>. When you select several objects at once, the Inspector shows only the parameters they have in common. Changing one changes it for all of them.</h2>
+<h3 data-section-url="/building-a-level/which-parameters-an-object-has-depends-on-its-type-a-start-zone-has-a-**zone-id**-an-end-zone-has-a-**next-level**-when-you-select-several-objects-at-once,-the-inspector-shows-only-the-parameters-they-have-in-common-changing-one-changes-it-for-all-of-them/variable-parameters" data-hv="3">Variable Parameters</h3>
 <figure style="--ratio: 0.6418703506907545"><a style="aspect-ratio: 604/941" target="_blank" data-pswp-src="/media/variable-parameter-tooltip.png" data-pswp-width="604" data-pswp-height="941"><img alt="The variable parameter of a Cube object." data-src="/media/variable-parameter-tooltip.png" /></a><figcaption>The variable parameter of a Cube object.</figcaption></figure><p>Some presets let you set one of their parameters before you place them, such as an object's material. This is called a <strong>variable parameter</strong>.</p>
 <p>Presets with a variable parameter display a <img src="/media/icons/Settings.svg#icon" alt=""> cog icon on the bottom left. From the Inventor Bar, click the cog to set the value. Objects will be placed using the set parameter value.</p>
 
@@ -2794,7 +2823,7 @@ LOCATION:	ABV/FR</p>
     <div class="page-content"><div class="breadcrumbs">5 / <a href="/verifying-a-level">Verifying a Level</a> / <a class="self" href="/verifying-a-level/setting-level-times">Setting Level Times</a>
             </div><h2>Setting Level Times</h2>
 <p>Runners earn stars for finishing a level quickly. The maximum time for each star can be set from the level settings, under <strong>Level Times</strong>. Times are set in seconds.</p>
-<p>Each star's time must be the same as or shorter than the one before it, or the level will have an error. Star 4 is optional—leave it at 0 and Runners won't see it.</p>
+<p>Each star's time must be the same as or shorter than the one before it, or the level will have an error. Star 4 is optional, leave it at 0 and Runners won't see it.</p>
 <div class="figure-row">
 <figure style="--ratio: 1.5874125874125875"><a class="video" style="aspect-ratio: 454/286" target="_blank" data-pswp-src="/media/screenshots/level-stars-clear3.webm" data-pswp-width="454" data-pswp-height="286" data-pswp-type="video"><video data-src="/media/screenshots/level-stars-clear3.webm" autoplay loop muted playsinline></video></a><figcaption>Finishing a level in time for three stars.</figcaption></figure><figure style="--ratio: 1.5874125874125875"><a class="video" style="aspect-ratio: 454/286" target="_blank" data-pswp-src="/media/screenshots/level-stars-timeout.webm" data-pswp-width="454" data-pswp-height="286" data-pswp-type="video"><video data-src="/media/screenshots/level-stars-timeout.webm" autoplay loop muted playsinline></video></a><figcaption>Running out of time for a star.</figcaption></figure></div>
 <p>Your ghosts are the best guide for choosing times. Before you publish, you'll be encouraged to set all four times and to have a ghost that beats the fastest one, so you know every star can be earned.</p>
@@ -3429,7 +3458,7 @@ LOCATION:	ABV/FR</p>
 <p>A <strong>variable</strong> is a name that holds a value. Create one with <code>let</code>, or with <code>const</code> if it should never change.</p>
 <pre class="script"><code class="language-c3script"><span class="line"><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">INTERVAL</span> = <span class="hljs-number">2</span>;</span>
 <span class="line"><span class="hljs-keyword">let</span> lives = <span class="hljs-number">3</span>;</span>
-<span class="line">lives = lives - <span class="hljs-number">1</span>;    <span class="hljs-comment">// lives is now 2</span></span></code></pre>
+<span class="line">lives = lives - <span class="hljs-number">1</span>; <span class="hljs-comment">// lives is now 2</span></span></code></pre>
 <p>Values can be numbers (<code>3</code>, <code>0.5</code>), text in quotes (<code>&quot;hello&quot;</code>), <code>true</code> or <code>false</code>, or <code>null</code> (no value).</p>
 <h4 data-section-url="/advanced/scripting/c3script-basics/functions" data-hv="4">Functions</h4>
 <p>A <strong>function</strong> is a reusable block of code. It can optionally take values in and give one back with <code>return</code>.</p>
@@ -3437,7 +3466,7 @@ LOCATION:	ABV/FR</p>
 <span class="line">  <span class="hljs-keyword">return</span> n * <span class="hljs-number">2</span>;</span>
 <span class="line">}</span>
 <span class="line"></span>
-<span class="line"><span class="hljs-title function_">double</span>(<span class="hljs-number">4</span>);    <span class="hljs-comment">// 8</span></span></code></pre>
+<span class="line"><span class="hljs-title function_">double</span>(<span class="hljs-number">4</span>); <span class="hljs-comment">// 8</span></span></code></pre>
 <p>There's also a shorter way to write a function, called an <strong>arrow function</strong>. This is the form you'll usually pass to events:</p>
 <pre class="script"><code class="language-c3script"><span class="line"><span class="hljs-keyword">let</span> <span class="hljs-title function_">double</span> = (<span class="hljs-params">n</span>) =&gt; {</span>
 <span class="line">  <span class="hljs-keyword">return</span> n * <span class="hljs-number">2</span>;</span>
@@ -3450,13 +3479,13 @@ LOCATION:	ABV/FR</p>
 <h4 data-section-url="/advanced/scripting/c3script-basics/objects" data-hv="4">Objects</h4>
 <p>A c3script <strong>object</strong> groups values under names and is defined using curly brackets <code>{</code> <code>}</code>.</p>
 <pre class="script"><code class="language-c3script"><span class="line"><span class="hljs-keyword">let</span> point = { <span class="hljs-attr">x</span>: <span class="hljs-number">10</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">20</span> };</span>
-<span class="line">point.<span class="hljs-property">x</span> = <span class="hljs-number">15</span>;     <span class="hljs-comment">// changes point&#x27;s &#x27;x&#x27; value</span></span>
-<span class="line">point[<span class="hljs-string">&quot;x&quot;</span>] = <span class="hljs-number">15</span>;  <span class="hljs-comment">// this works too</span></span>
-<span class="line"><span class="hljs-title function_">print</span>(point.<span class="hljs-property">x</span>);   <span class="hljs-comment">// prints &quot;15&quot; to the console</span></span></code></pre>
+<span class="line">point.<span class="hljs-property">x</span> = <span class="hljs-number">15</span>; <span class="hljs-comment">// changes point&#x27;s &#x27;x&#x27; value</span></span>
+<span class="line">point[<span class="hljs-string">&quot;x&quot;</span>] = <span class="hljs-number">15</span>; <span class="hljs-comment">// this works too</span></span>
+<span class="line"><span class="hljs-title function_">print</span>(point.<span class="hljs-property">x</span>); <span class="hljs-comment">// prints &quot;15&quot; to the console</span></span></code></pre>
 <h4 data-section-url="/advanced/scripting/c3script-basics/arrays" data-hv="4">Arrays</h4>
 <p>An <strong>array</strong> is a list of values defined using square brackets <code>[</code> <code>]</code>. They start count at 0.</p>
 <pre class="script"><code class="language-c3script"><span class="line"><span class="hljs-keyword">let</span> colors = [<span class="hljs-string">&quot;red&quot;</span>, <span class="hljs-string">&quot;green&quot;</span>, <span class="hljs-string">&quot;blue&quot;</span>];</span>
-<span class="line"><span class="hljs-title function_">print</span>(colors[<span class="hljs-number">0</span>]);     <span class="hljs-comment">// prints &quot;red&quot; to the console</span></span>
+<span class="line"><span class="hljs-title function_">print</span>(colors[<span class="hljs-number">0</span>]); <span class="hljs-comment">// prints &quot;red&quot; to the console</span></span>
 <span class="line"><span class="hljs-title function_">print</span>(colors.<span class="hljs-property">length</span>); <span class="hljs-comment">// prints &quot;3&quot; to the console</span></span></code></pre>
 <h4 data-section-url="/advanced/scripting/c3script-basics/if-statements" data-hv="4">If Statements</h4>
 <p><code>if</code> runs code only when something is true. <code>else</code> runs when it isn't.</p>
@@ -4792,7 +4821,7 @@ LOCATION:	ABV/FR</p>
 <td>A label with variables has spaces or symbols in its name, so scripts must write <code>obj.labels[&quot;&lt;label&gt;&quot;]</code> instead of <code>obj.labels.&lt;label&gt;</code>.</td>
 </tr>
 <tr>
-<td>Script warning (line <code>&lt;n&gt;</code>): &quot;<code>&lt;value&gt;</code>&quot; is not a known value for <code>&lt;function&gt;</code> — expected one of: …</td>
+<td>Script warning (line <code>&lt;n&gt;</code>): &quot;<code>&lt;value&gt;</code>&quot; is not a known value for <code>&lt;function&gt;</code>, expected one of: …</td>
 <td>The script passes a value that doesn't exist, such as <code>level.find(&quot;dooor&quot;)</code> when no label is called &quot;dooor&quot;.</td>
 </tr>
 <tr>
@@ -5701,8 +5730,10 @@ LOCATION:	ABV/FR</p>
 </tr>
 </tbody>
 </table>
-<pre class="script"><code class="language-c3script"><span class="line"><span class="hljs-title class_">Tween</span>.<span class="hljs-title function_">to</span>(door, { <span class="hljs-attr">position</span>: { <span class="hljs-attr">x</span>: <span class="hljs-number">100</span> }, <span class="hljs-attr">angle</span>: <span class="hljs-number">90</span> }, <span class="hljs-number">1</span>, { <span class="hljs-attr">easing</span>: <span class="hljs-title class_">Easing</span>.<span class="hljs-property">easeInOut</span> });</span>
-<span class="line"><span class="hljs-keyword">await</span> <span class="hljs-title class_">Tween</span>.<span class="hljs-title function_">run</span>(<span class="hljs-number">1</span>, <span class="hljs-function">(<span class="hljs-params">t</span>) =&gt;</span> sign.<span class="hljs-property">color</span> = { <span class="hljs-attr">r</span>: t, <span class="hljs-attr">g</span>: t, <span class="hljs-attr">b</span>: t }).<span class="hljs-property">done</span>;</span></code></pre>
+<pre class="script"><code class="language-c3script"><span class="line"><span class="hljs-title class_">Tween</span>.<span class="hljs-title function_">to</span>(door, { <span class="hljs-attr">position</span>: { <span class="hljs-attr">x</span>: <span class="hljs-number">100</span> }, <span class="hljs-attr">angle</span>: <span class="hljs-number">90</span> }, <span class="hljs-number">1</span>, {</span>
+<span class="line">  <span class="hljs-attr">easing</span>: <span class="hljs-title class_">Easing</span>.<span class="hljs-property">easeInOut</span>,</span>
+<span class="line">});</span>
+<span class="line"><span class="hljs-keyword">await</span> <span class="hljs-title class_">Tween</span>.<span class="hljs-title function_">run</span>(<span class="hljs-number">1</span>, <span class="hljs-function">(<span class="hljs-params">t</span>) =&gt;</span> (sign.<span class="hljs-property">color</span> = { <span class="hljs-attr">r</span>: t, <span class="hljs-attr">g</span>: t, <span class="hljs-attr">b</span>: t })).<span class="hljs-property">done</span>;</span></code></pre>
 <h3 data-section-url="/appendix/scripting-reference/player" data-hv="3">Player</h3>
 <p>The Runner. <code>level.player</code> is the same object. It can only be used from the <code>&quot;load&quot;</code> event onward, once the Runner has spawned (see <a href="/appendix/scripting-reference/how-a-level-script-runs">How a Level Script Runs</a>).</p>
 <table>
@@ -6585,19 +6616,17 @@ LOCATION:	ABV/FR</p>
 <p>Your level pack's title, visibility, difficulty, description, and preview image (see <a href="/publishing/creating-and-uploading-on-the-steam-workshop/defining-the-level-pack">Section 7: Publishing &gt; Defining the Level Pack</a>).</p>
 
     </div>
-</div>
-            </div>
-            <footer>
-                <button id="pagePrevious" disabled>← Prev</button>
-                <div class="page-indicator">
-                    <input id="pageNumberInput" type="number" min="1" value="0">
-                    <strong class="tertiary">/ <span id="pageTotal">29</span></strong>
-                </div>
-                <button id="pageNext">Next →</button>
-            </footer>
-        </div>
+</div></div>
+        <footer>
+          <button id="pagePrevious" disabled>← Prev</button>
+          <div class="page-indicator">
+            <input id="pageNumberInput" type="number" min="1" value="0" />
+            <strong class="tertiary">/ <span id="pageTotal">29</span></strong>
+          </div>
+          <button id="pageNext">Next →</button>
+        </footer>
+      </div>
     </main>
-    
-</body>
-<script src="/book.js?nocache=1793073044719" type="module"></script>
+  </body>
+  <script src="/book.js?nocache=1793387646216" type="module"></script>
 </html>
