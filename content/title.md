@@ -2,7 +2,7 @@
     <div class="title-classified title-tag flex">
         <div>Classified</div>
     </div>
-    <div class="title-classified title-desc">Internal document — Do not redistribute</div>
+    <div class="title-classified title-desc">Internal document /// Do not redistribute</div>
     <div class="title-warning">
         ⚠ UPDATE UNDERWAY<br>
         Some details are missing and will be updated shortly.

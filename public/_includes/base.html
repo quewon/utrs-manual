@@ -1,86 +1,104 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ title }}</title>
-    <link rel="stylesheet" href="/style.css{{ nocache }}">
-    <link rel="stylesheet" href="/res/photoswipe/photoswipe.css">
-</head>
-<body>
-
+    <link rel="stylesheet" href="/style.css{{ nocache }}" />
+    <link rel="stylesheet" href="/res/photoswipe/photoswipe.css" />
+  </head>
+  <body>
     <header class="gap1">
-        <img class="header-logo" src="/res/logos/z-corp_symbolmark_white.svg" alt="Z-Corp®">
-        <div class="vertical-div hide-when-small"></div>
-        <div class="secondary upper overflow-ellipsis hide-when-small">
-            <strong class="primary">Z–corp® Labs</strong> <span class="light hide-when-medium">— Development Handbook for Builders™</span>
+      <img
+        class="header-logo"
+        src="/res/logos/z-corp_symbolmark_white.svg"
+        alt="Z-Corp®"
+      />
+      <div class="vertical-div hide-when-small"></div>
+      <div class="secondary upper overflow-ellipsis hide-when-small">
+        <strong class="primary">Z–corp® Labs</strong>
+        <span class="light hide-when-medium"
+          >/ Development Handbook for Builders™</span
+        >
+      </div>
+      <div class="grow hide-when-smaller"></div>
+      <div class="search">
+        <button id="searchClear" class="search-icon" title="Clear search">
+          <img src="/res/misc/search.svg" alt="" class="search-glass" />
+          <img
+            src="/res/misc/clear.svg"
+            alt="Clear search"
+            class="search-clear"
+          />
+        </button>
+        <input type="text" placeholder="Search document..." id="searchInput" />
+        <div class="tertiary">
+          <span id="searchIndex">0</span> /
+          <span id="searchResultCount">0</span>
         </div>
-        <div class="grow hide-when-smaller"></div>
-        <div class="search">
-            <button id="searchClear" class="search-icon" title="Clear search">
-                <img src="/res/misc/search.svg" alt="" class="search-glass">
-                <img src="/res/misc/clear.svg" alt="Clear search" class="search-clear">
-            </button>
-            <input type="text" placeholder="Search document..." id="searchInput">
-            <div class="tertiary">
-                <span id="searchIndex">0</span> / <span id="searchResultCount">0</span>
-            </div>
-            <div class="tertiary">|</div> <button id="searchPrev">↑</button> <button id="searchNext">↓</button>
-        </div>
-        <button class="upper danger leave-button" onclick="location.href = 'https://dedragames.com'"></button>
+        <div class="tertiary">|</div>
+        <button id="searchPrev">↑</button> <button id="searchNext">↓</button>
+      </div>
+      <button
+        class="upper danger leave-button"
+        onclick="location.href = 'https://dedragames.com'"
+      ></button>
     </header>
-    
+
     <header class="gap2 flex tertiary upper">
-        <div>Doc ref: <span class="secondary-dark">ZC/OPS-X.H-TDVB.ZZ03</span></div>
-        <div>Edition: <span class="secondary-dark">V (20ZZ)</span></div>
-        <div class="clf b">Classification · &nbsp;[B] Partial view</div>
+      <div>
+        Doc ref: <span class="secondary-dark">ZC/OPS-X.H-TDVB.ZZ03</span>
+      </div>
+      <div>Edition: <span class="secondary-dark">V (20ZZ)</span></div>
+      <div class="clf b">Classification · &nbsp;[B] Partial view</div>
     </header>
 
     <main>
-        <aside id="sidebar">
-            <div>
-                <div class="upper quaternary">Table of Contents</div>
-                <a href="/" class="title">
-                    <h2 class="upper secondary">
-                        Z–CORP® LABS <span class="quaternary">/</span>
-                    </h2>
-                    <h1 class="upper primary">
-                        Development Handbook<br>for Builders™
-                    </h1>
-                </a>
-                <div class="progress">
-                    <div class="progress-bar">
-                        <div class="progress-bar-fill" id="progressFill" style="width: 50%"></div>
-                    </div>
-                    <div class="progress-label">
-                        <span>Reading progress</span>
-                        <span id="progressPercentage">50%</span>
-                    </div>
-                </div>
+      <aside id="sidebar">
+        <div>
+          <div class="upper quaternary">Table of Contents</div>
+          <a href="/" class="title">
+            <h2 class="upper secondary">
+              Z–CORP® LABS <span class="quaternary">/</span>
+            </h2>
+            <h1 class="upper primary">
+              Development Handbook<br />for Builders™
+            </h1>
+          </a>
+          <div class="progress">
+            <div class="progress-bar">
+              <div
+                class="progress-bar-fill"
+                id="progressFill"
+                style="width: 50%"
+              ></div>
             </div>
-            <nav>
-                <div id="navPageMarker" class="hidden"></div>
-                {{ pages.nav }}
-            </nav>
-        </aside>
-
-        <button id="sideToggleButton">&#8801;</button>
-
-        <div class="viewer">
-            <div id="book">
-                {{ content }}
+            <div class="progress-label">
+              <span>Reading progress</span>
+              <span id="progressPercentage">50%</span>
             </div>
-            <footer>
-                <button id="pagePrevious" disabled>← Prev</button>
-                <div class="page-indicator">
-                    <input id="pageNumberInput" type="number" min="1" value="0">
-                    <strong class="tertiary">/ <span id="pageTotal">29</span></strong>
-                </div>
-                <button id="pageNext">Next →</button>
-            </footer>
+          </div>
         </div>
+        <nav>
+          <div id="navPageMarker" class="hidden"></div>
+          {{ pages.nav }}
+        </nav>
+      </aside>
+
+      <button id="sideToggleButton">&#8801;</button>
+
+      <div class="viewer">
+        <div id="book">{{ content }}</div>
+        <footer>
+          <button id="pagePrevious" disabled>← Prev</button>
+          <div class="page-indicator">
+            <input id="pageNumberInput" type="number" min="1" value="0" />
+            <strong class="tertiary">/ <span id="pageTotal">29</span></strong>
+          </div>
+          <button id="pageNext">Next →</button>
+        </footer>
+      </div>
     </main>
-    
-</body>
-<script src="/book.js{{ nocache }}" type="module"></script>
+  </body>
+  <script src="/book.js{{ nocache }}" type="module"></script>
 </html>
